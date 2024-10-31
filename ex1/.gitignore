@@ -1,0 +1,5 @@
+*.md
+*.csv
+ex1/unitTest/unity.c
+ex1/unitTest/unity.h
+ex1/unitTest/unity_internals.h
