@@ -1,20 +1,58 @@
-CFLAGS = -g -Wall -Wextra -Wpedantic -Wconversion
-INCLUDES = -I src -I unitTest
+CC = gcc
+CFLAGS = -Wall -Wextra -g
+LDFLAGS = -lm
 
-all: bin/sort.o bin/main.o
-	gcc $(CFLAGS) $(INCLUDES) bin/sort.o bin/main.o -o bin/ex1_main
+# Directories
+BIN_DIR = bin
+SRC_DIR = src
+TEST_DIR = tests
 
-bin/sort.o: src/sort.c
-	mkdir -p bin
-	gcc $(CFLAGS) $(INCLUDES) -c src/sort.c -o bin/sort.o
+# Target executables
+TARGET = $(BIN_DIR)/sort_program
+TEST_TARGET = $(BIN_DIR)/run_tests
 
-bin/main.o: src/main.c
-	mkdir -p bin
-	gcc $(CFLAGS) $(INCLUDES) -c src/main.c -o bin/main.o
+# Source files
+SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/sort.c
+TEST_SRCS = $(TEST_DIR)/sortTest.c $(SRC_DIR)/sort.c
+UNITY_SRCS = $(TEST_DIR)/unity.c
 
-test:
-	mkdir -p bin
-	gcc $(CFLAGS) $(INCLUDES) -o bin/ex1_test src/sortTest.c src/sort.c unitTest/unity.c
+# Object files
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BIN_DIR)/%.o)
+TEST_OBJS = $(TEST_SRCS:$(SRC_DIR)/%.c=$(BIN_DIR)/%.o)
+TEST_OBJS := $(TEST_OBJS:$(TEST_DIR)/%.c=$(BIN_DIR)/%.o)
+UNITY_OBJ = $(UNITY_SRCS:$(TEST_DIR)/%.c=$(BIN_DIR)/%.o)
 
+# Header files
+INCLUDES = -I$(SRC_DIR) -I$(TEST_DIR)
+
+.PHONY: all clean test directories
+
+all: directories $(TARGET)
+
+# Create bin directory
+directories:
+	@mkdir -p $(BIN_DIR)
+
+# Main program
+$(TARGET): $(OBJS)
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+# Test program
+$(TEST_TARGET): $(TEST_OBJS) $(UNITY_OBJ)
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+# Compile source files
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c | directories
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Compile test files
+$(BIN_DIR)/%.o: $(TEST_DIR)/%.c | directories
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Build and run tests
+test: directories $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+# Clean build files
 clean:
-	rm -rf bin
+	rm -rf $(BIN_DIR)

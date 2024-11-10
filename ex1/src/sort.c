@@ -1,31 +1,30 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "sort.h"
 
 #define CAPACITY 20000000
 
-//&   := parte di codice da sostituire con una chiamata a funzione
 
-struct _Records{
-    int     id;
-    char    field1[20];
-    int     field2;
-    float   field3;
-};
-
-Records* records_create(){
-    Records *records = malloc(CAPACITY * sizeof(Records));
+Records** records_create(){
+    Records **records = malloc(CAPACITY * sizeof(Records*));
 
     if(records == NULL){
         printf("MEMORY EMPTY");
         exit(1);
     }
+    
+    for(size_t i = 0; i < CAPACITY; i++){
+        records[i] = malloc(sizeof(Records));
+        if(records[i] == NULL){
+            puts("EMPTY MEMORY");
+            exit(1);
+        }
+    }
 
-    records->id = 0;
-    records->field1[0] = '\0';
-    records->field2 = 0;
-    records->field3 = 0;
+    for(size_t i = 0; i < CAPACITY; i++){
+        records[i]->id = 0;
+        records[i]->field1[0] = '\0';
+        records[i]->field2 = 0;
+        records[i]->field3 = 0;
+    }
 
     return records;
 }
@@ -43,34 +42,136 @@ int compare_f3(const void* a, const void* b){
     return (diff > 0) - (diff < 0);
 }
 
+void merge(void **base, int p, int q, int r, int (*compar)(const void *, const void*)) {
+    int n1 = q - p + 1;
+    int n2 = r - q;
+    
+    void **ArrayLeft = (void**)malloc(n1 * sizeof(void*));
+    void **ArrayRight = (void**)malloc(n2 * sizeof(void*));
+    
+    if (!ArrayLeft || !ArrayRight) {
+        printf("error allocation memory for merge\n");
+        exit(1);
+    }
+    
+    for(int i = 0; i < n1; i++) {
+        ArrayLeft[i] = base[p + i];
+    }
+    for(int j = 0; j < n2; j++) {
+        ArrayRight[j] = base[q + j + 1];
+    }
+    
+    int i = 0;
+    int j = 0;
+    int k = p;
+    
+    while (i < n1 && j < n2) {
+        if (compar(ArrayLeft[i], ArrayRight[j]) <= 0) {
+            base[k] = ArrayLeft[i];
+            i++;
+        } else {
+            base[k] = ArrayRight[j];
+            j++;
+        }
+        k++;
+    }
+    
+    while (i < n1) {
+        base[k] = ArrayLeft[i];
+        i++;
+        k++;
+    }
+    
+    while (j < n2) {
+        base[k] = ArrayRight[j];
+        j++;
+        k++;
+    }
+    
+    free(ArrayLeft);
+    free(ArrayRight);
+}
+
+void merge_sort_rec(void **base, int p, int r, int (*compar)(const void *, const void*)){
+    
+    if(p < r){
+        size_t q = floor((p + r) / 2);
+        merge_sort_rec(base, p, q, compar);
+        merge_sort_rec(base, q + 1, r, compar);
+        merge(base, p, q, r, compar);
+    }
+    
+    return;
+}
+
+void merge_sort(void **base, int nitems, int (*compar)(const void *, const void*)) {
+    merge_sort_rec(base, 0, nitems - 1, compar);
+}
+
+int partition(void **base, int start, int end, int (*compar)(const void *, const void*)){
+    
+    void* pivot = base[end];
+    int i = (start - 1);
+    
+    for(int j = start; j < end; j++){
+        if(compar(base[j], pivot) < 0){
+            i++;
+            void* temp = base[i];
+            base[i] = base[j];
+            base[j] = temp;
+        }
+    }
+    void* temp = base[i + 1];
+    base[i + 1] = base[end];
+    base[end] = temp;
+    return i + 1;
+}
+
+void quick_sort_rec(void **base, int start, int end, int (*compar)(const void *, const void*)){
+    if(start < end){
+        int pivot = partition(base, start, end, compar);
+        
+        quick_sort_rec(base, start, pivot - 1, compar);
+        quick_sort_rec(base, pivot + 1, end, compar);
+    }
+}
+
+void quick_sort(void **base, int nitems, int (*compar)(const void *, const void*)) {
+    quick_sort_rec(base, 0, (int)nitems - 1, compar);
+}
+
+
 void sort_records(FILE *infile, FILE *outfile, size_t field, size_t algo){
 
-    Records *records = malloc(CAPACITY * sizeof(Records));//
-    unsigned long cont = 0;//&
+    puts("creation data structure");
+    Records **records = records_create();
+    int cont = 0;
 
-    while(fscanf(infile, "%d, %19[^,],%d,%f\n", &records[cont].id, &records[cont].field1, &records[cont].field2, &records[cont].field3)){
-        cont++;
+    puts("reading file");
+    while(fscanf(infile, "%d,%[^,],%d,%f\n", &records[cont]->id, records[cont]->field1, &records[cont]->field2, &records[cont]->field3) == 4){
+    cont++;
     }
 
-    int (*compare)(void*, void*) = NULL;
+    int (*compare)(const void*, const void*) = NULL;
     if(field == 1){compare = compare_f1;}
     else if(field == 2){compare = compare_f2;}
     else if(field == 3){compare = compare_f3;}
     else{printf("FIELD VALUE NOT VALID"); exit(1);}
 
-    if(algo == 1){merge_sort(records, cont, sizeof(records), compare);}
-    else if(algo == 2){quick_sort(records, cont, sizeof(records), compare);}
+    puts("sorting...");
+    if(algo == 1){merge_sort((void **)records, cont, compare);}
+    else if(algo == 2){quick_sort((void **)records, cont, compare);}
     else{printf("ALGO VALUE NOT VALID"); exit(1);}
 
-    for(unsigned long i = 0; i < cont; i++){
-        fprintf(outfile, "%d,%s,%d,%.2f", records[i].id, records[i].field1, records[i].field2, records[i].field3);
+    puts("printing result");
+    for(int i = 0; i < cont; i++){
+        fprintf(outfile, "%d,%s,%d,%.2f\n", records[i]->id, records[i]->field1, records[i]->field2, records[i]->field3);
     }
 
+    puts("destruction of data structure");
+    for (int i = 0; i < cont; i++) {
+    free(records[i]);
+    }
     free(records);
+
 }
-
-void merge_sort(Records*, unsigned long, size_t, int (*compare)(void*, void*));
-
-void quick_sort(Records*, unsigned long, size_t, int (*compare)(void*, void*));
-
-int partition(Records*, void*, unsigned long);
