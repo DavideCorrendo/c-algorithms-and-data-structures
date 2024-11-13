@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['e_20discussione_20orale_0',['Consegna del progetto e discussione orale',['../md_README.html#autotoc_md17',1,'']]],
+  ['e_20merging_20con_20git_1',['Branching e Merging con Git',['../md_Git.html#autotoc_md9',1,'']]],
+  ['e_20o_20native_20del_20linguaggio_20scelto_2',['Uso di librerie esterne e/o native del linguaggio scelto',['../md_README.html#autotoc_md23',1,'']]],
+  ['e_20quick_20sort_3',['Esercizio 1 - Merge Sort e Quick Sort',['../md_README.html#autotoc_md28',1,'']]],
+  ['e_20strutture_20dati_4',['Uso di Git per il laboratorio di Algoritmi e Strutture Dati',['../md_Git.html',1,'']]],
+  ['e_20strutture_20dati_3a_20regole_20d_20esame_20indicazioni_20generali_20e_20suggerimenti_20consegne_20per_20gli_20esercizi_5',['Laboratorio per il corso di Algoritmi e Strutture Dati: regole d&apos;esame, indicazioni generali e suggerimenti, consegne per gli esercizi',['../md_README.html',1,'']]],
+  ['e_20studentesse_20con_20algoritmi_20non_20di_209_20cfu_6',['Studenti e studentesse con Algoritmi non di 9 CFU',['../md_README.html#autotoc_md14',1,'']]],
+  ['e_20studentesse_20di_20anni_20precedenti_20il_202024_202025_7',['Studenti e studentesse di anni precedenti il 2024/2025',['../md_README.html#autotoc_md13',1,'']]],
+  ['e_20suggerimenti_8',['Indicazioni generali e suggerimenti',['../md_README.html#autotoc_md18',1,'']]],
+  ['e_20turni_9',['Gruppi di laboratorio e turni',['../md_README.html#autotoc_md15',1,'']]],
+  ['e_20visita_20in_20ampiezza_10',['Esercizio 4 - Grafi sparsi e Visita in Ampiezza',['..//home/federico/ProgettoAlgoritmiStruttureDati/laboratorio-algoritmi-2024-2025/README.md#autotoc_md44',1,'']]],
+  ['e_20von_20neumann_11',['Accesso via https (laboratorio Dijkstra e Von Neumann)',['../md_Git.html#autotoc_md5',1,'']]],
+  ['edit_20distance_12',['Esercizio 2 - Edit distance',['../md_README.html#autotoc_md33',1,'']]],
+  ['esame_13',['Regole d&apos;esame',['../md_README.html#autotoc_md12',1,'']]],
+  ['esame_20complessivo_14',['Esame complessivo',['../md_README.html#autotoc_md16',1,'']]],
+  ['esame_20indicazioni_20generali_20e_20suggerimenti_20consegne_20per_20gli_20esercizi_15',['Laboratorio per il corso di Algoritmi e Strutture Dati: regole d&apos;esame, indicazioni generali e suggerimenti, consegne per gli esercizi',['../md_README.html',1,'']]],
+  ['esercizi_16',['esercizi',['../md_README.html#autotoc_md27',1,'Consegne per gli esercizi'],['../md_README.html',1,'Laboratorio per il corso di Algoritmi e Strutture Dati: regole d&apos;esame, indicazioni generali e suggerimenti, consegne per gli esercizi'],['../md_README.html#autotoc_md24',1,'Relazione sugli esercizi']]],
+  ['esercizio_201_20merge_20sort_20e_20quick_20sort_17',['Esercizio 1 - Merge Sort e Quick Sort',['../md_README.html#autotoc_md28',1,'']]],
+  ['esercizio_202_20edit_20distance_18',['Esercizio 2 - Edit distance',['../md_README.html#autotoc_md33',1,'']]],
+  ['esercizio_203_20tavole_20hash_20con_20concatenamento_19',['Esercizio 3 - Tavole hash (con concatenamento)',['..//home/federico/ProgettoAlgoritmiStruttureDati/laboratorio-algoritmi-2024-2025/README.md#autotoc_md40',1,'']]],
+  ['esercizio_204_20grafi_20sparsi_20e_20visita_20in_20ampiezza_20',['Esercizio 4 - Grafi sparsi e Visita in Ampiezza',['..//home/federico/ProgettoAlgoritmiStruttureDati/laboratorio-algoritmi-2024-2025/README.md#autotoc_md44',1,'']]],
+  ['esterne_20e_20o_20native_20del_20linguaggio_20scelto_21',['Uso di librerie esterne e/o native del linguaggio scelto',['../md_README.html#autotoc_md23',1,'']]]
+];

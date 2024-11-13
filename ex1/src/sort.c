@@ -14,6 +14,12 @@ Records** records_create(){
     for(size_t i = 0; i < CAPACITY; i++){
         records[i] = malloc(sizeof(Records));
         if(records[i] == NULL){
+
+            for(size_t j = 0; j < i; j++) {
+                free(records[j]);
+            }
+
+            free(records);
             puts("EMPTY MEMORY");
             exit(1);
         }
@@ -42,28 +48,38 @@ int compare_f3(const void* a, const void* b){
     return (diff > 0) - (diff < 0);
 }
 
-void merge(void **base, int p, int q, int r, int (*compar)(const void *, const void*)) {
-    int n1 = q - p + 1;
-    int n2 = r - q;
+void merge(void **base, int first, int mid, int last, int (*compar)(const void *, const void*)) {
+    // ArrayLeft dimension
+    int n1 = mid - first + 1;
+    // ArrayRight dimension
+    int n2 = last - mid;
     
     void **ArrayLeft = (void**)malloc(n1 * sizeof(void*));
+
+    if(!ArrayLeft) {
+        puts("ERROR ALLOCATION ARRAYLEFT");
+        exit(1);
+    }
+
     void **ArrayRight = (void**)malloc(n2 * sizeof(void*));
-    
-    if (!ArrayLeft || !ArrayRight) {
-        printf("error allocation memory for merge\n");
+
+    if(!ArrayRight) {
+        puts("ERROR ALLOCATION ARRAYRIGHT");
+        free(ArrayLeft);
         exit(1);
     }
     
     for(int i = 0; i < n1; i++) {
-        ArrayLeft[i] = base[p + i];
+        ArrayLeft[i] = base[first + i];
     }
+
     for(int j = 0; j < n2; j++) {
-        ArrayRight[j] = base[q + j + 1];
+        ArrayRight[j] = base[mid + j + 1];
     }
     
     int i = 0;
     int j = 0;
-    int k = p;
+    int k = first;
     
     while (i < n1 && j < n2) {
         if (compar(ArrayLeft[i], ArrayRight[j]) <= 0) {
@@ -92,13 +108,13 @@ void merge(void **base, int p, int q, int r, int (*compar)(const void *, const v
     free(ArrayRight);
 }
 
-void merge_sort_rec(void **base, int p, int r, int (*compar)(const void *, const void*)){
+void merge_sort_rec(void **base, int first, int last, int (*compar)(const void *, const void*)){
     
-    if(p < r){
-        size_t q = floor((p + r) / 2);
-        merge_sort_rec(base, p, q, compar);
-        merge_sort_rec(base, q + 1, r, compar);
-        merge(base, p, q, r, compar);
+    if(first < last){
+        size_t mid = floor((first + last) / 2);
+        merge_sort_rec(base, first, mid, compar);
+        merge_sort_rec(base, mid + 1, last, compar);
+        merge(base, first, mid, last, compar);
     }
     
     return;
@@ -140,6 +156,15 @@ void quick_sort(void **base, int nitems, int (*compar)(const void *, const void*
     quick_sort_rec(base, 0, (int)nitems - 1, compar);
 }
 
+void free_records(Records **records) {
+    puts("destruction of data structure");
+
+    for (int i = 0; i < CAPACITY; i++) {
+        free(records[i]);
+    }
+
+    free(records);
+}
 
 void sort_records(FILE *infile, FILE *outfile, size_t field, size_t algo){
 
@@ -168,10 +193,5 @@ void sort_records(FILE *infile, FILE *outfile, size_t field, size_t algo){
         fprintf(outfile, "%d,%s,%d,%.2f\n", records[i]->id, records[i]->field1, records[i]->field2, records[i]->field3);
     }
 
-    puts("destruction of data structure");
-    for (int i = 0; i < cont; i++) {
-    free(records[i]);
-    }
-    free(records);
-
+    free_records(records);
 }

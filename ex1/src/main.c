@@ -2,19 +2,20 @@
 
 int main(int argc, char *argv[]){
     if(argc != 5){
-        puts("ERRORE NELL'INSERIMENTO DEL COMANDO");
+        puts("ERROR IN THE INSERT OF THE COMMANDS");
         exit(1);
     }
 
     FILE *infile = fopen(argv[1], "r");
     if(!infile){
-        puts("ERRORE NELL'APERTURA DEL FILE IN INPUT");
+        puts("ERROR IN THE INPUT FILE OPENING");
         exit(1);
     }
     
     FILE *outfile = fopen(argv[2], "w");
     if(!outfile){
-        puts("ERRORE NELL'APERTURA DEL FILE DI OUTPUT");
+        fclose(outfile);
+        puts("ERROR IN THE OUTPUT FILE OPENING");
         exit(1);
     }
     

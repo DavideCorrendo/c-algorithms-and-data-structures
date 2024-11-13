@@ -17,6 +17,8 @@ struct _Records{
 
 Records** records_create();
 
+void free_records(Records **);
+
 int compare_f1(const void*, const void*);
 
 int compare_f2(const void*, const void*);
@@ -25,17 +27,17 @@ int compare_f3(const void*, const void*);
 
 void sort_records(FILE*, FILE*, size_t, size_t);
 
-void merge(void **, int , int, int, int (*compare)(const void *, const void*));
+void merge(void **, int , int, int, int (*compar)(const void *, const void*));
 
-void merge_sort_rec(void **,int, int, int (*compare)(const void *, const void*));
+void merge_sort_rec(void **,int, int, int (*compar)(const void *, const void*));
 
-void merge_sort(void**, int, int (*compare)(const void*, const void*));
+void merge_sort(void**, int, int (*compar)(const void*, const void*));
 
-int partition(void**, int, int, int (*compare)(const void*, const void*));
+int partition(void**, int, int, int (*compar)(const void*, const void*));
 
-void quick_sortRec(void**, int, int (*compare)(const void*, const void*));
+void quick_sortRec(void**, int, int (*compar)(const void*, const void*));
 
-void quick_sort(void**, int, int (*compare)(const void*, const void*));
+void quick_sort(void**, int, int (*compar)(const void*, const void*));
 
 
 #endif
