@@ -33,11 +33,13 @@ void merge_sort_rec(void **,int, int, int (*compar)(const void *, const void*));
 
 void merge_sort(void**, int, int (*compar)(const void*, const void*));
 
+void swap(void **, void**);
+
 int partition(void**, int, int, int (*compar)(const void*, const void*));
 
-void quick_sortRec(void**, int, int (*compar)(const void*, const void*));
+void quick_sort_rec(void**, int, int, int (*compar)(const void*, const void*));
 
-void quick_sort(void**, int, int (*compar)(const void*, const void*));
+void quick_sort(void**, size_t, int (*compar)(const void*, const void*));
 
 
 #endif

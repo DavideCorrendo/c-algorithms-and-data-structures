@@ -124,36 +124,59 @@ void merge_sort(void **base, int nitems, int (*compar)(const void *, const void*
     merge_sort_rec(base, 0, nitems - 1, compar);
 }
 
-int partition(void **base, int start, int end, int (*compar)(const void *, const void*)){
+/*Quick sort*/
+/*swap function*/
+void swap(void** x, void** y) {
+    void* temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+/*partition function of the quick*/
+int partition(void** base, int first, int last, int (*compar)(const void*, const void*)) {
+    /*Initialization of supporting variables*/
+    int random_index = rand() % (last - first + 1) + first;
+    void* pivot = base[random_index];
     
-    void* pivot = base[end];
-    int i = (start - 1);
+    if(random_index < last) swap(&base[random_index], &base[last]);
     
-    for(int j = start; j < end; j++){
-        if(compar(base[j], pivot) < 0){
+    int i = first-1;
+    
+    /*Effective body*/
+    for(int j = first; j < last; j++) {
+        
+        if(compar(base[j], pivot) < 0) {
             i++;
-            void* temp = base[i];
-            base[i] = base[j];
-            base[j] = temp;
+            swap(&base[i], &base[j]);
         }
     }
-    void* temp = base[i + 1];
-    base[i + 1] = base[end];
-    base[end] = temp;
-    return i + 1;
+    swap(&base[i+1], &base[last]);
+    
+    return (i + 1);
 }
 
-void quick_sort_rec(void **base, int start, int end, int (*compar)(const void *, const void*)){
-    if(start < end){
-        int pivot = partition(base, start, end, compar);
-        
-        quick_sort_rec(base, start, pivot - 1, compar);
-        quick_sort_rec(base, pivot + 1, end, compar);
+void quick_sort_rec(void **base, int first, int last, int (*compar)(const void*, const void*)) {
+    /**base case (first = last) => 1 elemnt
+     * general case */
+    if(first < last) {
+        int p_pos = partition(base, first, last, compar);
+        quick_sort_rec(base, first, p_pos - 1, compar);
+        quick_sort_rec(base, p_pos + 1, last, compar);
     }
 }
 
-void quick_sort(void **base, int nitems, int (*compar)(const void *, const void*)) {
-    quick_sort_rec(base, 0, (int)nitems - 1, compar);
+void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const void*)) {
+    /** insert your code here
+     * control for the validity of base */
+    if(base == NULL) return;
+    
+    /*control for see if base is empty*/
+    if(nitems == 0) return;
+    
+    /*control the validity of compar*/
+    if(compar == NULL) return;
+    
+    if( nitems > 1) quick_sort_rec(base, 0, (int)(nitems - 1), compar);
 }
 
 void free_records(Records **records) {
