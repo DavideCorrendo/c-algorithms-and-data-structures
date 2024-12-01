@@ -1,0 +1,7 @@
+*.md
+*.csv
+*.txt
+
+unity.c
+unity.h
+unity_internals.h
