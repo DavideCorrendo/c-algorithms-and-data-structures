@@ -124,59 +124,65 @@ void merge_sort(void **base, int nitems, int (*compar)(const void *, const void*
     merge_sort_rec(base, 0, nitems - 1, compar);
 }
 
-/*Quick sort*/
-/*swap function*/
-void swap(void** x, void** y) {
-    void* temp = *x;
-    *x = *y;
-    *y = temp;
+void swap(void **a, void **b) {
+    void *temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-/*partition function of the quick*/
-int partition(void** base, int first, int last, int (*compar)(const void*, const void*)) {
-    /*Initialization of supporting variables*/
-    int random_index = rand() % (last - first + 1) + first;
-    void* pivot = base[random_index];
-    
-    if(random_index < last) swap(&base[random_index], &base[last]);
-    
-    int i = first-1;
-    
-    /*Effective body*/
-    for(int j = first; j < last; j++) {
-        
-        if(compar(base[j], pivot) < 0) {
+// Partizione in tre sezioni
+void threewaypartition(void **arr, int n, void *low, void *high, int (*compar)(const void *, const void *), int *start, int *end) {
+    *start = 0;
+    *end = n - 1;
+
+    for (int i = 0; i <= *end;) {
+        if (compar(arr[i], low) < 0) {
+            swap(&arr[i++], &arr[(*start)++]);
+        } else if (compar(arr[i], high) > 0) {
+            swap(&arr[i], &arr[(*end)--]);
+        } else {
             i++;
-            swap(&base[i], &base[j]);
         }
     }
-    swap(&base[i+1], &base[last]);
-    
-    return (i + 1);
 }
 
-void quick_sort_rec(void **base, int first, int last, int (*compar)(const void*, const void*)) {
-    /**base case (first = last) => 1 elemnt
-     * general case */
-    if(first < last) {
-        int p_pos = partition(base, first, last, compar);
-        quick_sort_rec(base, first, p_pos - 1, compar);
-        quick_sort_rec(base, p_pos + 1, last, compar);
+// Funzione ricorsiva di QuickSort
+void quick_sort_rec(void **arr, int left, int right, int (*compar)(const void *, const void *)) {
+    if (left >= right) return;
+
+    // Scegli un pivot (in questo esempio il valore centrale)
+    void *pivot = arr[(left + right) / 2];
+    int i = left, j = right;
+
+    while (i <= j) {
+        while (compar(arr[i], pivot) < 0) i++;
+        while (compar(arr[j], pivot) > 0) j--;
+        if (i <= j) {
+            swap(&arr[i], &arr[j]);
+            i++;
+            j--;
+        }
     }
+
+    // Ordina ricorsivamente le due partizioni
+    if (left < j) quick_sort_rec(arr, left, j, compar);
+    if (i < right) quick_sort_rec(arr, i, right, compar);
 }
 
-void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const void*)) {
-    /** insert your code here
-     * control for the validity of base */
-    if(base == NULL) return;
-    
-    /*control for see if base is empty*/
-    if(nitems == 0) return;
-    
-    /*control the validity of compar*/
-    if(compar == NULL) return;
-    
-    if( nitems > 1) quick_sort_rec(base, 0, (int)(nitems - 1), compar);
+// QuickSort wrapper
+void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const void *)) {
+    int start, end;
+
+    int low = nitems;
+    int high = nitems - low;
+
+    // Partizione in tre sezioni
+    threewaypartition(base, nitems, &low, &high, compar, &start, &end);
+
+    // Ordina ogni sezione
+    quick_sort_rec(base, 0, start - 1, compar);   // Sezione inferiore
+    quick_sort_rec(base, start, end, compar);    // Sezione centrale
+    quick_sort_rec(base, end + 1, nitems - 1, compar); // Sezione superiore
 }
 
 void free_records(Records **records) {

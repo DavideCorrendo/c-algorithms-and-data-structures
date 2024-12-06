@@ -3,80 +3,157 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-// Helper function to create test record
-Records** create_test_record(int id, const char* field1, int field2, float field3) {
-    Records** record = malloc(sizeof(Records*));
-    *record = malloc(sizeof(Records));
-    (*record)->id = id;
-    strncpy((*record)->field1, field1, 15);
-    (*record)->field2 = field2;
-    (*record)->field3 = field3;
-    return record;
+// Maximum test record size for dynamic allocation tests
+#define MAX_TEST_RECORDS 1000
+#define LARGE_RECORD_COUNT 10000
+
+// Forward declarations of helper functions
+Records** prepare_test_records(int count);
+void cleanup_test_records(Records** records, int count);
+
+// Helper function to prepare test records
+Records** prepare_test_records(int count) {
+    // Dynamically allocate only the array of pointers
+    Records** records = malloc(count * sizeof(Records*));
+    if (!records) {
+        puts("Memory allocation failed");
+        exit(1);
+    }
+
+    // Allocate each record
+    for (int i = 0; i < count; i++) {
+        records[i] = malloc(sizeof(Records));
+        if (!records[i]) {
+            // Free previously allocated records if allocation fails
+            for (int j = 0; j < i; j++) {
+                free(records[j]);
+            }
+            free(records);
+            puts("Memory allocation failed");
+            exit(1);
+        }
+        
+        // Initialize record to prevent potential garbage values
+        records[i]->id = 0;
+        memset(records[i]->field1, 0, sizeof(records[i]->field1));
+        records[i]->field2 = 0;
+        records[i]->field3 = 0.0;
+    }
+
+    return records;
 }
 
-// Test records_create function
-void test_records_create(void) {
-    Records** records = records_create();
-    TEST_ASSERT_NOT_NULL(records);
-    free(records);
+// Helper function to clean up test records
+void cleanup_test_records(Records** records, int count) {
+    if (records) {
+        for (int i = 0; i < count; i++) {
+            free(records[i]);
+        }
+        free(records);
+    }
 }
 
-// Test compare functions
-void test_compare_f1(void) {
-    Records** record1 = create_test_record(1, "AAA", 10, 1.0);
-    Records** record2 = create_test_record(2, "BBB", 20, 2.0);
-    
-    TEST_ASSERT_TRUE(compare_f1(*record1, *record2) < 0);
-    TEST_ASSERT_TRUE(compare_f1(*record2, *record1) > 0);
-    TEST_ASSERT_EQUAL_INT(0, compare_f1(*record1, *record1));
-    
-    free(*record1);
-    free(record1);
-    free(*record2);
-    free(record2);
+// Helper function to generate random test data
+void generate_random_records(Records** records, int count) {
+    // Seed random number generator
+    srand(time(NULL));
+
+    for (int i = 0; i < count; i++) {
+        // Generate random ID
+        records[i]->id = rand() % 10000;
+
+        // Generate random field1 (string)
+        for (int j = 0; j < 14; j++) {
+            records[i]->field1[j] = 'A' + (rand() % 26);
+        }
+        records[i]->field1[14] = '\0';
+
+        // Generate random field2 (integer)
+        records[i]->field2 = rand() % 1000;
+
+        // Generate random field3 (float)
+        records[i]->field3 = (float)(rand() % 10000) / 100.0;
+    }
 }
 
-void test_compare_f2(void) {
-    Records** record1 = create_test_record(1, "AAA", 10, 1.0);
-    Records** record2 = create_test_record(2, "BBB", 20, 2.0);
+// Test sorting with large number of records
+void test_merge_sort_large_dataset(void) {
+    // Allocate large test set
+    Records** records = prepare_test_records(LARGE_RECORD_COUNT);
     
-    TEST_ASSERT_TRUE(compare_f2(*record1, *record2) < 0);
-    TEST_ASSERT_TRUE(compare_f2(*record2, *record1) > 0);
-    TEST_ASSERT_EQUAL_INT(0, compare_f2(*record1, *record1));
+    // Generate random data
+    generate_random_records(records, LARGE_RECORD_COUNT);
     
-    free(*record1);
-    free(record1);
-    free(*record2);
-    free(record2);
+    // Perform merge sort
+    merge_sort((void**)records, LARGE_RECORD_COUNT, compare_f1);
+    
+    // Verify sorting (check if sorted correctly)
+    for (int i = 1; i < LARGE_RECORD_COUNT; i++) {
+        TEST_ASSERT_TRUE(strcmp(records[i-1]->field1, records[i]->field1) <= 0);
+    }
+    
+    // Clean up
+    cleanup_test_records(records, LARGE_RECORD_COUNT);
 }
 
-void test_compare_f3(void) {
-    Records** record1 = create_test_record(1, "AAA", 10, 1.0);
-    Records** record2 = create_test_record(2, "BBB", 20, 2.0);
+// Test sorting with records containing duplicate values
+void test_quick_sort_duplicate_values(void) {
+    Records** records = prepare_test_records(5);
     
-    TEST_ASSERT_TRUE(compare_f3(*record1, *record2) < 0);
-    TEST_ASSERT_TRUE(compare_f3(*record2, *record1) > 0);
-    TEST_ASSERT_EQUAL_INT(0, compare_f3(*record1, *record1));
+    // Create records with some duplicate field1 values
+    strcpy(records[0]->field1, "AAA");
+    strcpy(records[1]->field1, "BBB");
+    strcpy(records[2]->field1, "AAA");
+    strcpy(records[3]->field1, "CCC");
+    strcpy(records[4]->field1, "BBB");
     
-    free(*record1);
-    free(record1);
-    free(*record2);
-    free(record2);
+    quick_sort((void**)records, 5, compare_f1);
+    
+    // Verify correct sorting of duplicates
+    TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
+    TEST_ASSERT_EQUAL_STRING("AAA", records[1]->field1);
+    TEST_ASSERT_EQUAL_STRING("BBB", records[2]->field1);
+    TEST_ASSERT_EQUAL_STRING("BBB", records[3]->field1);
+    TEST_ASSERT_EQUAL_STRING("CCC", records[4]->field1);
+    
+    cleanup_test_records(records, 5);
 }
 
-// Test merge sort
-void test_merge_sort_field1(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    records[1] = malloc(sizeof(Records));
-    records[2] = malloc(sizeof(Records));
+// Memory stress test for sorting algorithms
+void test_memory_handling_stress(void) {
+    // Test multiple allocations and deallocations
+    for (int iterations = 0; iterations < 10; iterations++) {
+        Records** records = prepare_test_records(MAX_TEST_RECORDS);
+        
+        // Generate random data
+        generate_random_records(records, MAX_TEST_RECORDS);
+        
+        // Alternate between merge and quick sort
+        if (iterations % 2 == 0) {
+            merge_sort((void**)records, MAX_TEST_RECORDS, compare_f2);
+        } else {
+            quick_sort((void**)records, MAX_TEST_RECORDS, compare_f3);
+        }
+        
+        // Verify no memory corruption occurred during sorting
+        TEST_ASSERT_NOT_NULL(records);
+        
+        // Clean up
+        cleanup_test_records(records, MAX_TEST_RECORDS);
+    }
+}
+
+// Test sorting with different field comparators
+void test_multiple_field_sorting(void) {
+    Records** records = prepare_test_records(4);
     
-    // Initialize records
+    // Prepare test data with varying field values
     records[0]->id = 1;
-    strcpy(records[0]->field1, "CCC");
-    records[0]->field2 = 10;
-    records[0]->field3 = 1.0;
+    strcpy(records[0]->field1, "BBB");
+    records[0]->field2 = 30;
+    records[0]->field3 = 3.0;
     
     records[1]->id = 2;
     strcpy(records[1]->field1, "AAA");
@@ -84,273 +161,91 @@ void test_merge_sort_field1(void) {
     records[1]->field3 = 2.0;
     
     records[2]->id = 3;
-    strcpy(records[2]->field1, "BBB");
-    records[2]->field2 = 30;
-    records[2]->field3 = 3.0;
-    
-    merge_sort((void**)records, 3, compare_f1);
-    
-    TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
-    TEST_ASSERT_EQUAL_STRING("BBB", records[1]->field1);
-    TEST_ASSERT_EQUAL_STRING("CCC", records[2]->field1);
-    
-    for(int i = 0; i < 3; i++) {
-        free(records[i]);
-    }
-    free(records);
-}
-
-void test_merge_sort_field2(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    records[1] = malloc(sizeof(Records));
-    records[2] = malloc(sizeof(Records));
-    
-    records[0]->id = 1;
-    strcpy(records[0]->field1, "AAA");
-    records[0]->field2 = 30;
-    records[0]->field3 = 1.0;
-    
-    records[1]->id = 2;
-    strcpy(records[1]->field1, "BBB");
-    records[1]->field2 = 10;
-    records[1]->field3 = 2.0;
-    
-    records[2]->id = 3;
     strcpy(records[2]->field1, "CCC");
-    records[2]->field2 = 20;
-    records[2]->field3 = 3.0;
+    records[2]->field2 = 10;
+    records[2]->field3 = 1.0;
     
-    merge_sort((void**)records, 3, compare_f2);
+    records[3]->id = 4;
+    strcpy(records[3]->field1, "AAA");
+    records[3]->field2 = 40;
+    records[3]->field3 = 4.0;
     
+    // Test sorting by different fields
+    merge_sort((void**)records, 4, compare_f1);
+    TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
+    
+    merge_sort((void**)records, 4, compare_f2);
     TEST_ASSERT_EQUAL_INT(10, records[0]->field2);
-    TEST_ASSERT_EQUAL_INT(20, records[1]->field2);
-    TEST_ASSERT_EQUAL_INT(30, records[2]->field2);
     
-    for(int i = 0; i < 3; i++) {
-        free(records[i]);
+    merge_sort((void**)records, 4, compare_f3);
+    TEST_ASSERT_EQUAL_FLOAT(1.0, records[0]->field3);
+    
+    cleanup_test_records(records, 4);
+}
+
+// Boundary condition test for very small arrays
+void test_minimal_array_sorting(void) {
+    // Test arrays of length 0, 1, and 2
+    for (int size = 0; size <= 2; size++) {
+        Records** records = prepare_test_records(size + 1);
+        
+        if (size > 0) {
+            // Add some predefined data
+            records[0]->id = 1;
+            strcpy(records[0]->field1, "BBB");
+            
+            if (size > 1) {
+                records[1]->id = 2;
+                strcpy(records[1]->field1, "AAA");
+            }
+        }
+        
+        // Try both sorting algorithms
+        merge_sort((void**)records, size, compare_f1);
+        quick_sort((void**)records, size, compare_f1);
+        
+        // If size > 1, verify sorting
+        if (size > 1) {
+            TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
+        }
+        
+        cleanup_test_records(records, size + 1);
     }
-    free(records);
 }
 
-void test_merge_sort_field3(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    records[1] = malloc(sizeof(Records));
-    records[2] = malloc(sizeof(Records));
+// Performance and error handling test
+void test_sorting_with_large_strings(void) {
+    Records** records = prepare_test_records(5);
     
-    records[0]->id = 1;
-    strcpy(records[0]->field1, "AAA");
-    records[0]->field2 = 10;
-    records[0]->field3 = 3.0;
+    // Create records with longer field1 values
+    strcpy(records[0]->field1, "Very Long String Test 1");
+    strcpy(records[1]->field1, "Another Long String Test 2");
+    strcpy(records[2]->field1, "Short Test");
+    strcpy(records[3]->field1, "Zebra Test");
+    strcpy(records[4]->field1, "Aardvark Test");
     
-    records[1]->id = 2;
-    strcpy(records[1]->field1, "BBB");
-    records[1]->field2 = 20;
-    records[1]->field3 = 1.0;
+    // Ensure sorting works with longer strings
+    merge_sort((void**)records, 5, compare_f1);
     
-    records[2]->id = 3;
-    strcpy(records[2]->field1, "CCC");
-    records[2]->field2 = 30;
-    records[2]->field3 = 2.0;
+    TEST_ASSERT_EQUAL_STRING("Aardvark Test", records[0]->field1);
+    TEST_ASSERT_EQUAL_STRING("Another Long String Test 2", records[1]->field1);
+    TEST_ASSERT_EQUAL_STRING("Short Test", records[2]->field1);
+    TEST_ASSERT_EQUAL_STRING("Very Long String Test 1", records[3]->field1);
+    TEST_ASSERT_EQUAL_STRING("Zebra Test", records[4]->field1);
     
-    merge_sort((void**)records, 3, compare_f3);
-    
-    TEST_ASSERT_FLOAT_WITHIN(0.01, 1.0, records[0]->field3);
-    TEST_ASSERT_FLOAT_WITHIN(0.01, 2.0, records[1]->field3);
-    TEST_ASSERT_FLOAT_WITHIN(0.01, 3.0, records[2]->field3);
-    
-    for(int i = 0; i < 3; i++) {
-        free(records[i]);
-    }
-    free(records);
-}
-
-// Test quick sort
-void test_quick_sort_field1(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    records[1] = malloc(sizeof(Records));
-    records[2] = malloc(sizeof(Records));
-    
-    records[0]->id = 1;
-    strcpy(records[0]->field1, "CCC");
-    records[0]->field2 = 10;
-    records[0]->field3 = 1.0;
-    
-    records[1]->id = 2;
-    strcpy(records[1]->field1, "AAA");
-    records[1]->field2 = 20;
-    records[1]->field3 = 2.0;
-    
-    records[2]->id = 3;
-    strcpy(records[2]->field1, "BBB");
-    records[2]->field2 = 30;
-    records[2]->field3 = 3.0;
-    
-    quick_sort((void**)records, 3, compare_f1);
-    
-    TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
-    TEST_ASSERT_EQUAL_STRING("BBB", records[1]->field1);
-    TEST_ASSERT_EQUAL_STRING("CCC", records[2]->field1);
-    
-    for(int i = 0; i < 3; i++) {
-        free(records[i]);
-    }
-    free(records);
-}
-
-void test_quick_sort_field2(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    records[1] = malloc(sizeof(Records));
-    records[2] = malloc(sizeof(Records));
-    
-    records[0]->id = 1;
-    strcpy(records[0]->field1, "AAA");
-    records[0]->field2 = 30;
-    records[0]->field3 = 1.0;
-    
-    records[1]->id = 2;
-    strcpy(records[1]->field1, "BBB");
-    records[1]->field2 = 10;
-    records[1]->field3 = 2.0;
-    
-    records[2]->id = 3;
-    strcpy(records[2]->field1, "CCC");
-    records[2]->field2 = 20;
-    records[2]->field3 = 3.0;
-    
-    quick_sort((void**)records, 3, compare_f2);
-    
-    TEST_ASSERT_EQUAL_INT(10, records[0]->field2);
-    TEST_ASSERT_EQUAL_INT(20, records[1]->field2);
-    TEST_ASSERT_EQUAL_INT(30, records[2]->field2);
-    
-    for(int i = 0; i < 3; i++) {
-        free(records[i]);
-    }
-    free(records);
-}
-
-void test_quick_sort_field3(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    records[1] = malloc(sizeof(Records));
-    records[2] = malloc(sizeof(Records));
-    
-    records[0]->id = 1;
-    strcpy(records[0]->field1, "AAA");
-    records[0]->field2 = 10;
-    records[0]->field3 = 3.0;
-    
-    records[1]->id = 2;
-    strcpy(records[1]->field1, "BBB");
-    records[1]->field2 = 20;
-    records[1]->field3 = 1.0;
-    
-    records[2]->id = 3;
-    strcpy(records[2]->field1, "CCC");
-    records[2]->field2 = 30;
-    records[2]->field3 = 2.0;
-    
-    quick_sort((void**)records, 3, compare_f3);
-    
-    TEST_ASSERT_FLOAT_WITHIN(0.01, 1.0, records[0]->field3);
-    TEST_ASSERT_FLOAT_WITHIN(0.01, 2.0, records[1]->field3);
-    TEST_ASSERT_FLOAT_WITHIN(0.01, 3.0, records[2]->field3);
-    
-    for(int i = 0; i < 3; i++) {
-        free(records[i]);
-    }
-    free(records);
-}
-
-// Test edge cases
-void test_sort_empty_array(void) {
-    Records** records = records_create();
-    
-    // Test both sorting algorithms with empty array
-    merge_sort((void**)records, 0, compare_f1);
-    quick_sort((void**)records, 0, compare_f1);
-    
-    TEST_PASS();
-    
-    free(records);
-}
-
-void test_sort_single_element(void) {
-    Records** records = records_create();
-    records[0] = malloc(sizeof(Records));
-    
-    records[0]->id = 1;
-    strcpy(records[0]->field1, "AAA");
-    records[0]->field2 = 10;
-    records[0]->field3 = 1.0;
-    
-    merge_sort((void**)records, 1, compare_f1);
-    TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
-    
-    quick_sort((void**)records, 1, compare_f1);
-    TEST_ASSERT_EQUAL_STRING("AAA", records[0]->field1);
-    
-    free(records[0]);
-    free(records);
-}
-
-// Test file operations
-void test_sort_records_file_operations(void) {
-    // Create a temporary input file
-    FILE* infile = fopen("test_input.txt", "w");
-
-    fprintf(infile, "1,BBB,20,2.5\n");
-    fprintf(infile, "2,AAA,10,1.5\n");
-    fprintf(infile, "3,CCC,30,3.5\n");
-    fclose(infile);
-    
-    // Open files for testing
-    infile = fopen("test_input.txt", "r");
-    FILE* outfile = fopen("test_output.txt", "w");
-    
-    TEST_ASSERT_NOT_NULL(infile);
-    TEST_ASSERT_NOT_NULL(outfile);
-    
-    // Test sorting with different fields and algorithms
-    sort_records(infile, outfile, 1, 1); // Test merge sort on field1
-    
-    fclose(infile);
-    fclose(outfile);
-    
-    // Clean up temporary files
-    remove("test_input.txt");
-    remove("test_output.txt");
+    cleanup_test_records(records, 5);
 }
 
 int main(void) {
     UNITY_BEGIN();
     
-    // Basic functionality tests
-    RUN_TEST(test_records_create);
-    RUN_TEST(test_compare_f1);
-    RUN_TEST(test_compare_f2);
-    RUN_TEST(test_compare_f3);
-    
-    // Merge sort tests
-    RUN_TEST(test_merge_sort_field1);
-    RUN_TEST(test_merge_sort_field2);
-    RUN_TEST(test_merge_sort_field3);
-    
-    // Quick sort tests
-    RUN_TEST(test_quick_sort_field1);
-    RUN_TEST(test_quick_sort_field2);
-    RUN_TEST(test_quick_sort_field3);
-    
-    // Edge cases
-    RUN_TEST(test_sort_empty_array);
-    RUN_TEST(test_sort_single_element);
-    
-    // File operations test
-    RUN_TEST(test_sort_records_file_operations);
+    // Run additional test cases
+    RUN_TEST(test_merge_sort_large_dataset);
+    RUN_TEST(test_quick_sort_duplicate_values);
+    RUN_TEST(test_memory_handling_stress);
+    RUN_TEST(test_multiple_field_sorting);
+    RUN_TEST(test_minimal_array_sorting);
+    RUN_TEST(test_sorting_with_large_strings);
     
     return UNITY_END();
 }

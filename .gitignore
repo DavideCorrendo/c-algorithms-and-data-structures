@@ -1,6 +1,7 @@
 .md
 *.csv
 *.txt
+bin/
 
 unity.c
 unity.h
