@@ -9,14 +9,14 @@
 // Forward declaration
 typedef struct HashNode HashNode;
 
-// Nodo della lista per la tabella hash
+// structure of the hashtable node
 struct HashNode {
     void* key;
     void* value;
     struct HashNode* next;
 };
 
-// Struttura della tabella hash
+// structure of hashtable
 typedef struct HashTable {
     HashNode** buckets;
     int bucket_count;

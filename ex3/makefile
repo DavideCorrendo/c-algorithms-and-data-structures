@@ -1,6 +1,5 @@
-# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -g -I./tests
+CFLAGS = -Wall -Wextra -g -I./tests -I./src
 LDFLAGS =
 
 # Directories
@@ -9,7 +8,7 @@ TEST_DIR = tests
 BIN_DIR = bin
 
 # Source files
-SRC_FILES = $(SRC_DIR)/main.c $(SRC_DIR)/hashtable.c
+SRC_FILES = $(SRC_DIR)/main.c $(SRC_DIR)/hashtable.c $(SRC_DIR)/occurences.c
 TEST_FILES = $(TEST_DIR)/test.c $(TEST_DIR)/unity.c
 
 # Object files (in BIN_DIR)

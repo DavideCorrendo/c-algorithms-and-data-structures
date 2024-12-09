@@ -1,6 +1,6 @@
 #include "hashtable.h"
 
-// Crea una nuova tabella hash
+// create a new hash table
 HashTable* hash_table_create(int (*compare)(const void*, const void*), unsigned long (*hash)(const void*)) {
     int initial_bucket_count = 16; // Numero iniziale di bucket
     HashTable* table = (HashTable*)malloc(sizeof(HashTable));
@@ -12,27 +12,24 @@ HashTable* hash_table_create(int (*compare)(const void*, const void*), unsigned 
     return table;
 }
 
-// Aggiunge o aggiorna una coppia chiave-valore
 void hash_table_put(HashTable* table, const void* key, const void* value) {
+    // Calculate the bucket index directly
     unsigned long hash_value = table->hash(key) % table->bucket_count;
-    HashNode* current = table->buckets[hash_value];
-    while (current) {
-        if (table->compare(current->key, key) == 0) {
-            current->value = (void*)value; // Aggiorna il valore
-            return;
-        }
-        current = current->next;
-    }
-    // Aggiunge un nuovo nodo
+    
+    // Create a new node for insertion
     HashNode* new_node = (HashNode*)malloc(sizeof(HashNode));
     new_node->key = (void*)key;
     new_node->value = (void*)value;
+    
+    // Insert at the beginning of the bucket's linked list
     new_node->next = table->buckets[hash_value];
     table->buckets[hash_value] = new_node;
+    
+    // Increment the table size
     table->size++;
 }
 
-// Recupera il valore associato a una chiave
+// get the value associated to a key
 void* hash_table_get(const HashTable* table, const void* key) {
     unsigned long hash_value = table->hash(key) % table->bucket_count;
     HashNode* current = table->buckets[hash_value];
@@ -42,15 +39,15 @@ void* hash_table_get(const HashTable* table, const void* key) {
         }
         current = current->next;
     }
-    return NULL; // Chiave non trovata
+    return NULL; // key not found
 }
 
-// Verifica se una chiave è presente nella tabella
+// verify if a key is present in a table
 int hash_table_contains_key(const HashTable* table, const void* key) {
     return hash_table_get(table, key) != NULL;
 }
 
-// Rimuove una chiave dalla tabella
+// remove a key from a table
 void hash_table_remove(HashTable* table, const void* key) {
     unsigned long hash_value = table->hash(key) % table->bucket_count;
     HashNode* current = table->buckets[hash_value];
@@ -71,12 +68,12 @@ void hash_table_remove(HashTable* table, const void* key) {
     }
 }
 
-// Restituisce il numero di elementi nella tabella
+// return the size of the table
 int hash_table_size(const HashTable* table) {
     return table->size;
 }
 
-// Restituisce un array di tutte le chiavi
+// return a key array
 void** hash_table_keyset(const HashTable* table) {
     void** keys = (void**)malloc(table->size * sizeof(void*));
     int index = 0;
@@ -97,9 +94,9 @@ void hash_table_free(HashTable* table) {
             HashNode* temp = current;
             current = current->next;
 
-            // Libera separatamente chiave e valore
-            free(temp->key);   // Libera la stringa duplicata
-            free(temp->value); // Libera il contatore
+            // free separately key and value
+            free(temp->key);   
+            free(temp->value); 
             free(temp);
         }
     }
