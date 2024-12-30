@@ -16,7 +16,18 @@ void hash_table_put(HashTable* table, const void* key, const void* value) {
     // Calculate the bucket index directly
     unsigned long hash_value = table->hash(key) % table->bucket_count;
     
-    // Create a new node for insertion
+    // Check if key already exists
+    HashNode* current = table->buckets[hash_value];
+    while (current) {
+        if (table->compare(current->key, key) == 0) {
+            // Key found, update the value and return
+            current->value = (void*)value;
+            return;
+        }
+        current = current->next;
+    }
+    
+    // Key not found, create a new node
     HashNode* new_node = (HashNode*)malloc(sizeof(HashNode));
     new_node->key = (void*)key;
     new_node->value = (void*)value;
@@ -25,7 +36,7 @@ void hash_table_put(HashTable* table, const void* key, const void* value) {
     new_node->next = table->buckets[hash_value];
     table->buckets[hash_value] = new_node;
     
-    // Increment the table size
+    // Increment the table size only if it's a new key
     table->size++;
 }
 
@@ -75,7 +86,7 @@ int hash_table_size(const HashTable* table) {
 
 // return a key array
 void** hash_table_keyset(const HashTable* table) {
-    void** keys = (void**)malloc(table->size * sizeof(void*));
+    void** keys = (void**)malloc((table->size + 1) * sizeof(void*));
     int index = 0;
     for (int i = 0; i < table->bucket_count; i++) {
         HashNode* current = table->buckets[i];
@@ -84,19 +95,21 @@ void** hash_table_keyset(const HashTable* table) {
             current = current->next;
         }
     }
+    keys[table->size] = NULL;
     return keys;
 }
 
 void hash_table_free(HashTable* table) {
+    if (!table) return;
+
     for (int i = 0; i < table->bucket_count; i++) {
         HashNode* current = table->buckets[i];
         while (current) {
             HashNode* temp = current;
             current = current->next;
 
-            // free separately key and value
-            free(temp->key);   
-            free(temp->value); 
+            // Only free if the key was dynamically allocated
+            // (in this case, from strdup in graph_add_node)
             free(temp);
         }
     }
