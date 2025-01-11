@@ -1,7 +1,11 @@
+/**
+ * @file distance.c
+ * @brief Implementation of edit distance calculation and word matching functions
+ */
+
 #include "distance.h"
 #define CORRECT_WORDS 3
 
-//function to find the minimum of 3 int numbers
 int min3(int a, int b, int c) {
     int min = a;
     if (b < min) min = b;
@@ -9,76 +13,86 @@ int min3(int a, int b, int c) {
     return min;
 }
 
-//initialilize the matrix forthe memoization
 int **initialize_memo(int rows, int cols) {
     int **memo = (int **)malloc(rows * sizeof(int *));
+    if (!memo) return NULL;
+
     for (int i = 0; i < rows; i++) {
         memo[i] = (int *)malloc(cols * sizeof(int));
+        if (!memo[i]) {
+            // Clean up previously allocated memory
+            for (int j = 0; j < i; j++) {
+                free(memo[j]);
+            }
+            free(memo);
+            return NULL;
+        }
         for (int j = 0; j < cols; j++) {
-            memo[i][j] = -1; // Indica che il valore non è stato calcolato
+            memo[i][j] = -1;
         }
     }
     return memo;
 }
 
-//reset the matrix for the memoization
 void reset_memo(int **memo, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            memo[i][j] = -1; // Resetta a -1
+            memo[i][j] = -1;
         }
     }
 }
 
-//free the matrix for the memoization
 void free_memo(int **memo, int rows) {
+    if (!memo) return;
+    
     for (int i = 0; i < rows; i++) {
         free(memo[i]);
     }
     free(memo);
 }
 
-//wrapped function of edit_distance
-int edit_distance_memo(const char *s1, const char *s2, int i, int j, int **memo) {
-    //base case
-    if (i == 0) return j; //if first string is empty
-    if (j == 0) return i; //if second string is empty
+/**
+ * @brief Helper function for edit_distance with memoization
+ * @param s1 First string
+ * @param s2 Second string
+ * @param i Length of first string being considered
+ * @param j Length of second string being considered
+ * @param memo Memoization matrix
+ * @return Edit distance between s1[0..i-1] and s2[0..j-1]
+ */
+static int edit_distance_memo(const char *s1, const char *s2, int i, int j, int **memo) {
+    if (i == 0) return j;
+    if (j == 0) return i;
 
-    //avoid to make redondant calculations
     if (memo[i][j] != -1) {
         return memo[i][j];
     }
 
-
-    int d_noop = (s1[i - 1] == s2[j - 1]) ? edit_distance_memo(s1, s2, i - 1, j - 1, memo) : 1 + edit_distance_memo(s1, s2, i - 1, j - 1, memo);
-
-
-    int d_canc = 1 + edit_distance_memo(s1, s2, i, j - 1, memo); // Cancella in s2
-    int d_ins = 1 + edit_distance_memo(s1, s2, i - 1, j, memo);  // Inserisce in s1
-
+    // Calculate cost of operations
+    int d_noop = (s1[i - 1] == s2[j - 1]) ? 
+                 edit_distance_memo(s1, s2, i - 1, j - 1, memo) : 
+                 1 + edit_distance_memo(s1, s2, i - 1, j - 1, memo);
+    
+    int d_canc = 1 + edit_distance_memo(s1, s2, i, j - 1, memo);
+    int d_ins = 1 + edit_distance_memo(s1, s2, i - 1, j, memo);
 
     memo[i][j] = min3(d_noop, d_canc, d_ins);
     return memo[i][j];
 }
 
-//recorsive function with memoization to find edit distance
 int edit_distance(const char *s1, const char *s2, int **memo) {
     int len1 = strlen(s1);
     int len2 = strlen(s2);
 
-    //reset the matrix for a new word
     reset_memo(memo, len1 + 1, len2 + 1);
-
-    //call the wrapped function
     return edit_distance_memo(s1, s2, len1, len2, memo);
 }
 
-//find the closests words to a target word
 void find_closest_words(const char *dictionary[], int dict_size, char *target, int **memo) {
-    clock_t from = clock();
+    clock_t start = clock();
 
+    // Remove punctuation and convert to lowercase
     int j = 0;
-    //ignore every sign of punctuation
     for (int i = 0; target[i] != '\0'; i++) {
         if (!ispunct(target[i])) {
             target[j++] = tolower(target[i]);
@@ -87,13 +101,14 @@ void find_closest_words(const char *dictionary[], int dict_size, char *target, i
     target[j] = '\0';
 
     WordDistance *distances = (WordDistance *)malloc(dict_size * sizeof(WordDistance));
-    int target_len = strlen(target);
+    if (!distances) return;
 
+    int target_len = strlen(target);
     int count = 0;
+
+    // Calculate distances for words within acceptable length difference
     for (int i = 0; i < dict_size; i++) {
         int dict_word_len = strlen(dictionary[i]);
-
-        //ignore dictionary word with lenght > 5
         if (abs(target_len - dict_word_len) > 3) continue;
 
         distances[count].word = (char *)dictionary[i];
@@ -101,24 +116,20 @@ void find_closest_words(const char *dictionary[], int dict_size, char *target, i
         count++;
     }
 
-    //sorting the word with less distances
     qsort(distances, count, sizeof(WordDistance), compare_distance);
 
-    // print the <CORRECT_WORDS> closest words 
-    printf("Parola: %s\n", target);
-    for (int i = 0; i < CORRECT_WORDS; i++) {
-        printf("  %s (distanza: %d)\n", distances[i].word, distances[i].distance);
+    printf("Word: %s\n", target);
+    for (int i = 0; i < CORRECT_WORDS && i < count; i++) {
+        printf("  %s (distance: %d)\n", distances[i].word, distances[i].distance);
     }
-    printf("\n");
 
     free(distances);
 
-    clock_t to = clock();
-    double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
-    printf("The time taken from the find_closest_words is: %f sec\n", time_taken);
+    clock_t end = clock();
+    printf("Time taken: %.2f seconds\n\n", 
+           (double)(end - start) / CLOCKS_PER_SEC);
 }
 
-//function to compare word distances(used in qsort)
 int compare_distance(const void *a, const void *b) {
     return ((WordDistance *)a)->distance - ((WordDistance *)b)->distance;
 }

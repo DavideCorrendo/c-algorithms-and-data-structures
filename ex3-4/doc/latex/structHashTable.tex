@@ -1,0 +1,133 @@
+\doxysection{Hash\+Table Struct Reference}
+\hypertarget{structHashTable}{}\label{structHashTable}\index{HashTable@{HashTable}}
+
+
+Hash table structure.  
+
+
+
+
+{\ttfamily \#include $<$hashtable.\+h$>$}
+
+
+
+Collaboration diagram for Hash\+Table\+:
+% FIG 0
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structHashNode}{Hash\+Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}
+\begin{DoxyCompactList}\small\item\em Array of bucket pointers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\+\_\+count}}
+\begin{DoxyCompactList}\small\item\em Number of buckets in the table. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}
+\begin{DoxyCompactList}\small\item\em Number of elements in the table. \end{DoxyCompactList}\item 
+int(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHashTable_a1b681b5c16acf36b99bf2954508ac633}{compare}} )(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Function pointer for comparing keys. \end{DoxyCompactList}\item 
+unsigned long(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}{hash}} )(const void \texorpdfstring{$\ast$}{*})
+\begin{DoxyCompactList}\small\item\em Function pointer for hashing keys. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Hash table structure. 
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00032}{32}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}\label{structHashTable_a071ad113322bdab9e3edd8991fa54cb1} 
+\index{HashTable@{HashTable}!bucket\_count@{bucket\_count}}
+\index{bucket\_count@{bucket\_count}!HashTable@{HashTable}}
+\doxysubsubsection{\texorpdfstring{bucket\_count}{bucket\_count}}
+{\footnotesize\ttfamily int Hash\+Table\+::bucket\+\_\+count}
+
+
+
+Number of buckets in the table. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00034}{34}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+\Hypertarget{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}\label{structHashTable_a579f11d40e112ae62246f9fbf5a146c6} 
+\index{HashTable@{HashTable}!buckets@{buckets}}
+\index{buckets@{buckets}!HashTable@{HashTable}}
+\doxysubsubsection{\texorpdfstring{buckets}{buckets}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structHashNode}{Hash\+Node}}\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Hash\+Table\+::buckets}
+
+
+
+Array of bucket pointers. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00033}{33}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+\Hypertarget{structHashTable_a1b681b5c16acf36b99bf2954508ac633}\label{structHashTable_a1b681b5c16acf36b99bf2954508ac633} 
+\index{HashTable@{HashTable}!compare@{compare}}
+\index{compare@{compare}!HashTable@{HashTable}}
+\doxysubsubsection{\texorpdfstring{compare}{compare}}
+{\footnotesize\ttfamily int(\texorpdfstring{$\ast$}{*} Hash\+Table\+::compare) (const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}
+
+
+
+Function pointer for comparing keys. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00036}{36}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}, \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+\Hypertarget{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}\label{structHashTable_a1b49858aed1eca33e6925561ee48d0e5} 
+\index{HashTable@{HashTable}!hash@{hash}}
+\index{hash@{hash}!HashTable@{HashTable}}
+\doxysubsubsection{\texorpdfstring{hash}{hash}}
+{\footnotesize\ttfamily unsigned long(\texorpdfstring{$\ast$}{*} Hash\+Table\+::hash) (const void \texorpdfstring{$\ast$}{*})}
+
+
+
+Function pointer for hashing keys. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00037}{37}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}, \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+\Hypertarget{structHashTable_ad732056fce42df5162c810b4dd28fca1}\label{structHashTable_ad732056fce42df5162c810b4dd28fca1} 
+\index{HashTable@{HashTable}!size@{size}}
+\index{size@{size}!HashTable@{HashTable}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily int Hash\+Table\+::size}
+
+
+
+Number of elements in the table. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00035}{35}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}, and \mbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{hashtable_8h}{hashtable.\+h}}\end{DoxyCompactItemize}

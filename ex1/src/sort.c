@@ -1,8 +1,17 @@
+/**
+ * @file sort.c
+ * @brief Implementation of sorting algorithms
+ * @details Implements merge sort and quicksort along with helper functions
+ */
+
 #include "sort.h"
 
 #define CAPACITY 20000000
 
-
+/**
+ * @brief Creates and initializes Records array
+ * @return Initialized array of Record pointers
+ */
 Records** records_create(){
     Records **records = malloc(CAPACITY * sizeof(Records*));
 
@@ -14,11 +23,9 @@ Records** records_create(){
     for(size_t i = 0; i < CAPACITY; i++){
         records[i] = malloc(sizeof(Records));
         if(records[i] == NULL){
-
             for(size_t j = 0; j < i; j++) {
                 free(records[j]);
             }
-
             free(records);
             puts("EMPTY MEMORY");
             exit(1);
@@ -35,34 +42,43 @@ Records** records_create(){
     return records;
 }
 
+/**
+ * @brief String field comparison implementation
+ */
 int compare_f1(const void* a, const void* b){
     return strcmp(((Records*)a)->field1, ((Records*)b)->field1);
 }
 
+/**
+ * @brief Integer field comparison implementation
+ */
 int compare_f2(const void* a, const void* b){
     return ((Records*)a)->field2 - ((Records*)b)->field2;
 }
 
+/**
+ * @brief Float field comparison implementation
+ */
 int compare_f3(const void* a, const void* b){
     float diff = ((Records*)a)->field3 - ((Records*)b)->field3;
     return (diff > 0) - (diff < 0);
 }
 
+/**
+ * @brief Merge implementation
+ * @details Merges two sorted subarrays using temporary arrays
+ */
 void merge(void **base, int first, int mid, int last, int (*compar)(const void *, const void*)) {
-    // ArrayLeft dimension
     int n1 = mid - first + 1;
-    // ArrayRight dimension
     int n2 = last - mid;
     
     void **ArrayLeft = (void**)malloc(n1 * sizeof(void*));
-
     if(!ArrayLeft) {
         puts("ERROR ALLOCATION ARRAYLEFT");
         exit(1);
     }
 
     void **ArrayRight = (void**)malloc(n2 * sizeof(void*));
-
     if(!ArrayRight) {
         puts("ERROR ALLOCATION ARRAYRIGHT");
         free(ArrayLeft);
@@ -72,14 +88,11 @@ void merge(void **base, int first, int mid, int last, int (*compar)(const void *
     for(int i = 0; i < n1; i++) {
         ArrayLeft[i] = base[first + i];
     }
-
     for(int j = 0; j < n2; j++) {
         ArrayRight[j] = base[mid + j + 1];
     }
     
-    int i = 0;
-    int j = 0;
-    int k = first;
+    int i = 0, j = 0, k = first;
     
     while (i < n1 && j < n2) {
         if (compar(ArrayLeft[i], ArrayRight[j]) <= 0) {
@@ -97,7 +110,6 @@ void merge(void **base, int first, int mid, int last, int (*compar)(const void *
         i++;
         k++;
     }
-    
     while (j < n2) {
         base[k] = ArrayRight[j];
         j++;
@@ -108,6 +120,9 @@ void merge(void **base, int first, int mid, int last, int (*compar)(const void *
     free(ArrayRight);
 }
 
+/**
+ * @brief Recursive merge sort implementation
+ */
 void merge_sort_rec(void **base, int first, int last, int (*compar)(const void *, const void*)){
     if(first < last){
         size_t mid = floor((first + last) / 2);
@@ -115,28 +130,36 @@ void merge_sort_rec(void **base, int first, int last, int (*compar)(const void *
         merge_sort_rec(base, mid + 1, last, compar);
         merge(base, first, mid, last, compar);
     }
-
     return;
 }
 
+/**
+ * @brief Merge sort wrapper with timing measurement
+ */
 void merge_sort(void **base, int nitems, int (*compar)(const void *, const void*)) {
     clock_t from = clock();
-
     merge_sort_rec(base, 0, nitems - 1, compar);
-
     clock_t to = clock();
     double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
     printf("The time taken by the merge_sort function is: %f sec\n", time_taken);
 }
 
+/**
+ * @brief Element swap implementation
+ */
 void swap(void **a, void **b) {
     void *temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Partizione in tre sezioni
-void threewaypartition(void **arr, int n, void *low, void *high, int (*compar)(const void *, const void *), int *start, int *end) {
+/**
+ * @brief Three-way partition implementation
+ * @details Partitions array into sections: <pivot, =pivot, >pivot
+ */
+void threewaypartition(void **arr, int n, void *low, void *high, 
+                      int (*compar)(const void *, const void *), 
+                      int *start, int *end) {
     *start = 0;
     *end = n - 1;
 
@@ -151,11 +174,12 @@ void threewaypartition(void **arr, int n, void *low, void *high, int (*compar)(c
     }
 }
 
-// Funzione ricorsiva di QuickSort
+/**
+ * @brief Recursive quicksort implementation
+ */
 void quick_sort_rec(void **arr, int left, int right, int (*compar)(const void *, const void *)) {
     if (left >= right) return;
 
-    // Scegli un pivot (in questo esempio il valore centrale)
     void *pivot = arr[(left + right) / 2];
     int i = left, j = right;
 
@@ -169,52 +193,54 @@ void quick_sort_rec(void **arr, int left, int right, int (*compar)(const void *,
         }
     }
 
-    // Ordina ricorsivamente le due partizioni
     if (left < j) quick_sort_rec(arr, left, j, compar);
     if (i < right) quick_sort_rec(arr, i, right, compar);
 }
 
-// QuickSort wrapper
+/**
+ * @brief Quicksort wrapper with timing
+ */
 void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const void *)) {
     clock_t from = clock();
 
     int start, end;
-
     int low = nitems;
     int high = nitems - low;
 
-    // Partizione in tre sezioni
     threewaypartition(base, nitems, &low, &high, compar, &start, &end);
-
-    // Ordina ogni sezione
-    quick_sort_rec(base, 0, start - 1, compar);   // Sezione inferiore
-    quick_sort_rec(base, start, end, compar);    // Sezione centrale
-    quick_sort_rec(base, end + 1, nitems - 1, compar); // Sezione superiore
+    quick_sort_rec(base, 0, start - 1, compar);
+    quick_sort_rec(base, start, end, compar);
+    quick_sort_rec(base, end + 1, nitems - 1, compar);
 
     clock_t to = clock();
     double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
-    printf("The time taken by the quick_sort function is: %f sec\n", time_taken);
+    printf("The time taken by sorting function function is: %f sec\n", time_taken);
 }
 
+/**
+ * @brief Frees all allocated memory
+ */
 void free_records(Records **records) {
     puts("destruction of data structure");
-
     for (int i = 0; i < CAPACITY; i++) {
         free(records[i]);
     }
-
     free(records);
 }
 
+/**
+ * @brief Main sorting function implementation
+ */
 void sort_records(FILE *infile, FILE *outfile, size_t field, size_t algo){
-
     puts("creation data structure");
     Records **records = records_create();
     int cont = 0;
 
     puts("reading file");
-    while(fscanf(infile, "%d,%[^,],%d,%f\n", &records[cont]->id, records[cont]->field1, &records[cont]->field2, &records[cont]->field3) == 4){
-    cont++;
+    while(fscanf(infile, "%d,%[^,],%d,%f\n", &records[cont]->id, 
+          records[cont]->field1, &records[cont]->field2, 
+          &records[cont]->field3) == 4){
+        cont++;
     }
 
     int (*compare)(const void*, const void*) = NULL;
@@ -230,7 +256,8 @@ void sort_records(FILE *infile, FILE *outfile, size_t field, size_t algo){
 
     puts("printing result");
     for(int i = 0; i < cont; i++){
-        fprintf(outfile, "%d,%s,%d,%.2f\n", records[i]->id, records[i]->field1, records[i]->field2, records[i]->field3);
+        fprintf(outfile, "%d,%s,%d,%.2f\n", records[i]->id, 
+                records[i]->field1, records[i]->field2, records[i]->field3);
     }
 
     free_records(records);

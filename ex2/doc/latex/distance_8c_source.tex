@@ -1,0 +1,128 @@
+\doxysection{distance.\+c}
+\hypertarget{distance_8c_source}{}\label{distance_8c_source}\index{src/distance.c@{src/distance.c}}
+\mbox{\hyperlink{distance_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{distance_8h}{distance.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00007}00007\ \textcolor{preprocessor}{\#define\ CORRECT\_WORDS\ 3}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00009}\mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{00009}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b,\ \textcolor{keywordtype}{int}\ c)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00010}00010\ \ \ \ \ \textcolor{keywordtype}{int}\ min\ =\ a;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (b\ <\ min)\ min\ =\ b;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ <\ min)\ min\ =\ c;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{return}\ min;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00016}\mbox{\hyperlink{distance_8c_a248b96ee59cc18b8a662707d19a64b74}{00016}}\ \textcolor{keywordtype}{int}\ **\mbox{\hyperlink{distance_8c_a248b96ee59cc18b8a662707d19a64b74}{initialize\_memo}}(\textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{int}\ **memo\ =\ (\textcolor{keywordtype}{int}\ **)malloc(rows\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}\ *));}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{if}\ (!memo)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ memo[i]\ =\ (\textcolor{keywordtype}{int}\ *)malloc(cols\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!memo[i])\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clean\ up\ previously\ allocated\ memory}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ i;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(memo[j]);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ free(memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ memo[i][j]\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00033}00033\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{return}\ memo;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00037}\mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{00037}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(\textcolor{keywordtype}{int}\ **memo,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ cols;\ j++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ memo[i][j]\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00041}00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00043}00043\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00045}\mbox{\hyperlink{distance_8c_a82c6f74dd09e412629f96cb1f0a8efdc}{00045}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{distance_8c_a82c6f74dd09e412629f96cb1f0a8efdc}{free\_memo}}(\textcolor{keywordtype}{int}\ **memo,\ \textcolor{keywordtype}{int}\ rows)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ (!memo)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00047}00047\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rows;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00049}00049\ \ \ \ \ \ \ \ \ free(memo[i]);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00051}00051\ \ \ \ \ free(memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00052}00052\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00063}\mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{00063}}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s2,\ \textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keywordtype}{int}\ **memo)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ 0)\ \textcolor{keywordflow}{return}\ j;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ ==\ 0)\ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{if}\ (memo[i][j]\ !=\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ memo[i][j];}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00069}00069\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ Calculate\ cost\ of\ operations}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{int}\ d\_noop\ =\ (s1[i\ -\/\ 1]\ ==\ s2[j\ -\/\ 1])\ ?\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ i\ -\/\ 1,\ j\ -\/\ 1,\ memo)\ :\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ +\ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ i\ -\/\ 1,\ j\ -\/\ 1,\ memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00075}00075\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00076}00076\ \ \ \ \ \textcolor{keywordtype}{int}\ d\_canc\ =\ 1\ +\ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ i,\ j\ -\/\ 1,\ memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00077}00077\ \ \ \ \ \textcolor{keywordtype}{int}\ d\_ins\ =\ 1\ +\ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ i\ -\/\ 1,\ j,\ memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00079}00079\ \ \ \ \ memo[i][j]\ =\ \mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(d\_noop,\ d\_canc,\ d\_ins);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{return}\ memo[i][j];}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00081}00081\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00083}\mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{00083}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s2,\ \textcolor{keywordtype}{int}\ **memo)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{int}\ len1\ =\ strlen(s1);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{int}\ len2\ =\ strlen(s2);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ len1\ +\ 1,\ len2\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ len1,\ len2,\ memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00089}00089\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00091}00091\ \textcolor{keywordtype}{void}\ find\_closest\_words(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *dictionary[],\ \textcolor{keywordtype}{int}\ dict\_size,\ \textcolor{keywordtype}{char}\ *target,\ \textcolor{keywordtype}{int}\ **memo)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00092}00092\ \ \ \ \ clock\_t\ start\ =\ clock();}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00094}00094\ \ \ \ \ \textcolor{comment}{//\ Remove\ punctuation\ and\ convert\ to\ lowercase}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{int}\ j\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ target[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'};\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!ispunct(target[i]))\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ target[j++]\ =\ tolower(target[i]);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00100}00100\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00101}00101\ \ \ \ \ target[j]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{structWordDistance}{WordDistance}}\ *distances\ =\ (\mbox{\hyperlink{structWordDistance}{WordDistance}}\ *)malloc(dict\_size\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structWordDistance}{WordDistance}}));}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00104}00104\ \ \ \ \ \textcolor{keywordflow}{if}\ (!distances)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00106}00106\ \ \ \ \ \textcolor{keywordtype}{int}\ target\_len\ =\ strlen(target);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00107}00107\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00109}00109\ \ \ \ \ \textcolor{comment}{//\ Calculate\ distances\ for\ words\ within\ acceptable\ length\ difference}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00110}00110\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ dict\_size;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ dict\_word\_len\ =\ strlen(dictionary[i]);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (abs(target\_len\ -\/\ dict\_word\_len)\ >\ 3)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ distances[count].\mbox{\hyperlink{structWordDistance_a1d0dbf99467282da721061e0d3267b14}{word}}\ =\ (\textcolor{keywordtype}{char}\ *)dictionary[i];}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ distances[count].\mbox{\hyperlink{structWordDistance_a9212d958bb6f48f75f2dad0f13f6f553}{distance}}\ =\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(target,\ dictionary[i],\ memo);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00117}00117\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00119}00119\ \ \ \ \ qsort(distances,\ count,\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structWordDistance}{WordDistance}}),\ \mbox{\hyperlink{distance_8c_a46c0aae85f38c367db13b394c70a2e82}{compare\_distance}});}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00121}00121\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Word:\ \%s\(\backslash\)n"{}},\ target);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00122}00122\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ CORRECT\_WORDS\ \&\&\ i\ <\ count;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\ \ \%s\ (distance:\ \%d)\(\backslash\)n"{}},\ distances[i].word,\ distances[i].distance);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00124}00124\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00126}00126\ \ \ \ \ free(distances);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00128}00128\ \ \ \ \ clock\_t\ end\ =\ clock();}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00129}00129\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Time\ taken:\ \%.2f\ seconds\(\backslash\)n\(\backslash\)n"{}},\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{double})(end\ -\/\ start)\ /\ CLOCKS\_PER\_SEC);}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00131}00131\ \}}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00133}\mbox{\hyperlink{distance_8c_a46c0aae85f38c367db13b394c70a2e82}{00133}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{distance_8c_a46c0aae85f38c367db13b394c70a2e82}{compare\_distance}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *b)\ \{}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\mbox{\hyperlink{structWordDistance}{WordDistance}}\ *)a)-\/>distance\ -\/\ ((\mbox{\hyperlink{structWordDistance}{WordDistance}}\ *)b)-\/>distance;}
+\DoxyCodeLine{\Hypertarget{distance_8c_source_l00135}00135\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,85 @@
+\doxysection{test\+\_\+distance.\+c}
+\hypertarget{test__distance_8c_source}{}\label{test__distance_8c_source}\index{tests/test\_distance.c@{tests/test\_distance.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}unity.h"{}}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{distance_8h}{distance.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00004}00004\ \textcolor{comment}{//\ Variabili\ globali\ per\ i\ test}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00005}00005\ \textcolor{keywordtype}{int}\ **memo\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00006}00006\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ MAX\_LEN\ =\ 19;\ \textcolor{comment}{//\ Lunghezza\ massima\ delle\ parole\ nel\ dizionario}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00008}00008\ \textcolor{comment}{//\ Setup:\ Inizializza\ la\ matrice\ di\ memoizzazione}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00009}00009\ \textcolor{keywordtype}{void}\ setUp(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00010}00010\ \ \ \ \ memo\ =\ \mbox{\hyperlink{distance_8c_a248b96ee59cc18b8a662707d19a64b74}{initialize\_memo}}(MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00011}00011\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00013}00013\ \textcolor{comment}{//\ Teardown:\ Libera\ la\ matrice\ di\ memoizzazione}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00014}00014\ \textcolor{keywordtype}{void}\ tearDown(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{distance_8c_a82c6f74dd09e412629f96cb1f0a8efdc}{free\_memo}}(memo,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00016}00016\ \ \ \ \ memo\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00019}00019\ \textcolor{comment}{//\ Test\ della\ funzione\ min3}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00020}00020\ \textcolor{keywordtype}{void}\ test\_min3(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00021}00021\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(1,\ 2,\ 3));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00022}00022\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(0,\ 5,\ 10));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00023}00023\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(-\/10,\ \mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(-\/10,\ -\/5,\ 0));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00024}00024\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(5,\ \mbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(5,\ 5,\ 5));\ \textcolor{comment}{//\ Tutti\ uguali}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00025}00025\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00027}00027\ \textcolor{comment}{//\ Test\ della\ edit\ distance\ con\ stringhe\ vuote}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00028}00028\ \textcolor{keywordtype}{void}\ test\_edit\_distance\_empty\_strings(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00030}00030\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}"{}},\ memo));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00031}00031\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(5,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}abcde"{}},\ memo));\ \textcolor{comment}{//\ Lunghezza\ della\ seconda\ stringa}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00032}00032\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(4,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abcd"{}},\ \textcolor{stringliteral}{"{}"{}},\ memo));\ \textcolor{comment}{//\ Lunghezza\ della\ prima\ stringa}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00035}00035\ \textcolor{comment}{//\ Test\ della\ edit\ distance\ con\ stringhe\ identiche}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00036}00036\ \textcolor{keywordtype}{void}\ test\_edit\_distance\_identical\_strings(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00038}00038\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abc"{}},\ \textcolor{stringliteral}{"{}abc"{}},\ memo));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00039}00039\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00041}00041\ \textcolor{comment}{//\ Test\ della\ edit\ distance\ con\ stringhe\ di\ diversa\ lunghezza}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00042}00042\ \textcolor{keywordtype}{void}\ test\_edit\_distance\_different\_lengths(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00044}00044\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abc"{}},\ \textcolor{stringliteral}{"{}abcd"{}},\ memo));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00046}00046\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abcd"{}},\ \textcolor{stringliteral}{"{}abc"{}},\ memo));}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00049}00049\ \textcolor{comment}{//\ Test\ della\ edit\ distance\ con\ sostituzioni}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00050}00050\ \textcolor{keywordtype}{void}\ test\_edit\_distance\_with\_substitutions(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00051}00051\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00052}00052\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(3,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abc"{}},\ \textcolor{stringliteral}{"{}def"{}},\ memo));\ \textcolor{comment}{//\ Tutti\ i\ caratteri\ diversi}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00053}00053\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00054}00054\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abc"{}},\ \textcolor{stringliteral}{"{}adc"{}},\ memo));\ \textcolor{comment}{//\ Una\ sostituzione}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00057}00057\ \textcolor{comment}{//\ Test\ aggiornato\ della\ edit\ distance\ con\ parole\ lunghe}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00058}00058\ \textcolor{keywordtype}{void}\ test\_edit\_distance\_long\_words(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00060}00060\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}abcdefghijklmnopqrs"{}},\ \textcolor{stringliteral}{"{}abcdefghijklmnopqr"{}},\ memo));\ \textcolor{comment}{//\ Rimozione\ singola}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ MAX\_LEN\ +\ 1,\ MAX\_LEN\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00063}00063\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{distance_8c_ab2e796d864101098b33e6c5622fcbeb6}{edit\_distance}}(\textcolor{stringliteral}{"{}aaaaaaaaaaaaaaaaaaa"{}},\ \textcolor{stringliteral}{"{}aaaaaaaabaaaaaaaaaa"{}},\ memo));\ \textcolor{comment}{//\ Sostituzione\ singola}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00064}00064\ \}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00067}00067\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00068}00068\ \ \ \ \ UNITY\_BEGIN();}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ Aggiunta\ dei\ test}}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00071}00071\ \ \ \ \ RUN\_TEST(test\_min3);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00072}00072\ \ \ \ \ RUN\_TEST(test\_edit\_distance\_empty\_strings);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00073}00073\ \ \ \ \ RUN\_TEST(test\_edit\_distance\_identical\_strings);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00074}00074\ \ \ \ \ RUN\_TEST(test\_edit\_distance\_different\_lengths);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00075}00075\ \ \ \ \ RUN\_TEST(test\_edit\_distance\_with\_substitutions);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00076}00076\ \ \ \ \ RUN\_TEST(test\_edit\_distance\_long\_words);}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00078}00078\ \ \ \ \ \textcolor{keywordflow}{return}\ UNITY\_END();}
+\DoxyCodeLine{\Hypertarget{test__distance_8c_source_l00079}00079\ \}}
+
+\end{DoxyCode}

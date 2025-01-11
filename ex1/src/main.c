@@ -1,5 +1,21 @@
+/**
+ * @file main.c
+ * @brief Main program entry point
+ * @details Handles command line arguments and initiates sorting
+ * 
+ * Usage: program input_file output_file field_num algo_num
+ * - field_num: 1=string, 2=integer, 3=float
+ * - algo_num: 1=merge sort, 2=quicksort
+ */
+
 #include "sort.h"
 
+/**
+ * @brief Main function
+ * @param argc Argument count
+ * @param argv Argument values
+ * @return 0 on success, 1 on error
+ */
 int main(int argc, char *argv[]){
     if(argc != 5){
         puts("ERROR IN THE INSERT OF THE COMMANDS");

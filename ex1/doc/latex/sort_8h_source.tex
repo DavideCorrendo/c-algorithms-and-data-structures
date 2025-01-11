@@ -1,0 +1,52 @@
+\doxysection{sort.\+h}
+\hypertarget{sort_8h_source}{}\label{sort_8h_source}\index{src/sort.h@{src/sort.h}}
+\mbox{\hyperlink{sort_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00007}00007\ \textcolor{preprocessor}{\#ifndef\ SORTING\_H}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00008}00008\ \textcolor{preprocessor}{\#define\ SORTING\_H}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00020}00020\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct__Records}{\_Records}}\ \mbox{\hyperlink{struct__Records}{Records}};}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00022}\mbox{\hyperlink{struct__Records}{00022}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct__Records}{\_Records}}\{}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00023}\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{00023}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00024}\mbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{00024}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \mbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[15];\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00025}\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{00025}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}};\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00026}\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{00026}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}};\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00027}00027\ \};}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00034}00034\ \mbox{\hyperlink{struct__Records}{Records}}**\ \mbox{\hyperlink{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b}{records\_create}}();}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00040}00040\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_a77bb77defc06c8546a6badf40a52e0b0}{free\_records}}(\mbox{\hyperlink{struct__Records}{Records}}\ **records);}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00048}00048\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sort_8h_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *b);}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00056}00056\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sort_8h_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *b);}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00064}00064\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sort_8h_a04608605cfc734f04f4719acff068fc5}{compare\_f3}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *b);}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00073}00073\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_aff70d48025f2cfa56970ede9667e4180}{sort\_records}}(FILE\ *infile,\ FILE\ *outfile,\ \textcolor{keywordtype}{size\_t}\ field,\ \textcolor{keywordtype}{size\_t}\ algo);}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00083}00083\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_a015c6f934416db768ce5e9fcd2072faa}{merge}}(\textcolor{keywordtype}{void}\ **base,\ \textcolor{keywordtype}{int}\ first,\ \textcolor{keywordtype}{int}\ mid,\ \textcolor{keywordtype}{int}\ last,\ \textcolor{keywordtype}{int}\ (*compar)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00092}00092\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(\textcolor{keywordtype}{void}\ **base,\ \textcolor{keywordtype}{int}\ first,\ \textcolor{keywordtype}{int}\ last,\ \textcolor{keywordtype}{int}\ (*compar)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00100}00100\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}(\textcolor{keywordtype}{void}**\ base,\ \textcolor{keywordtype}{int}\ nitems,\ \textcolor{keywordtype}{int}\ (*compar)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00107}00107\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_a65fb3038fc2b214b1e80142022812fcf}{swap}}(\textcolor{keywordtype}{void}\ **a,\ \textcolor{keywordtype}{void}**b);}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00117}\mbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{00117}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition}}(\textcolor{keywordtype}{void}\ **base,\ \textcolor{keywordtype}{int}\ left,\ \textcolor{keywordtype}{int}\ right,\ \textcolor{keywordtype}{int}\ (*compar)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00126}00126\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad}{quick\_sort\_rec}}(\textcolor{keywordtype}{void}\ **base,\ \textcolor{keywordtype}{int}\ left,\ \textcolor{keywordtype}{int}\ right,\ \textcolor{keywordtype}{int}\ (*compar)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00134}00134\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sort_8h_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}(\textcolor{keywordtype}{void}\ **base,\ \textcolor{keywordtype}{size\_t}\ nitems,\ \textcolor{keywordtype}{int}\ (*compar)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{sort_8h_source_l00136}00136\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,1427 @@
+\doxysection{unity.\+c}
+\hypertarget{unity_8c_source}{}\label{unity_8c_source}\index{tests/unity.c@{tests/unity.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00001}00001\ \textcolor{comment}{/*\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00002}00002\ \textcolor{comment}{\ \ \ \ Unity\ Project\ -\/\ A\ Test\ Framework\ for\ C}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00003}00003\ \textcolor{comment}{\ \ \ \ Copyright\ (c)\ 2007-\/14\ Mike\ Karlesky,\ Mark\ VanderVoord,\ Greg\ Williams}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00004}00004\ \textcolor{comment}{\ \ \ \ [Released\ under\ MIT\ License.\ Please\ refer\ to\ license.txt\ for\ details]}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00005}00005\ \textcolor{comment}{============================================================================\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}unity.h"{}}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00010}00010\ \textcolor{comment}{/*\ If\ omitted\ from\ header,\ declare\ overrideable\ prototypes\ here\ so\ they're\ ready\ for\ use\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00011}00011\ \textcolor{preprocessor}{\#ifdef\ UNITY\_OMIT\_OUTPUT\_CHAR\_HEADER\_DECLARATION}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00012}00012\ \textcolor{keywordtype}{void}\ UNITY\_OUTPUT\_CHAR(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00013}00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00015}00015\ \textcolor{comment}{/*\ Helpful\ macros\ for\ us\ to\ use\ here\ in\ Assert\ functions\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00016}00016\ \textcolor{preprocessor}{\#define\ UNITY\_FAIL\_AND\_BAIL\ \ \ \{\ Unity.CurrentTestFailed\ \ =\ 1;\ TEST\_ABORT();\ \}}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00017}00017\ \textcolor{preprocessor}{\#define\ UNITY\_IGNORE\_AND\_BAIL\ \{\ Unity.CurrentTestIgnored\ =\ 1;\ TEST\_ABORT();\ \}}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00018}00018\ \textcolor{preprocessor}{\#define\ RETURN\_IF\_FAIL\_OR\_IGNORE\ if\ (Unity.CurrentTestFailed\ ||\ Unity.CurrentTestIgnored)\ return}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00020}00020\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structUNITY__STORAGE__T}{UNITY\_STORAGE\_T}}\ Unity;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00022}00022\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrOk[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}OK"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00023}00023\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrPass[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}PASS"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00024}00024\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrFail[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}FAIL"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00025}00025\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrIgnore[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}IGNORE"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00026}00026\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrNull[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}NULL"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00027}00027\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrSpacer[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}.\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00028}00028\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrExpected[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Expected\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00029}00029\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrWas[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Was\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00030}00030\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrElement[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Element\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00031}00031\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrByte[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Byte\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00032}00032\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrMemory[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Memory\ Mismatch."{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00033}00033\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrDelta[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Values\ Not\ Within\ Delta\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00034}00034\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrPointless[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ You\ Asked\ Me\ To\ Compare\ Nothing,\ Which\ Was\ Pointless."{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00035}00035\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrNullPointerForExpected[]\ =\ \textcolor{stringliteral}{"{}\ Expected\ pointer\ to\ be\ NULL"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00036}00036\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrNullPointerForActual[]\ \ \ =\ \textcolor{stringliteral}{"{}\ Actual\ pointer\ was\ NULL"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00037}00037\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_FLOAT}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00038}00038\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrNot[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Not\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00039}00039\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrInf[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Infinity"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00040}00040\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrNegInf[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Negative\ Infinity"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00041}00041\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrNaN[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}NaN"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00042}00042\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrDet[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Determinate"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00043}00043\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrInvalidFloatTrait[]\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Invalid\ Float\ Trait"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00044}00044\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00045}00045\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrErrFloat[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Unity\ Floating\ Point\ Disabled"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00046}00046\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrErrDouble[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Unity\ Double\ Precision\ Disabled"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00047}00047\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrErr64[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Unity\ 64-\/bit\ Support\ Disabled"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00048}00048\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrBreaker[]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00049}00049\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrResultsTests[]\ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Tests\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00050}00050\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrResultsFailures[]\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Failures\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00051}00051\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrResultsIgnored[]\ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ Ignored\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00052}00052\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrDetail1Name[]\ \ \ \ \ \ \ \ \ \ \ \ =\ UNITY\_DETAIL1\_NAME\ \textcolor{stringliteral}{"{}\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00053}00053\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ UnityStrDetail2Name[]\ \ \ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\ "{}}\ UNITY\_DETAIL2\_NAME\ \textcolor{stringliteral}{"{}\ "{}};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00055}00055\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00056}00056\ \textcolor{comment}{\ *\ Pretty\ Printers\ \&\ Test\ Result\ Output\ Handlers}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00057}00057\ \textcolor{comment}{\ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00059}00059\ \textcolor{keywordtype}{void}\ UnityPrint(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{string})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00060}00060\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00061}00061\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pch\ =\ string;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (pch\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00064}00064\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (*pch)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ printable\ characters\ plus\ CR\ \&\ LF\ are\ printed\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*pch\ <=\ 126)\ \&\&\ (*pch\ >=\ 32))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(*pch);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ write\ escaped\ carriage\ returns\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*pch\ ==\ 13)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'r'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ write\ escaped\ line\ feeds\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*pch\ ==\ 10)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'n'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ unprintable\ characters\ are\ shown\ as\ codes\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'x'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberHex((UNITY\_UINT)*pch,\ 2);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ pch++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00093}00093\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00094}00094\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00096}00096\ \textcolor{keywordtype}{void}\ UnityPrintLen(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{string},\ \textcolor{keyword}{const}\ UNITY\_UINT32\ length)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00097}00097\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00098}00098\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pch\ =\ string;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00100}00100\ \ \ \ \ \textcolor{keywordflow}{if}\ (pch\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00101}00101\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (*pch\ \&\&\ (UNITY\_UINT32)(pch\ -\/\ \textcolor{keywordtype}{string})\ <\ length)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ printable\ characters\ plus\ CR\ \&\ LF\ are\ printed\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*pch\ <=\ 126)\ \&\&\ (*pch\ >=\ 32))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(*pch);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ write\ escaped\ carriage\ returns\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*pch\ ==\ 13)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'r'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ write\ escaped\ line\ feeds\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*pch\ ==\ 10)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'n'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ unprintable\ characters\ are\ shown\ as\ codes\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'x'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberHex((UNITY\_UINT)*pch,\ 2);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ pch++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00129}00129\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00130}00130\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00131}00131\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00133}00133\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00134}00134\ \textcolor{keywordtype}{void}\ UnityPrintNumberByStyle(\textcolor{keyword}{const}\ UNITY\_INT\ number,\ \textcolor{keyword}{const}\ UNITY\_DISPLAY\_STYLE\_T\ style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00135}00135\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00136}00136\ \ \ \ \ \textcolor{keywordflow}{if}\ ((style\ \&\ UNITY\_DISPLAY\_RANGE\_INT)\ ==\ UNITY\_DISPLAY\_RANGE\_INT)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00137}00137\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ UnityPrintNumber(number);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00139}00139\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((style\ \&\ UNITY\_DISPLAY\_RANGE\_UINT)\ ==\ UNITY\_DISPLAY\_RANGE\_UINT)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00141}00141\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned((UNITY\_UINT)number);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00143}00143\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00145}00145\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00146}00146\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'0'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00147}00147\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'x'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ UnityPrintNumberHex((UNITY\_UINT)number,\ (\textcolor{keywordtype}{char})((style\ \&\ 0xF)\ *\ 2));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00149}00149\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00150}00150\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00152}00152\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00153}00153\ \textcolor{keywordtype}{void}\ UnityPrintNumber(\textcolor{keyword}{const}\ UNITY\_INT\ number\_to\_print)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00154}00154\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00155}00155\ \ \ \ \ UNITY\_UINT\ number\ =\ (UNITY\_UINT)number\_to\_print;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00157}00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (number\_to\_print\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00158}00158\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ A\ negative\ number,\ including\ MIN\ negative\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00160}00160\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00161}00161\ \ \ \ \ \ \ \ \ number\ =\ (UNITY\_UINT)(-\/number\_to\_print);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00162}00162\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00163}00163\ \ \ \ \ UnityPrintNumberUnsigned(number);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00164}00164\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00166}00166\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00167}00167\ \textcolor{comment}{\ *\ basically\ do\ an\ itoa\ using\ as\ little\ ram\ as\ possible\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00168}00168\ \textcolor{keywordtype}{void}\ UnityPrintNumberUnsigned(\textcolor{keyword}{const}\ UNITY\_UINT\ number)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00169}00169\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00170}00170\ \ \ \ \ UNITY\_UINT\ divisor\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00172}00172\ \ \ \ \ \textcolor{comment}{/*\ figure\ out\ initial\ divisor\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00173}00173\ \ \ \ \ \textcolor{keywordflow}{while}\ (number\ /\ divisor\ >\ 9)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00174}00174\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00175}00175\ \ \ \ \ \ \ \ \ divisor\ *=\ 10;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00176}00176\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00178}00178\ \ \ \ \ \textcolor{comment}{/*\ now\ mod\ and\ print,\ then\ divide\ divisor\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00179}00179\ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00180}00180\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00181}00181\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR((\textcolor{keywordtype}{char})(\textcolor{charliteral}{'0'}\ +\ (number\ /\ divisor\ \%\ 10)));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00182}00182\ \ \ \ \ \ \ \ \ divisor\ /=\ 10;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00183}00183\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (divisor\ >\ 0);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00184}00184\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00186}00186\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00187}00187\ \textcolor{keywordtype}{void}\ UnityPrintNumberHex(\textcolor{keyword}{const}\ UNITY\_UINT\ number,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ nibbles\_to\_print)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00188}00188\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00189}00189\ \ \ \ \ \textcolor{keywordtype}{int}\ nibble;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00190}00190\ \ \ \ \ \textcolor{keywordtype}{char}\ nibbles\ =\ nibbles\_to\_print;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\textcolor{keywordtype}{unsigned})nibbles\ >\ (2\ *\ \textcolor{keyword}{sizeof}(number)))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00192}00192\ \ \ \ \ \ \ \ \ nibbles\ =\ 2\ *\ \textcolor{keyword}{sizeof}(number);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00194}00194\ \ \ \ \ \textcolor{keywordflow}{while}\ (nibbles\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00195}00195\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00196}00196\ \ \ \ \ \ \ \ \ nibbles-\/-\/;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00197}00197\ \ \ \ \ \ \ \ \ nibble\ =\ (int)(number\ >>\ (nibbles\ *\ 4))\ \&\ 0x0F;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00198}00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (nibble\ <=\ 9)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00199}00199\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR((\textcolor{keywordtype}{char})(\textcolor{charliteral}{'0'}\ +\ nibble));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR((\textcolor{keywordtype}{char})(\textcolor{charliteral}{'A'}\ -\/\ 10\ +\ nibble));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00206}00206\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00207}00207\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00209}00209\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00210}00210\ \textcolor{keywordtype}{void}\ UnityPrintMask(\textcolor{keyword}{const}\ UNITY\_UINT\ mask,\ \textcolor{keyword}{const}\ UNITY\_UINT\ number)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00211}00211\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00212}00212\ \ \ \ \ UNITY\_UINT\ current\_bit\ =\ (UNITY\_UINT)1\ <<\ (UNITY\_INT\_WIDTH\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00213}00213\ \ \ \ \ UNITY\_INT32\ i;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00215}00215\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ UNITY\_INT\_WIDTH;\ i++)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00216}00216\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00217}00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (current\_bit\ \&\ mask)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00218}00218\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (current\_bit\ \&\ number)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'1'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'0'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00227}00227\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00229}00229\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'X'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00231}00231\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00232}00232\ \ \ \ \ \ \ \ \ current\_bit\ =\ current\_bit\ >>\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00233}00233\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00234}00234\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00236}00236\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00237}00237\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_FLOAT\_PRINT}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00238}00238\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UnityPrintDecimalAndNumberWithLeadingZeros(UNITY\_INT32\ fraction\_part,\ UNITY\_INT32\ divisor)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00239}00239\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00240}00240\ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'.'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00241}00241\ \ \ \ \ \textcolor{keywordflow}{while}\ (divisor\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00242}00242\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00243}00243\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'0'}\ +\ fraction\_part\ /\ divisor);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00244}00244\ \ \ \ \ \ \ \ \ fraction\_part\ \%=\ divisor;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00245}00245\ \ \ \ \ \ \ \ \ divisor\ /=\ 10;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00246}00246\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fraction\_part\ ==\ 0)\ \textcolor{keywordflow}{break};\ \textcolor{comment}{/*\ Truncate\ trailing\ 0's\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00247}00247\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00248}00248\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00249}00249\ \textcolor{preprocessor}{\#ifndef\ UNITY\_ROUND\_TIES\_AWAY\_FROM\_ZERO}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00250}00250\ \textcolor{comment}{/*\ If\ rounds\ up\ \&\&\ remainder\ 0.5\ \&\&\ result\ odd\ \&\&\ below\ cutoff\ for\ double\ precision\ issues\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00251}00251\ \textcolor{preprocessor}{\ \ \#define\ ROUND\_TIES\_TO\_EVEN(orig,\ num\_int,\ num)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00252}00252\ \textcolor{preprocessor}{\ \ if\ (num\_int\ >\ (num)\ \&\&\ (num)\ -\/\ (num\_int-\/1)\ <=\ 0.5\ \&\&\ (num\_int\ \&\ 1)\ ==\ 1\ \&\&\ orig\ <\ 1e22)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00253}00253\ \textcolor{preprocessor}{\ \ \ \ num\_int\ -\/=\ 1\ }\textcolor{comment}{/*\ =>\ a\ tie\ to\ round\ down\ to\ even\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00254}00254\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00255}00255\ \textcolor{preprocessor}{\ \ \#define\ ROUND\_TIES\_TO\_EVEN(orig,\ num\_int,\ num)\ }\textcolor{comment}{/*\ Remove\ macro\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00256}00256\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00258}00258\ \textcolor{comment}{/*\ Printing\ floating\ point\ numbers\ is\ hard.\ Some\ goals\ of\ this\ implementation:\ works\ for\ embedded}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00259}00259\ \textcolor{comment}{\ *\ systems,\ floats\ or\ doubles,\ and\ has\ a\ reasonable\ format.\ The\ key\ paper\ in\ this\ area,}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00260}00260\ \textcolor{comment}{\ *\ 'How\ to\ Print\ Floating-\/Point\ Numbers\ Accurately'\ by\ Steele\ \&\ White,\ shows\ an\ approximation\ by}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00261}00261\ \textcolor{comment}{\ *\ scaling\ called\ Dragon\ 2.\ This\ code\ uses\ a\ similar\ idea.\ The\ other\ core\ algorithm\ uses\ casts\ and}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00262}00262\ \textcolor{comment}{\ *\ floating\ subtraction\ to\ give\ exact\ remainders\ after\ the\ decimal,\ to\ be\ scaled\ into\ an\ integer.}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00263}00263\ \textcolor{comment}{\ *\ Extra\ trailing\ 0's\ are\ excluded.\ The\ output\ defaults\ to\ rounding\ to\ nearest,\ ties\ to\ even.\ You}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00264}00264\ \textcolor{comment}{\ *\ can\ enable\ rounding\ ties\ away\ from\ zero.\ Note:\ UNITY\_DOUBLE\ param\ can\ typedef\ to\ float\ or\ double}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00265}00265\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00266}00266\ \textcolor{comment}{\ *\ The\ old\ version\ required\ compiling\ in\ snprintf.\ For\ reference,\ with\ a\ similar\ format\ as\ now:}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00267}00267\ \textcolor{comment}{\ *\ \ char\ buf[19];}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00268}00268\ \textcolor{comment}{\ *\ \ if\ (number\ >\ 4294967296.0\ ||\ -\/number\ >\ 4294967296.0)\ snprintf(buf,\ sizeof\ buf,\ "{}\%.8e"{},\ number);}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00269}00269\ \textcolor{comment}{\ *\ \ else\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(buf,\ sizeof\ buf,\ "{}\%.6f"{},\ number);}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00270}00270\ \textcolor{comment}{\ *\ \ UnityPrint(buf);}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00271}00271\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00272}00272\ \textcolor{keywordtype}{void}\ UnityPrintFloat(\textcolor{keyword}{const}\ UNITY\_DOUBLE\ input\_number)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00273}00273\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00274}00274\ \ \ \ \ UNITY\_DOUBLE\ number;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00276}00276\ \ \ \ \ \textcolor{keywordflow}{if}\ (input\_number\ <\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00277}00277\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00278}00278\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00279}00279\ \ \ \ \ \ \ \ \ number\ =\ -\/input\_number;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00280}00280\ \ \ \ \ \}\ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00281}00281\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00282}00282\ \ \ \ \ \ \ \ \ number\ =\ input\_number;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00283}00283\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00285}00285\ \ \ \ \ \textcolor{keywordflow}{if}\ (isnan(number))\ UnityPrint(UnityStrNaN);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00286}00286\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (isinf(number))\ UnityPrintLen(UnityStrInf,\ 3);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00287}00287\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (number\ <=\ 0.0000005\ \&\&\ number\ >\ 0)\ UnityPrint(\textcolor{stringliteral}{"{}0.000000..."{}});\ \textcolor{comment}{/*\ Small\ number\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00288}00288\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (number\ <\ 4294967295.9999995)\ \textcolor{comment}{/*\ Rounded\ result\ fits\ in\ 32\ bits,\ "{}\%.6f"{}\ format\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00289}00289\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00290}00290\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT32\ divisor\ =\ 1000000/10;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00291}00291\ \ \ \ \ \ \ \ \ UNITY\_UINT32\ integer\_part\ =\ (UNITY\_UINT32)number;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00292}00292\ \ \ \ \ \ \ \ \ UNITY\_INT32\ fraction\_part\ =\ (UNITY\_INT32)((number\ -\/\ (UNITY\_DOUBLE)integer\_part)*1000000.0\ +\ 0.5);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00293}00293\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Double\ precision\ calculation\ gives\ best\ performance\ for\ six\ rounded\ decimal\ places\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00294}00294\ \ \ \ \ \ \ \ \ ROUND\_TIES\_TO\_EVEN(number,\ fraction\_part,\ (number\ -\/\ (UNITY\_DOUBLE)integer\_part)*1000000.0);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00296}00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fraction\_part\ ==\ 1000000)\ \textcolor{comment}{/*\ Carry\ across\ the\ decimal\ point\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00297}00297\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ fraction\_part\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ integer\_part\ +=\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00300}00300\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00302}00302\ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(integer\_part);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00303}00303\ \ \ \ \ \ \ \ \ UnityPrintDecimalAndNumberWithLeadingZeros(fraction\_part,\ divisor);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00304}00304\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00305}00305\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{/*\ Number\ is\ larger,\ use\ exponential\ format\ of\ 9\ digits,\ "{}\%.8e"{}\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00306}00306\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00307}00307\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT32\ divisor\ =\ 1000000000/10;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00308}00308\ \ \ \ \ \ \ \ \ UNITY\_INT32\ integer\_part;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00309}00309\ \ \ \ \ \ \ \ \ UNITY\_DOUBLE\_TYPE\ divide\ =\ 10.0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00310}00310\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exponent\ =\ 9;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00312}00312\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (number\ /\ divide\ >=\ 1000000000.0\ -\/\ 0.5)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00313}00313\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ divide\ *=\ 10;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ exponent++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00316}00316\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00317}00317\ \ \ \ \ \ \ \ \ integer\_part\ =\ (UNITY\_INT32)(number\ /\ divide\ +\ 0.5);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00318}00318\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Double\ precision\ calculation\ required\ for\ float,\ to\ produce\ 9\ rounded\ digits\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00319}00319\ \ \ \ \ \ \ \ \ ROUND\_TIES\_TO\_EVEN(number,\ integer\_part,\ number\ /\ divide);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00321}00321\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'0'}\ +\ integer\_part\ /\ divisor);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00322}00322\ \ \ \ \ \ \ \ \ UnityPrintDecimalAndNumberWithLeadingZeros(integer\_part\ \%\ divisor,\ divisor\ /\ 10);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00323}00323\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'e'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00324}00324\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'+'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (exponent\ <\ 10)\ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'0'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00326}00326\ \ \ \ \ \ \ \ \ UnityPrintNumber(exponent);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00327}00327\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00328}00328\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00329}00329\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ !\ UNITY\_EXCLUDE\_FLOAT\_PRINT\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00330}00330\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00331}00331\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00332}00332\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UnityTestResultsBegin(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ file,\ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ line)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00333}00333\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00334}00334\ \ \ \ \ UnityPrint(file);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00335}00335\ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00336}00336\ \ \ \ \ UnityPrintNumber((UNITY\_INT)line);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00337}00337\ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00338}00338\ \ \ \ \ UnityPrint(Unity.CurrentTestName);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00339}00339\ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00340}00340\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00342}00342\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00343}00343\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UnityTestResultsFailBegin(\textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ line)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00344}00344\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00345}00345\ \ \ \ \ UnityTestResultsBegin(Unity.TestFile,\ line);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00346}00346\ \ \ \ \ UnityPrint(UnityStrFail);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00347}00347\ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00348}00348\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00350}00350\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00351}00351\ \textcolor{keywordtype}{void}\ UnityConcludeTest(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00352}00352\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00353}00353\ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentTestIgnored)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00354}00354\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00355}00355\ \ \ \ \ \ \ \ \ Unity.TestIgnores++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00356}00356\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00357}00357\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (!Unity.CurrentTestFailed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00358}00358\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00359}00359\ \ \ \ \ \ \ \ \ UnityTestResultsBegin(Unity.TestFile,\ Unity.CurrentTestLineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00360}00360\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrPass);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00361}00361\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00362}00362\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00363}00363\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00364}00364\ \ \ \ \ \ \ \ \ Unity.TestFailures++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00365}00365\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00366}00366\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00367}00367\ \ \ \ \ Unity.CurrentTestFailed\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00368}00368\ \ \ \ \ Unity.CurrentTestIgnored\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00369}00369\ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00370}00370\ \ \ \ \ UNITY\_FLUSH\_CALL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00371}00371\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00373}00373\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00374}00374\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UnityAddMsgIfSpecified(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00375}00375\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00376}00376\ \ \ \ \ \textcolor{keywordflow}{if}\ (msg)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00377}00377\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00378}00378\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrSpacer);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00379}00379\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_DETAILS}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00380}00380\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentDetail1)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00381}00381\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrDetail1Name);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(Unity.CurrentDetail1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentDetail2)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrDetail2Name);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(Unity.CurrentDetail2);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrSpacer);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00390}00390\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00391}00391\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00392}00392\ \ \ \ \ \ \ \ \ UnityPrint(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00393}00393\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00394}00394\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00396}00396\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00397}00397\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UnityPrintExpectedAndActualStrings(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00398}00398\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00399}00399\ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00400}00400\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00401}00401\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00402}00402\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00403}00403\ \ \ \ \ \ \ \ \ UnityPrint(expected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00404}00404\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00405}00405\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00406}00406\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00407}00407\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00408}00408\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNull);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00409}00409\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00410}00410\ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00411}00411\ \ \ \ \ \textcolor{keywordflow}{if}\ (actual\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00412}00412\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00413}00413\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00414}00414\ \ \ \ \ \ \ \ \ UnityPrint(actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00415}00415\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00416}00416\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00417}00417\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00418}00418\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00419}00419\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNull);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00420}00420\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00421}00421\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00422}00422\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00423}00423\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00424}00424\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UnityPrintExpectedAndActualStringsLen(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ length)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00427}00427\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00428}00428\ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00429}00429\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00430}00430\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00431}00431\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00432}00432\ \ \ \ \ \ \ \ \ UnityPrintLen(expected,\ length);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00433}00433\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00434}00434\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00435}00435\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00436}00436\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00437}00437\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNull);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00438}00438\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00439}00439\ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00440}00440\ \ \ \ \ \textcolor{keywordflow}{if}\ (actual\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00441}00441\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00442}00442\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00443}00443\ \ \ \ \ \ \ \ \ UnityPrintLen(actual,\ length);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00444}00444\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\(\backslash\)''});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00445}00445\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00446}00446\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00447}00447\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00448}00448\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNull);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00449}00449\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00450}00450\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00451}00451\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00452}00452\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00453}00453\ \textcolor{comment}{\ *\ Assertion\ \&\ Control\ Helpers}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00454}00454\ \textcolor{comment}{\ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00455}00455\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00456}00456\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ UnityIsOneArrayNull(UNITY\_INTERNAL\_PTR\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_INTERNAL\_PTR\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00460}00460\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00461}00461\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ actual)\ \textcolor{keywordflow}{return}\ 0;\ \textcolor{comment}{/*\ Both\ are\ NULL\ or\ same\ pointer\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00462}00462\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00463}00463\ \ \ \ \ \textcolor{comment}{/*\ print\ and\ return\ true\ if\ just\ expected\ is\ NULL\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00464}00464\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00465}00465\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00466}00466\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00467}00467\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNullPointerForExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00468}00468\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00469}00469\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00470}00470\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00471}00471\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00472}00472\ \ \ \ \ \textcolor{comment}{/*\ print\ and\ return\ true\ if\ just\ actual\ is\ NULL\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00473}00473\ \ \ \ \ \textcolor{keywordflow}{if}\ (actual\ ==\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00474}00474\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00475}00475\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00476}00476\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNullPointerForActual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00477}00477\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00478}00478\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00479}00479\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00480}00480\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00481}00481\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;\ \textcolor{comment}{/*\ return\ false\ if\ neither\ is\ NULL\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00482}00482\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00483}00483\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00484}00484\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00485}00485\ \textcolor{comment}{\ *\ Assertion\ Functions}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00486}00486\ \textcolor{comment}{\ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00487}00487\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00488}00488\ \textcolor{keywordtype}{void}\ UnityAssertBits(\textcolor{keyword}{const}\ UNITY\_INT\ mask,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00493}00493\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00494}00494\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00495}00495\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00496}00496\ \ \ \ \ \textcolor{keywordflow}{if}\ ((mask\ \&\ expected)\ !=\ (mask\ \&\ actual))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00497}00497\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00498}00498\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00499}00499\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00500}00500\ \ \ \ \ \ \ \ \ UnityPrintMask((UNITY\_UINT)mask,\ (UNITY\_UINT)expected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00501}00501\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00502}00502\ \ \ \ \ \ \ \ \ UnityPrintMask((UNITY\_UINT)mask,\ (UNITY\_UINT)actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00503}00503\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00504}00504\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00505}00505\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00506}00506\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00507}00507\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00508}00508\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00509}00509\ \textcolor{keywordtype}{void}\ UnityAssertEqualNumber(\textcolor{keyword}{const}\ UNITY\_INT\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_DISPLAY\_STYLE\_T\ style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00514}00514\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00515}00515\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00516}00516\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00517}00517\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ !=\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00518}00518\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00519}00519\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00520}00520\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00521}00521\ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(expected,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00522}00522\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00523}00523\ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(actual,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00524}00524\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00525}00525\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00526}00526\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00527}00527\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00529}00529\ \textcolor{preprocessor}{\#define\ UnityPrintPointlessAndBail()\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00530}00530\ \textcolor{preprocessor}{\{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00531}00531\ \textcolor{preprocessor}{\ \ \ \ UnityTestResultsFailBegin(lineNumber);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00532}00532\ \textcolor{preprocessor}{\ \ \ \ UnityPrint(UnityStrPointless);\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00533}00533\ \textcolor{preprocessor}{\ \ \ \ UnityAddMsgIfSpecified(msg);\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00534}00534\ \textcolor{preprocessor}{\ \ \ \ UNITY\_FAIL\_AND\_BAIL;\ \}}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00535}00535\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00536}00536\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00537}00537\ \textcolor{keywordtype}{void}\ UnityAssertEqualIntArray(UNITY\_INTERNAL\_PTR\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_INTERNAL\_PTR\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ num\_elements,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_DISPLAY\_STYLE\_T\ style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00543}00543\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00544}00544\ \ \ \ \ UNITY\_UINT32\ elements\ =\ num\_elements;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00545}00545\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ length\ \ \ =\ style\ \&\ 0xF;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00546}00546\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00547}00547\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00548}00548\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00549}00549\ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_elements\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00550}00550\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00551}00551\ \ \ \ \ \ \ \ \ UnityPrintPointlessAndBail();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00552}00552\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00553}00553\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00554}00554\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ actual)\ \textcolor{keywordflow}{return};\ \textcolor{comment}{/*\ Both\ are\ NULL\ or\ same\ pointer\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00555}00555\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityIsOneArrayNull(expected,\ actual,\ lineNumber,\ msg))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00556}00556\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00557}00557\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00558}00558\ \ \ \ \ \textcolor{keywordflow}{while}\ (elements-\/-\/)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00559}00559\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00560}00560\ \ \ \ \ \ \ \ \ UNITY\_INT\ expect\_val;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00561}00561\ \ \ \ \ \ \ \ \ UNITY\_INT\ actual\_val;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00562}00562\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (length)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00563}00563\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expect\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT8*)expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ actual\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT8*)actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expect\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT16*)expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ actual\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT16*)actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{comment}{/*\ length\ 4\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expect\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT32*)expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ actual\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT32*)actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ length\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00577}00577\ \textcolor{preprocessor}{\#ifdef\ UNITY\_SUPPORT\_64}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 8:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expect\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT64*)expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ actual\_val\ =\ *(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_INT64*)actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00582}00582\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00583}00583\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00584}00584\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00585}00585\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expect\_val\ !=\ actual\_val)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00586}00586\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (style\ \&\ UNITY\_DISPLAY\_RANGE\_UINT\ \&\&\ length\ <\ \textcolor{keyword}{sizeof}(expect\_val))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{comment}{/*\ For\ UINT,\ remove\ sign\ extension\ (padding\ 1's)\ from\ signed\ type\ casts\ above\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_INT\ mask\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ (mask\ <<\ 8\ *\ length)\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expect\_val\ \&=\ mask;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ actual\_val\ \&=\ mask;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00594}00594\ \ \ \ \ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrElement);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(num\_elements\ -\/\ elements\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(expect\_val,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(actual\_val,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00603}00603\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00604}00604\ \ \ \ \ \ \ \ \ expected\ =\ (UNITY\_INTERNAL\_PTR)(length\ +\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)expected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00605}00605\ \ \ \ \ \ \ \ \ actual\ \ \ =\ (UNITY\_INTERNAL\_PTR)(length\ +\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00606}00606\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00607}00607\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00608}00608\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00609}00609\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00610}00610\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_FLOAT}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00611}00611\ \textcolor{comment}{/*\ Wrap\ this\ define\ in\ a\ function\ with\ variable\ types\ as\ float\ or\ double\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00612}00612\ \textcolor{preprocessor}{\#define\ UNITY\_FLOAT\_OR\_DOUBLE\_WITHIN(delta,\ expected,\ actual,\ diff)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00613}00613\ \textcolor{preprocessor}{\ \ \ \ if\ (isinf(expected)\ \&\&\ isinf(actual)\ \&\&\ ((expected\ <\ 0)\ ==\ (actual\ <\ 0)))\ return\ 1;\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00614}00614\ \textcolor{preprocessor}{\ \ \ \ if\ (UNITY\_NAN\_CHECK)\ return\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00615}00615\ \textcolor{preprocessor}{\ \ \ \ diff\ =\ actual\ -\/\ expected;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00616}00616\ \textcolor{preprocessor}{\ \ \ \ if\ (diff\ <\ 0)\ diff\ =\ -\/diff;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00617}00617\ \textcolor{preprocessor}{\ \ \ \ if\ (delta\ <\ 0)\ delta\ =\ -\/delta;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00618}00618\ \textcolor{preprocessor}{\ \ \ \ return\ !(isnan(diff)\ ||\ isinf(diff)\ ||\ (diff\ >\ delta))}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00619}00619\ \ \ \ \ \textcolor{comment}{/*\ This\ first\ part\ of\ this\ condition\ will\ catch\ any\ NaN\ or\ Infinite\ values\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00620}00620\ \textcolor{preprocessor}{\#ifndef\ UNITY\_NAN\_NOT\_EQUAL\_NAN}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00621}00621\ \textcolor{preprocessor}{\ \ \#define\ UNITY\_NAN\_CHECK\ isnan(expected)\ \&\&\ isnan(actual)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00622}00622\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00623}00623\ \textcolor{preprocessor}{\ \ \#define\ UNITY\_NAN\_CHECK\ 0}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00624}00624\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00625}00625\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00626}00626\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_FLOAT\_PRINT}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00627}00627\ \textcolor{preprocessor}{\ \ \#define\ UNITY\_PRINT\_EXPECTED\_AND\_ACTUAL\_FLOAT(expected,\ actual)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00628}00628\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00629}00629\ \textcolor{preprocessor}{\ \ \ \ UnityPrint(UnityStrExpected);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00630}00630\ \textcolor{preprocessor}{\ \ \ \ UnityPrintFloat(expected);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00631}00631\ \textcolor{preprocessor}{\ \ \ \ UnityPrint(UnityStrWas);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00632}00632\ \textcolor{preprocessor}{\ \ \ \ UnityPrintFloat(actual);\ \}}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00633}00633\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00634}00634\ \textcolor{preprocessor}{\ \ \#define\ UNITY\_PRINT\_EXPECTED\_AND\_ACTUAL\_FLOAT(expected,\ actual)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00635}00635\ \textcolor{preprocessor}{\ \ \ \ UnityPrint(UnityStrDelta)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00636}00636\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ UNITY\_EXCLUDE\_FLOAT\_PRINT\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00637}00637\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00638}00638\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ UnityFloatsWithin(UNITY\_FLOAT\ delta,\ UNITY\_FLOAT\ expected,\ UNITY\_FLOAT\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00639}00639\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00640}00640\ \ \ \ \ UNITY\_FLOAT\ diff;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00641}00641\ \ \ \ \ UNITY\_FLOAT\_OR\_DOUBLE\_WITHIN(delta,\ expected,\ actual,\ diff);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00642}00642\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00643}00643\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00644}00644\ \textcolor{keywordtype}{void}\ UnityAssertEqualFloatArray(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_FLOAT*\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_FLOAT*\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ num\_elements,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00647}00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00649}00649\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00650}00650\ \ \ \ \ UNITY\_UINT32\ elements\ =\ num\_elements;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00651}00651\ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_FLOAT*\ ptr\_expected\ =\ expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00652}00652\ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_FLOAT*\ ptr\_actual\ =\ actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00653}00653\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00654}00654\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00655}00655\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00656}00656\ \ \ \ \ \textcolor{keywordflow}{if}\ (elements\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00657}00657\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00658}00658\ \ \ \ \ \ \ \ \ UnityPrintPointlessAndBail();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00659}00659\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00660}00660\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00661}00661\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ actual)\ \textcolor{keywordflow}{return};\ \textcolor{comment}{/*\ Both\ are\ NULL\ or\ same\ pointer\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00662}00662\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityIsOneArrayNull((UNITY\_INTERNAL\_PTR)expected,\ (UNITY\_INTERNAL\_PTR)actual,\ lineNumber,\ msg))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00663}00663\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00664}00664\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00665}00665\ \ \ \ \ \textcolor{keywordflow}{while}\ (elements-\/-\/)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00666}00666\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00667}00667\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!UnityFloatsWithin(*ptr\_expected\ *\ UNITY\_FLOAT\_PRECISION,\ *ptr\_expected,\ *ptr\_actual))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00668}00668\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00669}00669\ \ \ \ \ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00670}00670\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrElement);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00671}00671\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(num\_elements\ -\/\ elements\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EXPECTED\_AND\_ACTUAL\_FLOAT((UNITY\_DOUBLE)*ptr\_expected,\ (UNITY\_DOUBLE)*ptr\_actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00675}00675\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00676}00676\ \ \ \ \ \ \ \ \ ptr\_expected++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00677}00677\ \ \ \ \ \ \ \ \ ptr\_actual++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00678}00678\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00679}00679\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00680}00680\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00681}00681\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00682}00682\ \textcolor{keywordtype}{void}\ UnityAssertFloatsWithin(\textcolor{keyword}{const}\ UNITY\_FLOAT\ delta,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00683}00683\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_FLOAT\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00684}00684\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_FLOAT\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00685}00685\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00686}00686\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00687}00687\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00688}00688\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00689}00689\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00690}00690\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00691}00691\ \ \ \ \ \textcolor{keywordflow}{if}\ (!UnityFloatsWithin(delta,\ expected,\ actual))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00692}00692\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00693}00693\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00694}00694\ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EXPECTED\_AND\_ACTUAL\_FLOAT((UNITY\_DOUBLE)expected,\ (UNITY\_DOUBLE)actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00695}00695\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00696}00696\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00697}00697\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00698}00698\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00699}00699\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00700}00700\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00701}00701\ \textcolor{keywordtype}{void}\ UnityAssertFloatSpecial(\textcolor{keyword}{const}\ UNITY\_FLOAT\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00703}00703\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00704}00704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_FLOAT\_TRAIT\_T\ style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00705}00705\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00706}00706\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ trait\_names[]\ =\ \{UnityStrInf,\ UnityStrNegInf,\ UnityStrNaN,\ UnityStrDet\};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00707}00707\ \ \ \ \ UNITY\_INT\ should\_be\_trait\ =\ ((UNITY\_INT)style\ \&\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00708}00708\ \ \ \ \ UNITY\_INT\ is\_trait\ \ \ \ \ \ \ \ =\ !should\_be\_trait;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00709}00709\ \ \ \ \ UNITY\_INT\ trait\_index\ \ \ \ \ =\ (UNITY\_INT)(style\ >>\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00710}00710\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00711}00711\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00712}00712\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00713}00713\ \ \ \ \ \textcolor{keywordflow}{switch}\ (style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00714}00714\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00715}00715\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00716}00716\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00717}00717\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ isinf(actual)\ \&\&\ (actual\ >\ 0);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00718}00718\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00719}00719\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NEG\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00720}00720\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_NEG\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ isinf(actual)\ \&\&\ (actual\ <\ 0);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00722}00722\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00723}00723\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00724}00724\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NAN:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00725}00725\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_NAN:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00726}00726\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ isnan(actual)\ ?\ 1\ :\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00727}00727\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00728}00728\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00729}00729\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_DET:\ \textcolor{comment}{/*\ A\ determinate\ number\ is\ non\ infinite\ and\ not\ NaN.\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00730}00730\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_DET:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ !isinf(actual)\ \&\&\ !isnan(actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00733}00733\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00734}00734\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00735}00735\ \ \ \ \ \ \ \ \ \ \ \ \ trait\_index\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00736}00736\ \ \ \ \ \ \ \ \ \ \ \ \ trait\_names[0]\ =\ UnityStrInvalidFloatTrait;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00738}00738\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00739}00739\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00740}00740\ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_trait\ !=\ should\_be\_trait)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00741}00741\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00742}00742\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00743}00743\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00744}00744\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!should\_be\_trait)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNot);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00746}00746\ \ \ \ \ \ \ \ \ UnityPrint(trait\_names[trait\_index]);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00747}00747\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00748}00748\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_FLOAT\_PRINT}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00749}00749\ \ \ \ \ \ \ \ \ UnityPrintFloat((UNITY\_DOUBLE)actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00750}00750\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00751}00751\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (should\_be\_trait)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNot);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00753}00753\ \ \ \ \ \ \ \ \ UnityPrint(trait\_names[trait\_index]);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00754}00754\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00755}00755\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00756}00756\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00757}00757\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00758}00758\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00759}00759\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00760}00760\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ not\ UNITY\_EXCLUDE\_FLOAT\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00761}00761\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00762}00762\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00763}00763\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_DOUBLE}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00764}00764\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ UnityDoublesWithin(UNITY\_DOUBLE\ delta,\ UNITY\_DOUBLE\ expected,\ UNITY\_DOUBLE\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00765}00765\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00766}00766\ \ \ \ \ UNITY\_DOUBLE\ diff;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00767}00767\ \ \ \ \ UNITY\_FLOAT\_OR\_DOUBLE\_WITHIN(delta,\ expected,\ actual,\ diff);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00768}00768\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00769}00769\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00770}00770\ \textcolor{keywordtype}{void}\ UnityAssertEqualDoubleArray(UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_DOUBLE*\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00771}00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_DOUBLE*\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00772}00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ num\_elements,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00773}00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00774}00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00775}00775\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00776}00776\ \ \ \ \ UNITY\_UINT32\ elements\ =\ num\_elements;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00777}00777\ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_DOUBLE*\ ptr\_expected\ =\ expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00778}00778\ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ UNITY\_DOUBLE*\ ptr\_actual\ =\ actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00779}00779\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00780}00780\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00781}00781\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00782}00782\ \ \ \ \ \textcolor{keywordflow}{if}\ (elements\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00783}00783\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00784}00784\ \ \ \ \ \ \ \ \ UnityPrintPointlessAndBail();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00785}00785\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00786}00786\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00787}00787\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ actual)\ \textcolor{keywordflow}{return};\ \textcolor{comment}{/*\ Both\ are\ NULL\ or\ same\ pointer\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00788}00788\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityIsOneArrayNull((UNITY\_INTERNAL\_PTR)expected,\ (UNITY\_INTERNAL\_PTR)actual,\ lineNumber,\ msg))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00789}00789\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00790}00790\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00791}00791\ \ \ \ \ \textcolor{keywordflow}{while}\ (elements-\/-\/)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00792}00792\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00793}00793\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!UnityDoublesWithin(*ptr\_expected\ *\ UNITY\_DOUBLE\_PRECISION,\ *ptr\_expected,\ *ptr\_actual))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00794}00794\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00795}00795\ \ \ \ \ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00796}00796\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrElement);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00797}00797\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(num\_elements\ -\/\ elements\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00798}00798\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EXPECTED\_AND\_ACTUAL\_FLOAT(*ptr\_expected,\ *ptr\_actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00799}00799\ \ \ \ \ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00800}00800\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00801}00801\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00802}00802\ \ \ \ \ \ \ \ \ ptr\_expected++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00803}00803\ \ \ \ \ \ \ \ \ ptr\_actual++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00804}00804\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00805}00805\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00806}00806\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00807}00807\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00808}00808\ \textcolor{keywordtype}{void}\ UnityAssertDoublesWithin(\textcolor{keyword}{const}\ UNITY\_DOUBLE\ delta,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00809}00809\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_DOUBLE\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00810}00810\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_DOUBLE\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00811}00811\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00812}00812\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00813}00813\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00814}00814\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00815}00815\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00816}00816\ \ \ \ \ \textcolor{keywordflow}{if}\ (!UnityDoublesWithin(delta,\ expected,\ actual))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00817}00817\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00818}00818\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00819}00819\ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EXPECTED\_AND\_ACTUAL\_FLOAT(expected,\ actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00820}00820\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00821}00821\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00822}00822\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00823}00823\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00824}00824\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00825}00825\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00826}00826\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00827}00827\ \textcolor{keywordtype}{void}\ UnityAssertDoubleSpecial(\textcolor{keyword}{const}\ UNITY\_DOUBLE\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00828}00828\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00829}00829\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00830}00830\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_FLOAT\_TRAIT\_T\ style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00831}00831\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00832}00832\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ trait\_names[]\ =\ \{UnityStrInf,\ UnityStrNegInf,\ UnityStrNaN,\ UnityStrDet\};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00833}00833\ \ \ \ \ UNITY\_INT\ should\_be\_trait\ =\ ((UNITY\_INT)style\ \&\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00834}00834\ \ \ \ \ UNITY\_INT\ is\_trait\ \ \ \ \ \ \ \ =\ !should\_be\_trait;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00835}00835\ \ \ \ \ UNITY\_INT\ trait\_index\ \ \ \ \ =\ (UNITY\_INT)(style\ >>\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00836}00836\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00837}00837\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00838}00838\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00839}00839\ \ \ \ \ \textcolor{keywordflow}{switch}\ (style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00840}00840\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00841}00841\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00842}00842\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00843}00843\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ isinf(actual)\ \&\&\ (actual\ >\ 0);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00844}00844\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00845}00845\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NEG\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00846}00846\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_NEG\_INF:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00847}00847\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ isinf(actual)\ \&\&\ (actual\ <\ 0);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00848}00848\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00849}00849\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00850}00850\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NAN:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00851}00851\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_NAN:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00852}00852\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ isnan(actual)\ ?\ 1\ :\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00853}00853\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00854}00854\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00855}00855\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_DET:\ \textcolor{comment}{/*\ A\ determinate\ number\ is\ non\ infinite\ and\ not\ NaN.\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00856}00856\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ UNITY\_FLOAT\_IS\_NOT\_DET:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00857}00857\ \ \ \ \ \ \ \ \ \ \ \ \ is\_trait\ =\ !isinf(actual)\ \&\&\ !isnan(actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00858}00858\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00859}00859\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00860}00860\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00861}00861\ \ \ \ \ \ \ \ \ \ \ \ \ trait\_index\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00862}00862\ \ \ \ \ \ \ \ \ \ \ \ \ trait\_names[0]\ =\ UnityStrInvalidFloatTrait;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00863}00863\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00864}00864\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00865}00865\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00866}00866\ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_trait\ !=\ should\_be\_trait)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00867}00867\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00868}00868\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00869}00869\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00870}00870\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!should\_be\_trait)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00871}00871\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNot);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00872}00872\ \ \ \ \ \ \ \ \ UnityPrint(trait\_names[trait\_index]);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00873}00873\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00874}00874\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_FLOAT\_PRINT}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00875}00875\ \ \ \ \ \ \ \ \ UnityPrintFloat(actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00876}00876\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00877}00877\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (should\_be\_trait)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00878}00878\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrNot);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00879}00879\ \ \ \ \ \ \ \ \ UnityPrint(trait\_names[trait\_index]);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00880}00880\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00881}00881\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00882}00882\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00883}00883\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00884}00884\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00885}00885\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00886}00886\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ not\ UNITY\_EXCLUDE\_DOUBLE\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00887}00887\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00888}00888\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00889}00889\ \textcolor{keywordtype}{void}\ UnityAssertNumbersWithin(\textcolor{keyword}{const}\ UNITY\_UINT\ delta,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00890}00890\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00891}00891\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_INT\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00892}00892\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00893}00893\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00894}00894\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_DISPLAY\_STYLE\_T\ style)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00895}00895\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00896}00896\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00897}00897\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00898}00898\ \ \ \ \ \textcolor{keywordflow}{if}\ ((style\ \&\ UNITY\_DISPLAY\_RANGE\_INT)\ ==\ UNITY\_DISPLAY\_RANGE\_INT)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00899}00899\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00900}00900\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (actual\ >\ expected)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00901}00901\ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ ((UNITY\_UINT)(actual\ -\/\ expected)\ >\ delta);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00902}00902\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00903}00903\ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ ((UNITY\_UINT)(expected\ -\/\ actual)\ >\ delta);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00904}00904\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00905}00905\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00906}00906\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00907}00907\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((UNITY\_UINT)actual\ >\ (UNITY\_UINT)expected)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00908}00908\ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ ((UNITY\_UINT)(actual\ -\/\ expected)\ >\ delta);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00909}00909\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00910}00910\ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ ((UNITY\_UINT)(expected\ -\/\ actual)\ >\ delta);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00911}00911\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00912}00912\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00913}00913\ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentTestFailed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00914}00914\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00915}00915\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00916}00916\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrDelta);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00917}00917\ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle((UNITY\_INT)delta,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00918}00918\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00919}00919\ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(expected,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00920}00920\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00921}00921\ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(actual,\ style);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00922}00922\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00923}00923\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00924}00924\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00925}00925\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00926}00926\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00927}00927\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00928}00928\ \textcolor{keywordtype}{void}\ UnityAssertEqualString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00929}00929\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00930}00930\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00931}00931\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00932}00932\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00933}00933\ \ \ \ \ UNITY\_UINT32\ i;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00934}00934\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00935}00935\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00936}00936\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00937}00937\ \ \ \ \ \textcolor{comment}{/*\ if\ both\ pointers\ not\ null\ compare\ the\ strings\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00938}00938\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ \&\&\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00939}00939\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00940}00940\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ expected[i]\ ||\ actual[i];\ i++)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00941}00941\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00942}00942\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected[i]\ !=\ actual[i])}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00943}00943\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00944}00944\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00945}00945\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00946}00946\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00947}00947\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00948}00948\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00949}00949\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00950}00950\ \ \ \ \ \{\ \textcolor{comment}{/*\ handle\ case\ of\ one\ pointers\ being\ null\ (if\ both\ null,\ test\ should\ pass)\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00951}00951\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ !=\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00952}00952\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00953}00953\ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00954}00954\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00955}00955\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00956}00956\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00957}00957\ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentTestFailed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00958}00958\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00959}00959\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00960}00960\ \ \ \ \ \ \ \ \ UnityPrintExpectedAndActualStrings(expected,\ actual);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00961}00961\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00962}00962\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00963}00963\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00964}00964\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00965}00965\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00966}00966\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00967}00967\ \textcolor{keywordtype}{void}\ UnityAssertEqualStringLen(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00968}00968\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00969}00969\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ length,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00970}00970\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00971}00971\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00972}00972\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00973}00973\ \ \ \ \ UNITY\_UINT32\ i;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00974}00974\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00975}00975\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00976}00976\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00977}00977\ \ \ \ \ \textcolor{comment}{/*\ if\ both\ pointers\ not\ null\ compare\ the\ strings\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00978}00978\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ \&\&\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00979}00979\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00980}00980\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ (i\ <\ length)\ \&\&\ (expected[i]\ ||\ actual[i]);\ i++)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00981}00981\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00982}00982\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected[i]\ !=\ actual[i])}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00983}00983\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00984}00984\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00985}00985\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00986}00986\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00987}00987\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00988}00988\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00989}00989\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00990}00990\ \ \ \ \ \{\ \textcolor{comment}{/*\ handle\ case\ of\ one\ pointers\ being\ null\ (if\ both\ null,\ test\ should\ pass)\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00991}00991\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ !=\ actual)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00992}00992\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00993}00993\ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00994}00994\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00995}00995\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00996}00996\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00997}00997\ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentTestFailed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00998}00998\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l00999}00999\ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01000}01000\ \ \ \ \ \ \ \ \ UnityPrintExpectedAndActualStringsLen(expected,\ actual,\ length);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01001}01001\ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01002}01002\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01003}01003\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01004}01004\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01005}01005\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01006}01006\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01007}01007\ \textcolor{keywordtype}{void}\ UnityAssertEqualStringArray(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}**\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01008}01008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}**\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01009}01009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ num\_elements,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01010}01010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01011}01011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01012}01012\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01013}01013\ \ \ \ \ UNITY\_UINT32\ i,\ j\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01014}01014\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01015}01015\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01016}01016\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01017}01017\ \ \ \ \ \textcolor{comment}{/*\ if\ no\ elements,\ it's\ an\ error\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01018}01018\ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_elements\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01019}01019\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01020}01020\ \ \ \ \ \ \ \ \ UnityPrintPointlessAndBail();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01021}01021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01022}01022\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01023}01023\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ actual)\ \textcolor{keywordflow}{return};\ \textcolor{comment}{/*\ Both\ are\ NULL\ or\ same\ pointer\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01024}01024\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityIsOneArrayNull((UNITY\_INTERNAL\_PTR)expected,\ (UNITY\_INTERNAL\_PTR)actual,\ lineNumber,\ msg))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01025}01025\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01026}01026\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01027}01027\ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01028}01028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01029}01029\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ if\ both\ pointers\ not\ null\ compare\ the\ strings\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01030}01030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected[j]\ \&\&\ actual[j])}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01031}01031\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01032}01032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ expected[j][i]\ ||\ actual[j][i];\ i++)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01033}01033\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01034}01034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected[j][i]\ !=\ actual[j][i])}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01035}01035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01036}01036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01037}01037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01038}01038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01039}01039\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01040}01040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01041}01041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01042}01042\ \ \ \ \ \ \ \ \ \{\ \textcolor{comment}{/*\ handle\ case\ of\ one\ pointers\ being\ null\ (if\ both\ null,\ test\ should\ pass)\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01043}01043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (expected[j]\ !=\ actual[j])}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01044}01044\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01045}01045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Unity.CurrentTestFailed\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01046}01046\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01047}01047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01048}01048\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01049}01049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentTestFailed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01050}01050\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01051}01051\ \ \ \ \ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01052}01052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_elements\ >\ 1)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01053}01053\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01054}01054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrElement);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01055}01055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(j);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01056}01056\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01057}01057\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintExpectedAndActualStrings((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)(expected[j]),\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)(actual[j]));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01058}01058\ \ \ \ \ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01059}01059\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01060}01060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01061}01061\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (++j\ <\ num\_elements);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01062}01062\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01063}01063\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01064}01064\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01065}01065\ \textcolor{keywordtype}{void}\ UnityAssertEqualMemory(UNITY\_INTERNAL\_PTR\ expected,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01066}01066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_INTERNAL\_PTR\ actual,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01067}01067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ length,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01068}01068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_UINT32\ num\_elements,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01069}01069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01070}01070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ lineNumber)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01071}01071\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01072}01072\ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ ptr\_exp\ =\ (UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)expected;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01073}01073\ \ \ \ \ UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ ptr\_act\ =\ (UNITY\_PTR\_ATTRIBUTE\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)actual;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01074}01074\ \ \ \ \ UNITY\_UINT32\ elements\ =\ num\_elements;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01075}01075\ \ \ \ \ UNITY\_UINT32\ bytes;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01076}01076\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01077}01077\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01078}01078\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01079}01079\ \ \ \ \ \textcolor{keywordflow}{if}\ ((elements\ ==\ 0)\ ||\ (length\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01080}01080\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01081}01081\ \ \ \ \ \ \ \ \ UnityPrintPointlessAndBail();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01082}01082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01083}01083\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01084}01084\ \ \ \ \ \textcolor{keywordflow}{if}\ (expected\ ==\ actual)\ \textcolor{keywordflow}{return};\ \textcolor{comment}{/*\ Both\ are\ NULL\ or\ same\ pointer\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01085}01085\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityIsOneArrayNull(expected,\ actual,\ lineNumber,\ msg))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01086}01086\ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01087}01087\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01088}01088\ \ \ \ \ \textcolor{keywordflow}{while}\ (elements-\/-\/)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01089}01089\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01090}01090\ \ \ \ \ \ \ \ \ bytes\ =\ length;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01091}01091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (bytes-\/-\/)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01092}01092\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01093}01093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*ptr\_exp\ !=\ *ptr\_act)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01094}01094\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01095}01095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityTestResultsFailBegin(lineNumber);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01096}01096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrMemory);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01097}01097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_elements\ >\ 1)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01098}01098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01099}01099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrElement);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01100}01100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(num\_elements\ -\/\ elements\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01101}01101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01102}01102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrByte);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01103}01103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberUnsigned(length\ -\/\ bytes\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01104}01104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrExpected);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01105}01105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(*ptr\_exp,\ UNITY\_DISPLAY\_STYLE\_HEX8);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01106}01106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrWas);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01107}01107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrintNumberByStyle(*ptr\_act,\ UNITY\_DISPLAY\_STYLE\_HEX8);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01108}01108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityAddMsgIfSpecified(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01109}01109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01110}01110\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01111}01111\ \ \ \ \ \ \ \ \ \ \ \ \ ptr\_exp++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01112}01112\ \ \ \ \ \ \ \ \ \ \ \ \ ptr\_act++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01113}01113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01114}01114\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01115}01115\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01116}01116\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01117}01117\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01118}01118\ \textcolor{comment}{\ *\ Control\ Functions}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01119}01119\ \textcolor{comment}{\ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01120}01120\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01121}01121\ \textcolor{keywordtype}{void}\ UnityFail(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,\ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ line)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01122}01122\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01123}01123\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01124}01124\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01125}01125\ \ \ \ \ UnityTestResultsBegin(Unity.TestFile,\ line);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01126}01126\ \ \ \ \ UnityPrint(UnityStrFail);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01127}01127\ \ \ \ \ \textcolor{keywordflow}{if}\ (msg\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01128}01128\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01129}01129\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01130}01130\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01131}01131\ \textcolor{preprocessor}{\#ifndef\ UNITY\_EXCLUDE\_DETAILS}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01132}01132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentDetail1)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01133}01133\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01134}01134\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrDetail1Name);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01135}01135\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(Unity.CurrentDetail1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01136}01136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.CurrentDetail2)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01137}01137\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01138}01138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrDetail2Name);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01139}01139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(Unity.CurrentDetail2);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01140}01140\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01141}01141\ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(UnityStrSpacer);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01142}01142\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01143}01143\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01144}01144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (msg[0]\ !=\ \textcolor{charliteral}{'\ '})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01145}01145\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01146}01146\ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01147}01147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01148}01148\ \ \ \ \ \ \ \ \ UnityPrint(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01149}01149\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01150}01150\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01151}01151\ \ \ \ \ UNITY\_FAIL\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01152}01152\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01153}01153\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01154}01154\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01155}01155\ \textcolor{keywordtype}{void}\ UnityIgnore(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ msg,\ \textcolor{keyword}{const}\ UNITY\_LINE\_TYPE\ line)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01156}01156\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01157}01157\ \ \ \ \ RETURN\_IF\_FAIL\_OR\_IGNORE;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01158}01158\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01159}01159\ \ \ \ \ UnityTestResultsBegin(Unity.TestFile,\ line);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01160}01160\ \ \ \ \ UnityPrint(UnityStrIgnore);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01161}01161\ \ \ \ \ \textcolor{keywordflow}{if}\ (msg\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01162}01162\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01163}01163\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01164}01164\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01165}01165\ \ \ \ \ \ \ \ \ UnityPrint(msg);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01166}01166\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01167}01167\ \ \ \ \ UNITY\_IGNORE\_AND\_BAIL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01168}01168\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01169}01169\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01170}01170\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01171}01171\ \textcolor{preprocessor}{\#if\ defined(UNITY\_WEAK\_ATTRIBUTE)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01172}01172\ \ \ UNITY\_WEAK\_ATTRIBUTE\ \textcolor{keywordtype}{void}\ setUp(\textcolor{keywordtype}{void})\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01173}01173\ \ \ UNITY\_WEAK\_ATTRIBUTE\ \textcolor{keywordtype}{void}\ tearDown(\textcolor{keywordtype}{void})\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01174}01174\ \textcolor{preprocessor}{\#elif\ defined(UNITY\_WEAK\_PRAGMA)}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01175}01175\ \textcolor{preprocessor}{\ \ \#pragma\ weak\ setUp}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01176}01176\ \ \ \textcolor{keywordtype}{void}\ setUp(\textcolor{keywordtype}{void})\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01177}01177\ \textcolor{preprocessor}{\ \ \#pragma\ weak\ tearDown}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01178}01178\ \ \ \textcolor{keywordtype}{void}\ tearDown(\textcolor{keywordtype}{void})\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01179}01179\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01180}01180\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01181}01181\ \textcolor{keywordtype}{void}\ UnityDefaultTestRun(UnityTestFunction\ Func,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ FuncName,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ FuncLineNum)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01182}01182\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01183}01183\ \ \ \ \ Unity.CurrentTestName\ =\ FuncName;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01184}01184\ \ \ \ \ Unity.CurrentTestLineNumber\ =\ (UNITY\_LINE\_TYPE)FuncLineNum;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01185}01185\ \ \ \ \ Unity.NumberOfTests++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01186}01186\ \ \ \ \ UNITY\_CLR\_DETAILS();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01187}01187\ \ \ \ \ \textcolor{keywordflow}{if}\ (TEST\_PROTECT())}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01188}01188\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01189}01189\ \ \ \ \ \ \ \ \ setUp();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01190}01190\ \ \ \ \ \ \ \ \ Func();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01191}01191\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01192}01192\ \ \ \ \ \textcolor{keywordflow}{if}\ (TEST\_PROTECT())}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01193}01193\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01194}01194\ \ \ \ \ \ \ \ \ tearDown();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01195}01195\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01196}01196\ \ \ \ \ UnityConcludeTest();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01197}01197\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01198}01198\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01199}01199\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01200}01200\ \textcolor{keywordtype}{void}\ UnityBegin(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01201}01201\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01202}01202\ \ \ \ \ Unity.TestFile\ =\ filename;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01203}01203\ \ \ \ \ Unity.CurrentTestName\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01204}01204\ \ \ \ \ Unity.CurrentTestLineNumber\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01205}01205\ \ \ \ \ Unity.NumberOfTests\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01206}01206\ \ \ \ \ Unity.TestFailures\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01207}01207\ \ \ \ \ Unity.TestIgnores\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01208}01208\ \ \ \ \ Unity.CurrentTestFailed\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01209}01209\ \ \ \ \ Unity.CurrentTestIgnored\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01210}01210\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01211}01211\ \ \ \ \ UNITY\_CLR\_DETAILS();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01212}01212\ \ \ \ \ UNITY\_OUTPUT\_START();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01213}01213\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01214}01214\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01215}01215\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01216}01216\ \textcolor{keywordtype}{int}\ UnityEnd(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01217}01217\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01218}01218\ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01219}01219\ \ \ \ \ UnityPrint(UnityStrBreaker);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01220}01220\ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01221}01221\ \ \ \ \ UnityPrintNumber((UNITY\_INT)(Unity.NumberOfTests));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01222}01222\ \ \ \ \ UnityPrint(UnityStrResultsTests);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01223}01223\ \ \ \ \ UnityPrintNumber((UNITY\_INT)(Unity.TestFailures));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01224}01224\ \ \ \ \ UnityPrint(UnityStrResultsFailures);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01225}01225\ \ \ \ \ UnityPrintNumber((UNITY\_INT)(Unity.TestIgnores));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01226}01226\ \ \ \ \ UnityPrint(UnityStrResultsIgnored);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01227}01227\ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01228}01228\ \ \ \ \ \textcolor{keywordflow}{if}\ (Unity.TestFailures\ ==\ 0U)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01229}01229\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01230}01230\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrOk);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01231}01231\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01232}01232\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01233}01233\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01234}01234\ \ \ \ \ \ \ \ \ UnityPrint(UnityStrFail);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01235}01235\ \textcolor{preprocessor}{\#ifdef\ UNITY\_DIFFERENTIATE\_FINAL\_FAIL}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01236}01236\ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'E'});\ UNITY\_OUTPUT\_CHAR(\textcolor{charliteral}{'D'});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01237}01237\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01238}01238\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01239}01239\ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01240}01240\ \ \ \ \ UNITY\_FLUSH\_CALL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01241}01241\ \ \ \ \ UNITY\_OUTPUT\_COMPLETE();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01242}01242\ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{int})(Unity.TestFailures);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01243}01243\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01244}01244\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01245}01245\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01246}01246\ \textcolor{comment}{\ *\ Command\ Line\ Argument\ Support}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01247}01247\ \textcolor{comment}{\ *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01248}01248\ \textcolor{preprocessor}{\#ifdef\ UNITY\_USE\_COMMAND\_LINE\_ARGS}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01249}01249\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01250}01250\ \textcolor{keywordtype}{char}*\ UnityOptionIncludeNamed\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01251}01251\ \textcolor{keywordtype}{char}*\ UnityOptionExcludeNamed\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01252}01252\ \textcolor{keywordtype}{int}\ UnityVerbosity\ \ \ \ \ \ \ \ \ \ \ \ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01253}01253\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01254}01254\ \textcolor{keywordtype}{int}\ UnityParseOptions(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01255}01255\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01256}01256\ \ \ \ \ UnityOptionIncludeNamed\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01257}01257\ \ \ \ \ UnityOptionExcludeNamed\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01258}01258\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01259}01259\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ argc;\ i++)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01260}01260\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01261}01261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][0]\ ==\ \textcolor{charliteral}{'-\/'})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01262}01262\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01263}01263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (argv[i][1])}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01264}01264\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01265}01265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'l'}:\ \textcolor{comment}{/*\ list\ tests\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01266}01266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01267}01267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'n'}:\ \textcolor{comment}{/*\ include\ tests\ with\ name\ including\ this\ string\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01268}01268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'f'}:\ \textcolor{comment}{/*\ an\ alias\ for\ -\/n\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01269}01269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][2]\ ==\ \textcolor{charliteral}{'='})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01270}01270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityOptionIncludeNamed\ =\ \&argv[i][3];}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01271}01271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (++i\ <\ argc)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01272}01272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityOptionIncludeNamed\ =\ argv[i];}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01273}01273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01274}01274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01275}01275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(\textcolor{stringliteral}{"{}ERROR:\ No\ Test\ String\ to\ Include\ Matches\ For"{}});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01276}01276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01277}01277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01278}01278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01279}01279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01280}01280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'q'}:\ \textcolor{comment}{/*\ quiet\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01281}01281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityVerbosity\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01282}01282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01283}01283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'v'}:\ \textcolor{comment}{/*\ verbose\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01284}01284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityVerbosity\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01285}01285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01286}01286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'x'}:\ \textcolor{comment}{/*\ exclude\ tests\ with\ name\ including\ this\ string\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01287}01287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (argv[i][2]\ ==\ \textcolor{charliteral}{'='})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01288}01288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityOptionExcludeNamed\ =\ \&argv[i][3];}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01289}01289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (++i\ <\ argc)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01290}01290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityOptionExcludeNamed\ =\ argv[i];}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01291}01291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01292}01292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01293}01293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(\textcolor{stringliteral}{"{}ERROR:\ No\ Test\ String\ to\ Exclude\ Matches\ For"{}});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01294}01294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01295}01295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01296}01296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01297}01297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01298}01298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01299}01299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UnityPrint(\textcolor{stringliteral}{"{}ERROR:\ Unknown\ Option\ "{}});}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01300}01300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_OUTPUT\_CHAR(argv[i][1]);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01301}01301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UNITY\_PRINT\_EOL();}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01302}01302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01303}01303\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01304}01304\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01305}01305\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01306}01306\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01307}01307\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01308}01308\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01309}01309\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01310}01310\ \textcolor{keywordtype}{int}\ IsStringInBiggerString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ longstring,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ shortstring)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01311}01311\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01312}01312\ \ \ \ \ \textcolor{keywordtype}{char}*\ lptr\ =\ (\textcolor{keywordtype}{char}*)longstring;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01313}01313\ \ \ \ \ \textcolor{keywordtype}{char}*\ sptr\ =\ (\textcolor{keywordtype}{char}*)shortstring;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01314}01314\ \ \ \ \ \textcolor{keywordtype}{char}*\ lnext\ =\ lptr;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01315}01315\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01316}01316\ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ \textcolor{charliteral}{'*'})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01317}01317\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01318}01318\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01319}01319\ \ \ \ \ \textcolor{keywordflow}{while}\ (*lptr)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01320}01320\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01321}01321\ \ \ \ \ \ \ \ \ lnext\ =\ lptr\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01322}01322\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01323}01323\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ they\ current\ bytes\ match,\ go\ on\ to\ the\ next\ bytes\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01324}01324\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (*lptr\ \&\&\ *sptr\ \&\&\ (*lptr\ ==\ *sptr))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01325}01325\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01326}01326\ \ \ \ \ \ \ \ \ \ \ \ \ lptr++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01327}01327\ \ \ \ \ \ \ \ \ \ \ \ \ sptr++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01328}01328\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01329}01329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ We're\ done\ if\ we\ match\ the\ entire\ string\ or\ up\ to\ a\ wildcard\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01330}01330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ \textcolor{charliteral}{'*'})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01331}01331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01332}01332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ \textcolor{charliteral}{','})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01333}01333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01334}01334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ \textcolor{charliteral}{'"{}'})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01335}01335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01336}01336\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ \textcolor{charliteral}{'\(\backslash\)''})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01337}01337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01338}01338\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ \textcolor{charliteral}{':'})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01339}01339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 2;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01340}01340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*sptr\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01341}01341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01342}01342\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01343}01343\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01344}01344\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Otherwise\ we\ start\ in\ the\ long\ pointer\ 1\ character\ further\ and\ try\ again\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01345}01345\ \ \ \ \ \ \ \ \ lptr\ =\ lnext;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01346}01346\ \ \ \ \ \ \ \ \ sptr\ =\ (\textcolor{keywordtype}{char}*)shortstring;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01347}01347\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01348}01348\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01349}01349\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01350}01350\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01351}01351\ \textcolor{keywordtype}{int}\ UnityStringArgumentMatches(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01352}01352\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01353}01353\ \ \ \ \ \textcolor{keywordtype}{int}\ retval;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01354}01354\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ptr1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01355}01355\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ptr2;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01356}01356\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ptrf;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01357}01357\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01358}01358\ \ \ \ \ \textcolor{comment}{/*\ Go\ through\ the\ options\ and\ get\ the\ substrings\ for\ matching\ one\ at\ a\ time\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01359}01359\ \ \ \ \ ptr1\ =\ str;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01360}01360\ \ \ \ \ \textcolor{keywordflow}{while}\ (ptr1[0]\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01361}01361\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01362}01362\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((ptr1[0]\ ==\ \textcolor{charliteral}{'"{}'})\ ||\ (ptr1[0]\ ==\ \textcolor{charliteral}{'\(\backslash\)''}))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01363}01363\ \ \ \ \ \ \ \ \ \ \ \ \ ptr1++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01364}01364\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01365}01365\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ look\ for\ the\ start\ of\ the\ next\ partial\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01366}01366\ \ \ \ \ \ \ \ \ ptr2\ =\ ptr1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01367}01367\ \ \ \ \ \ \ \ \ ptrf\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01368}01368\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01369}01369\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01370}01370\ \ \ \ \ \ \ \ \ \ \ \ \ ptr2++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01371}01371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((ptr2[0]\ ==\ \textcolor{charliteral}{':'})\ \&\&\ (ptr2[1]\ !=\ 0)\ \&\&\ (ptr2[0]\ !=\ \textcolor{charliteral}{'\(\backslash\)''})\ \&\&\ (ptr2[0]\ !=\ \textcolor{charliteral}{'"{}'})\ \&\&\ (ptr2[0]\ !=\ \textcolor{charliteral}{','}))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01372}01372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptrf\ =\ \&ptr2[1];}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01373}01373\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ ((ptr2[0]\ !=\ 0)\ \&\&\ (ptr2[0]\ !=\ \textcolor{charliteral}{'\(\backslash\)''})\ \&\&\ (ptr2[0]\ !=\ \textcolor{charliteral}{'"{}'})\ \&\&\ (ptr2[0]\ !=\ \textcolor{charliteral}{','}));}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01374}01374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((ptr2[0]\ !=\ 0)\ \&\&\ ((ptr2[0]\ ==\ \textcolor{charliteral}{':'})\ ||\ (ptr2[0]\ ==\ \textcolor{charliteral}{'\(\backslash\)''})\ ||\ (ptr2[0]\ ==\ \textcolor{charliteral}{'"{}'})\ ||\ (ptr2[0]\ ==\ \textcolor{charliteral}{','})))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01375}01375\ \ \ \ \ \ \ \ \ \ \ \ \ ptr2++;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01376}01376\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01377}01377\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ done\ if\ complete\ filename\ match\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01378}01378\ \ \ \ \ \ \ \ \ retval\ =\ IsStringInBiggerString(Unity.TestFile,\ ptr1);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01379}01379\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (retval\ ==\ 1)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01380}01380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ retval;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01381}01381\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01382}01382\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ done\ if\ testname\ match\ after\ filename\ partial\ match\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01383}01383\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((retval\ ==\ 2)\ \&\&\ (ptrf\ !=\ 0))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01384}01384\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01385}01385\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (IsStringInBiggerString(Unity.CurrentTestName,\ ptrf))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01386}01386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01387}01387\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01388}01388\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01389}01389\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ done\ if\ complete\ testname\ match\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01390}01390\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (IsStringInBiggerString(Unity.CurrentTestName,\ ptr1)\ ==\ 1)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01391}01391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01392}01392\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01393}01393\ \ \ \ \ \ \ \ \ ptr1\ =\ ptr2;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01394}01394\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01395}01395\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01396}01396\ \ \ \ \ \textcolor{comment}{/*\ we\ couldn't\ find\ a\ match\ for\ any\ substrings\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01397}01397\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01398}01398\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01399}01399\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01400}01400\ \textcolor{keywordtype}{int}\ UnityTestMatches(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01401}01401\ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01402}01402\ \ \ \ \ \textcolor{comment}{/*\ Check\ if\ this\ test\ name\ matches\ the\ included\ test\ pattern\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01403}01403\ \ \ \ \ \textcolor{keywordtype}{int}\ retval;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01404}01404\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityOptionIncludeNamed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01405}01405\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01406}01406\ \ \ \ \ \ \ \ \ retval\ =\ UnityStringArgumentMatches(UnityOptionIncludeNamed);}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01407}01407\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01408}01408\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01409}01409\ \ \ \ \ \ \ \ \ retval\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01410}01410\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01411}01411\ \ \ \ \ \textcolor{comment}{/*\ Check\ if\ this\ test\ name\ matches\ the\ excluded\ test\ pattern\ */}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01412}01412\ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityOptionExcludeNamed)}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01413}01413\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01414}01414\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (UnityStringArgumentMatches(UnityOptionExcludeNamed))}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01415}01415\ \ \ \ \ \ \ \ \ \ \ \ \ retval\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01416}01416\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01417}01417\ \ \ \ \ \textcolor{keywordflow}{return}\ retval;}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01418}01418\ \}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01419}01419\ }
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01420}01420\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ UNITY\_USE\_COMMAND\_LINE\_ARGS\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{unity_8c_source_l01421}01421\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+
+\end{DoxyCode}

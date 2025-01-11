@@ -1,0 +1,93 @@
+\doxysection{Hash\+Node Struct Reference}
+\hypertarget{structHashNode}{}\label{structHashNode}\index{HashNode@{HashNode}}
+
+
+Node structure for hash table entries.  
+
+
+
+
+{\ttfamily \#include $<$hashtable.\+h$>$}
+
+
+
+Collaboration diagram for Hash\+Node\+:
+% FIG 0
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}}
+\begin{DoxyCompactList}\small\item\em Key of the hash table entry. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}}
+\begin{DoxyCompactList}\small\item\em Value associated with the key. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structHashNode}{Hash\+Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}}
+\begin{DoxyCompactList}\small\item\em Pointer to next node in case of collision. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Node structure for hash table entries. 
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00022}{22}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}\label{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36} 
+\index{HashNode@{HashNode}!key@{key}}
+\index{key@{key}!HashNode@{HashNode}}
+\doxysubsubsection{\texorpdfstring{key}{key}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} Hash\+Node\+::key}
+
+
+
+Key of the hash table entry. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00023}{23}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+\Hypertarget{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}\label{structHashNode_a3213171b5cdc2bfab119ce74c9971e36} 
+\index{HashNode@{HashNode}!next@{next}}
+\index{next@{next}!HashNode@{HashNode}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structHashNode}{Hash\+Node}}\texorpdfstring{$\ast$}{*} Hash\+Node\+::next}
+
+
+
+Pointer to next node in case of collision. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00025}{25}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+\Hypertarget{structHashNode_a6ae4d33712292a282972b284fd27e27d}\label{structHashNode_a6ae4d33712292a282972b284fd27e27d} 
+\index{HashNode@{HashNode}!value@{value}}
+\index{value@{value}!HashNode@{HashNode}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} Hash\+Node\+::value}
+
+
+
+Value associated with the key. 
+
+
+
+Definition at line \mbox{\hyperlink{hashtable_8h_source_l00024}{24}} of file \mbox{\hyperlink{hashtable_8h_source}{hashtable.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{hashtable_8h}{hashtable.\+h}}\end{DoxyCompactItemize}

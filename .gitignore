@@ -1,4 +1,4 @@
-.md
+*.md
 *.csv
 *.txt
 bin/

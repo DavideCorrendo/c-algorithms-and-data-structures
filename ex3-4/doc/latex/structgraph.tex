@@ -1,0 +1,113 @@
+\doxysection{graph Struct Reference}
+\hypertarget{structgraph}{}\label{structgraph}\index{graph@{graph}}
+
+
+Structure representing the graph.  
+
+
+
+
+{\ttfamily \#include $<$graph.\+h$>$}
+
+
+
+Collaboration diagram for graph\+:
+% FIG 0
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}}
+\begin{DoxyCompactList}\small\item\em Hash table storing nodes and their adjacency lists. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\+\_\+directed}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the graph is directed. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\+\_\+labelled}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the graph has edge labels. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\+\_\+count}}
+\begin{DoxyCompactList}\small\item\em Total number of edges in the graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structure representing the graph. 
+
+Definition at line \mbox{\hyperlink{graph_8h_source_l00034}{34}} of file \mbox{\hyperlink{graph_8h_source}{graph.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structgraph_a2cf75c5e36016b12cfa133504969c54f}\label{structgraph_a2cf75c5e36016b12cfa133504969c54f} 
+\index{graph@{graph}!edge\_count@{edge\_count}}
+\index{edge\_count@{edge\_count}!graph@{graph}}
+\doxysubsubsection{\texorpdfstring{edge\_count}{edge\_count}}
+{\footnotesize\ttfamily int graph\+::edge\+\_\+count}
+
+
+
+Total number of edges in the graph. 
+
+
+
+Definition at line \mbox{\hyperlink{graph_8h_source_l00038}{38}} of file \mbox{\hyperlink{graph_8h_source}{graph.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00018}{graph\+\_\+create()}}, \mbox{\hyperlink{graph_8c_source_l00265}{graph\+\_\+get\+\_\+edges()}}, \mbox{\hyperlink{graph_8c_source_l00247}{graph\+\_\+num\+\_\+edges()}}, and \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}.
+
+\Hypertarget{structgraph_a281098f7296782d1fde87ac063c4d855}\label{structgraph_a281098f7296782d1fde87ac063c4d855} 
+\index{graph@{graph}!is\_directed@{is\_directed}}
+\index{is\_directed@{is\_directed}!graph@{graph}}
+\doxysubsubsection{\texorpdfstring{is\_directed}{is\_directed}}
+{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+::is\+\_\+directed}
+
+
+
+Flag indicating if the graph is directed. 
+
+
+
+Definition at line \mbox{\hyperlink{graph_8h_source_l00036}{36}} of file \mbox{\hyperlink{graph_8h_source}{graph.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00018}{graph\+\_\+create()}}, \mbox{\hyperlink{graph_8c_source_l00040}{graph\+\_\+is\+\_\+directed()}}, \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}, and \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}.
+
+\Hypertarget{structgraph_a4d11e6c85943080376d99ec93c665d12}\label{structgraph_a4d11e6c85943080376d99ec93c665d12} 
+\index{graph@{graph}!is\_labelled@{is\_labelled}}
+\index{is\_labelled@{is\_labelled}!graph@{graph}}
+\doxysubsubsection{\texorpdfstring{is\_labelled}{is\_labelled}}
+{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+::is\+\_\+labelled}
+
+
+
+Flag indicating if the graph has edge labels. 
+
+
+
+Definition at line \mbox{\hyperlink{graph_8h_source_l00037}{37}} of file \mbox{\hyperlink{graph_8h_source}{graph.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00018}{graph\+\_\+create()}}, \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{graph_8c_source_l00049}{graph\+\_\+is\+\_\+labelled()}}, and \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}.
+
+\Hypertarget{structgraph_a1777271f3807584ccd092d71a876f0bd}\label{structgraph_a1777271f3807584ccd092d71a876f0bd} 
+\index{graph@{graph}!nodes@{nodes}}
+\index{nodes@{nodes}!graph@{graph}}
+\doxysubsubsection{\texorpdfstring{nodes}{nodes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structHashTable}{Hash\+Table}}\texorpdfstring{$\ast$}{*} graph\+::nodes}
+
+
+
+Hash table storing nodes and their adjacency lists. 
+
+
+
+Definition at line \mbox{\hyperlink{graph_8h_source_l00035}{35}} of file \mbox{\hyperlink{graph_8h_source}{graph.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}, \mbox{\hyperlink{graph_8c_source_l00154}{graph\+\_\+contains\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00142}{graph\+\_\+contains\+\_\+node()}}, \mbox{\hyperlink{graph_8c_source_l00018}{graph\+\_\+create()}}, \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{graph_8c_source_l00265}{graph\+\_\+get\+\_\+edges()}}, \mbox{\hyperlink{graph_8c_source_l00345}{graph\+\_\+get\+\_\+label()}}, \mbox{\hyperlink{graph_8c_source_l00318}{graph\+\_\+get\+\_\+neighbours()}}, \mbox{\hyperlink{graph_8c_source_l00256}{graph\+\_\+get\+\_\+nodes()}}, \mbox{\hyperlink{graph_8c_source_l00331}{graph\+\_\+num\+\_\+neighbours()}}, \mbox{\hyperlink{graph_8c_source_l00238}{graph\+\_\+num\+\_\+nodes()}}, \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}, and \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{graph_8h}{graph.\+h}}\end{DoxyCompactItemize}

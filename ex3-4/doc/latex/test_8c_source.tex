@@ -1,0 +1,425 @@
+\doxysection{test.\+c}
+\hypertarget{test_8c_source}{}\label{test_8c_source}\index{tests/test.c@{tests/test.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}unity.h"{}}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../src/graph.h"{}}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../src/bfs.h"{}}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}../src/hashtable.h"{}}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00008}00008\ \textcolor{comment}{//\ Utility\ function\ for\ string\ comparison}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00009}00009\ \textcolor{keywordtype}{int}\ test\_compare\_strings(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00010}00010\ \ \ \ \ \textcolor{keywordflow}{return}\ strcmp((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)a,\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)b);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00011}00011\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00013}00013\ \textcolor{comment}{//\ Utility\ function\ for\ hashing\ strings}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00014}00014\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ test\_hash\_string(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ key)\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\ =\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)key;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\ =\ 5381;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{int}\ c;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{while}\ ((c\ =\ *str++))\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00019}00019\ \ \ \ \ \ \ \ \ hash\ =\ ((hash\ <<\ 5)\ +\ hash)\ +\ c;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ hash;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00024}00024\ \textcolor{comment}{//\ Global\ variables\ for\ tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00025}00025\ \textcolor{keyword}{static}\ \mbox{\hyperlink{structgraph}{Graph}}*\ \mbox{\hyperlink{structgraph}{graph}}\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00026}00026\ \textcolor{keyword}{static}\ \mbox{\hyperlink{structHashTable}{HashTable}}*\ hash\_table\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00028}00028\ \textcolor{keywordtype}{void}\ setUp(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ Initialize\ graph\ for\ graph-\/related\ tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{structgraph}{graph}}\ =\ \mbox{\hyperlink{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5}{graph\_create}}(\textcolor{keyword}{true},\ \textcolor{keyword}{false},\ test\_compare\_strings,\ test\_hash\_string);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00031}00031\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(\mbox{\hyperlink{structgraph}{graph}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ Initialize\ hash\ table}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00034}00034\ \ \ \ \ hash\_table\ =\ \mbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\_table\_create}}(test\_compare\_strings,\ test\_hash\_string);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00035}00035\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(hash\_table);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00038}00038\ \textcolor{keywordtype}{void}\ tearDown(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00039}00039\ \ \ \ \ \textcolor{comment}{//\ Clean\ up\ graph\ after\ each\ test}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structgraph}{graph}})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00041}00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee}{graph\_free}}(\mbox{\hyperlink{structgraph}{graph}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structgraph}{graph}}\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//\ Clean\ up\ hash\ table}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ (hash\_table)\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00047}00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(hash\_table);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00048}00048\ \ \ \ \ \ \ \ \ hash\_table\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00052}00052\ \textcolor{comment}{//\ Hash\ Table\ Tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00053}00053\ \textcolor{keywordtype}{void}\ test\_hash\_table\_create(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00054}00054\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(hash\_table);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00055}00055\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(hash\_table));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00056}00056\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00058}00058\ \textcolor{keywordtype}{void}\ test\_hash\_table\_put\_get(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key\ =\ \textcolor{stringliteral}{"{}test\_key"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00060}00060\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value\ =\ \textcolor{stringliteral}{"{}test\_value"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00061}00061\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key,\ value);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00063}00063\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00064}00064\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(hash\_table));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00065}00065\ \ \ \ \ TEST\_ASSERT\_EQUAL\_PTR(value,\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(hash\_table,\ key));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00066}00066\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00068}00068\ \textcolor{keywordtype}{void}\ test\_hash\_table\_multiple\_puts(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00069}00069\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key1\ =\ \textcolor{stringliteral}{"{}key1"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00070}00070\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value1\ =\ \textcolor{stringliteral}{"{}value1"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00071}00071\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key2\ =\ \textcolor{stringliteral}{"{}key2"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00072}00072\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value2\ =\ \textcolor{stringliteral}{"{}value2"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00073}00073\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00074}00074\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key1,\ value1);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key2,\ value2);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00076}00076\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00077}00077\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(2,\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(hash\_table));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00078}00078\ \ \ \ \ TEST\_ASSERT\_EQUAL\_PTR(value1,\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(hash\_table,\ key1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00079}00079\ \ \ \ \ TEST\_ASSERT\_EQUAL\_PTR(value2,\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(hash\_table,\ key2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00080}00080\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00082}00082\ \textcolor{keywordtype}{void}\ test\_hash\_table\_overwrite(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00083}00083\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key\ =\ \textcolor{stringliteral}{"{}key"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00084}00084\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value1\ =\ \textcolor{stringliteral}{"{}value1"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00085}00085\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value2\ =\ \textcolor{stringliteral}{"{}value2"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00086}00086\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key,\ value1);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00088}00088\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key,\ value2);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00089}00089\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00090}00090\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(hash\_table));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00091}00091\ \ \ \ \ TEST\_ASSERT\_EQUAL\_PTR(value2,\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(hash\_table,\ key));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00092}00092\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00094}00094\ \textcolor{keywordtype}{void}\ test\_hash\_table\_contains\_key(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key\ =\ \textcolor{stringliteral}{"{}existing\_key"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00096}00096\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00097}00097\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key,\ \textcolor{stringliteral}{"{}some\_value"{}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00098}00098\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00099}00099\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(hash\_table,\ key));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00100}00100\ \ \ \ \ TEST\_ASSERT\_FALSE(\mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(hash\_table,\ \textcolor{stringliteral}{"{}non\_existing\_key"{}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00101}00101\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00103}00103\ \textcolor{keywordtype}{void}\ test\_hash\_table\_remove(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00104}00104\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key\ =\ \textcolor{stringliteral}{"{}key\_to\_remove"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00105}00105\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00106}00106\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key,\ \textcolor{stringliteral}{"{}value"{}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00107}00107\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(hash\_table,\ key);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00108}00108\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00109}00109\ \ \ \ \ TEST\_ASSERT\_FALSE(\mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(hash\_table,\ key));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00110}00110\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(hash\_table));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00111}00111\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00113}00113\ \textcolor{keywordtype}{void}\ test\_hash\_table\_keyset(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00114}00114\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key1\ =\ \textcolor{stringliteral}{"{}key1"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00115}00115\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key2\ =\ \textcolor{stringliteral}{"{}key2"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00116}00116\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00117}00117\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key1,\ \textcolor{stringliteral}{"{}value1"{}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00118}00118\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(hash\_table,\ key2,\ \textcolor{stringliteral}{"{}value2"{}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00119}00119\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00120}00120\ \ \ \ \ \textcolor{keywordtype}{void}**\ keys\ =\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(hash\_table);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00121}00121\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(keys);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00122}00122\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00123}00123\ \ \ \ \ \textcolor{comment}{//\ Check\ that\ both\ keys\ are\ in\ the\ keyset}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00124}00124\ \ \ \ \ \textcolor{keywordtype}{int}\ found1\ =\ 0,\ found2\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ keys[i]\ !=\ NULL;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(keys[i],\ key1)\ ==\ 0)\ found1\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(keys[i],\ key2)\ ==\ 0)\ found2\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00128}00128\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00129}00129\ \ \ \ \ TEST\_ASSERT\_TRUE(found1);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00130}00130\ \ \ \ \ TEST\_ASSERT\_TRUE(found2);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00131}00131\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00132}00132\ \ \ \ \ free(keys);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00133}00133\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00135}00135\ \textcolor{comment}{//\ Graph\ Tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00136}00136\ \textcolor{keywordtype}{void}\ test\_graph\_create(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00137}00137\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(\mbox{\hyperlink{structgraph}{graph}});}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00138}00138\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00139}00139\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00140}00140\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a4461245283642d82c6ef9480a0a876a0}{graph\_is\_labelled}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00141}00141\ \ \ \ \ TEST\_ASSERT\_FALSE(\mbox{\hyperlink{graph_8c_ad496179ca331699b6f041d26873dd859}{graph\_is\_directed}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00142}00142\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00144}00144\ \textcolor{keywordtype}{void}\ test\_graph\_add\_node(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00145}00145\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\ =\ \textcolor{stringliteral}{"{}TestNode"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00146}00146\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00147}00147\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00148}00148\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\_contains\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00149}00149\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00150}00150\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00151}00151\ \ \ \ \ \textcolor{comment}{//\ Try\ to\ add\ duplicate\ node}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00152}00152\ \ \ \ \ TEST\_ASSERT\_FALSE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00153}00153\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00154}00154\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00156}00156\ \textcolor{keywordtype}{void}\ test\_graph\_add\_multiple\_nodes(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00157}00157\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}Node1"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00158}00158\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}Node2"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00159}00159\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00160}00160\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00161}00161\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00162}00162\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(2,\ \mbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00163}00163\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00165}00165\ \textcolor{keywordtype}{void}\ test\_graph\_add\_edge(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00166}00166\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00167}00167\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00168}00168\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.5f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00169}00169\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00170}00170\ \ \ \ \ \textcolor{comment}{//\ Add\ nodes\ first}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00171}00171\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00172}00172\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00173}00173\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00174}00174\ \ \ \ \ \textcolor{comment}{//\ Add\ edge\ with\ label}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00175}00175\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00176}00176\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\_contains\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00177}00177\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\_contains\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node2,\ node1));\ \textcolor{comment}{//\ undirected}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00178}00178\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00179}00179\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00180}00180\ \ \ \ \ \textcolor{comment}{//\ Check\ label}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00181}00181\ \ \ \ \ \textcolor{keywordtype}{float}*\ retrieved\_label\ =\ (\textcolor{keywordtype}{float}*)\mbox{\hyperlink{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}{graph\_get\_label}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00182}00182\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(retrieved\_label);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00183}00183\ \ \ \ \ TEST\_ASSERT\_FLOAT\_WITHIN(0.001f,\ label,\ *retrieved\_label);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00184}00184\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00186}00186\ \textcolor{keywordtype}{void}\ test\_graph\_add\_duplicate\_edge(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00187}00187\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00188}00188\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00189}00189\ \ \ \ \ \textcolor{keywordtype}{float}\ label1\ =\ 1.5f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00190}00190\ \ \ \ \ \textcolor{keywordtype}{float}\ label2\ =\ 2.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00191}00191\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00192}00192\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00193}00193\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00194}00194\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00195}00195\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00196}00196\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00197}00197\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\mbox{\hyperlink{structgraph}{graph}}));\ \textcolor{comment}{//\ Should\ not\ add\ duplicate}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00198}00198\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00200}00200\ \textcolor{keywordtype}{void}\ test\_graph\_get\_neighbours(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00201}00201\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00202}00202\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00203}00203\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node3\ =\ \textcolor{stringliteral}{"{}C"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00204}00204\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00205}00205\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00206}00206\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00207}00207\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00208}00208\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node3));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00209}00209\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00210}00210\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00211}00211\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node3,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00212}00212\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00213}00213\ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbours\ =\ \mbox{\hyperlink{graph_8c_a659a2d632e551421d7add607f30cba31}{graph\_get\_neighbours}}(\mbox{\hyperlink{structgraph}{graph}},\ node1);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00214}00214\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(neighbours);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00215}00215\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00216}00216\ \ \ \ \ \textcolor{comment}{//\ Check\ that\ both\ neighbours\ are\ found}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00217}00217\ \ \ \ \ \textcolor{keywordtype}{int}\ found\_node2\ =\ 0,\ found\_node3\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00218}00218\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ neighbours[i]\ !=\ NULL;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(neighbours[i],\ node2)\ ==\ 0)\ found\_node2\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(neighbours[i],\ node3)\ ==\ 0)\ found\_node3\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00222}00222\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00223}00223\ \ \ \ \ TEST\_ASSERT\_TRUE(found\_node2);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00224}00224\ \ \ \ \ TEST\_ASSERT\_TRUE(found\_node3);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00225}00225\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00226}00226\ \ \ \ \ free(neighbours);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00227}00227\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00229}00229\ \textcolor{keywordtype}{void}\ test\_graph\_remove\_node(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00230}00230\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00231}00231\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00232}00232\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00233}00233\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00234}00234\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00235}00235\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00236}00236\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00237}00237\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00238}00238\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_aba154e83b5bbc87190247fd4809179ce}{graph\_remove\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00239}00239\ \ \ \ \ TEST\_ASSERT\_FALSE(\mbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\_contains\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00240}00240\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(1,\ \mbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00241}00241\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00242}00242\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00244}00244\ \textcolor{keywordtype}{void}\ test\_graph\_remove\_edge(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00245}00245\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00246}00246\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00247}00247\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00248}00248\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00249}00249\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00250}00250\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00251}00251\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00252}00252\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00253}00253\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00254}00254\ \ \ \ \ TEST\_ASSERT\_FALSE(\mbox{\hyperlink{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\_contains\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00255}00255\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(0,\ \mbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\mbox{\hyperlink{structgraph}{graph}}));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00256}00256\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00258}00258\ \textcolor{comment}{//\ BFS\ Tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00259}00259\ \textcolor{keywordtype}{void}\ test\_breadth\_first\_visit(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00260}00260\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00261}00261\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00262}00262\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node3\ =\ \textcolor{stringliteral}{"{}C"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00263}00263\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00264}00264\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00265}00265\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00266}00266\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00267}00267\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node3));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00268}00268\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00269}00269\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00270}00270\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node2,\ node3,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00271}00271\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00272}00272\ \ \ \ \ \textcolor{keywordtype}{void}**\ result\ =\ \mbox{\hyperlink{bfs_8c_a237a09cde585ee4750f6419760f4021c}{breadth\_first\_visit}}(\mbox{\hyperlink{structgraph}{graph}},\ (\textcolor{keywordtype}{void}*)node1,\ test\_compare\_strings,\ test\_hash\_string);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00273}00273\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00274}00274\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00275}00275\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(node1,\ result[0]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00276}00276\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(node2,\ result[1]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00277}00277\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(node3,\ result[2]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00278}00278\ \ \ \ \ TEST\_ASSERT\_NULL(result[3]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00279}00279\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00280}00280\ \ \ \ \ free(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00281}00281\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00283}00283\ \textcolor{keywordtype}{void}\ test\_bfs\_single\_node(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00284}00284\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\ =\ \textcolor{stringliteral}{"{}SingleNode"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00285}00285\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00286}00286\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00287}00287\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00288}00288\ \ \ \ \ \textcolor{keywordtype}{void}**\ result\ =\ \mbox{\hyperlink{bfs_8c_a237a09cde585ee4750f6419760f4021c}{breadth\_first\_visit}}(\mbox{\hyperlink{structgraph}{graph}},\ (\textcolor{keywordtype}{void}*)node,\ test\_compare\_strings,\ test\_hash\_string);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00289}00289\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00290}00290\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00291}00291\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(node,\ result[0]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00292}00292\ \ \ \ \ TEST\_ASSERT\_NULL(result[1]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00293}00293\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00294}00294\ \ \ \ \ free(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00295}00295\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00296}00296\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00297}00297\ \textcolor{keywordtype}{void}\ test\_bfs\_disconnected\_graph(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00298}00298\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node1\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00299}00299\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node2\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00300}00300\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node3\ =\ \textcolor{stringliteral}{"{}C"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00301}00301\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node4\ =\ \textcolor{stringliteral}{"{}D"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00302}00302\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00303}00303\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00304}00304\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node1));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00305}00305\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node2));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00306}00306\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node3));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00307}00307\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node4));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00308}00308\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00309}00309\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node1,\ node2,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00310}00310\ \ \ \ \ \textcolor{comment}{//\ node3\ and\ node4\ are\ not\ connected}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00311}00311\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00312}00312\ \ \ \ \ \textcolor{keywordtype}{void}**\ result\ =\ \mbox{\hyperlink{bfs_8c_a237a09cde585ee4750f6419760f4021c}{breadth\_first\_visit}}(\mbox{\hyperlink{structgraph}{graph}},\ (\textcolor{keywordtype}{void}*)node1,\ test\_compare\_strings,\ test\_hash\_string);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00313}00313\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00314}00314\ \ \ \ \ TEST\_ASSERT\_NOT\_NULL(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00315}00315\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(node1,\ result[0]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00316}00316\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(node2,\ result[1]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00317}00317\ \ \ \ \ TEST\_ASSERT\_NULL(result[2]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00318}00318\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00319}00319\ \ \ \ \ free(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00320}00320\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00321}00321\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00322}00322\ \textcolor{keywordtype}{void}\ test\_bfs\_complex\_graph(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00323}00323\ \ \ \ \ \textcolor{comment}{//\ Create\ a\ more\ complex\ graph\ structure}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00325}00325\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_a\ =\ \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00326}00326\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_b\ =\ \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00327}00327\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_c\ =\ \textcolor{stringliteral}{"{}C"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00328}00328\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_d\ =\ \textcolor{stringliteral}{"{}D"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00329}00329\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_e\ =\ \textcolor{stringliteral}{"{}E"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00330}00330\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_f\ =\ \textcolor{stringliteral}{"{}F"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00331}00331\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_g\ =\ \textcolor{stringliteral}{"{}G"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00332}00332\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_h\ =\ \textcolor{stringliteral}{"{}H"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00333}00333\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_i\ =\ \textcolor{stringliteral}{"{}I"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00334}00334\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ node\_j\ =\ \textcolor{stringliteral}{"{}J"{}};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00335}00335\ \ \ \ \ \textcolor{keywordtype}{float}\ label\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00336}00336\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00337}00337\ \ \ \ \ \textcolor{comment}{//\ Add\ all\ nodes}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00338}00338\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_a));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00339}00339\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_b));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00340}00340\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_c));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00341}00341\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_d));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00342}00342\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_e));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00343}00343\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_f));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00344}00344\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_g));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00345}00345\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_h));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00346}00346\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_i));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00347}00347\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_j));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00349}00349\ \ \ \ \ \textcolor{comment}{//\ Add\ edges\ to\ create\ the\ graph\ structure}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00350}00350\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_a,\ node\_b,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00351}00351\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_a,\ node\_c,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00352}00352\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_b,\ node\_d,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00353}00353\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_b,\ node\_e,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00354}00354\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_c,\ node\_f,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00355}00355\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_c,\ node\_g,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00356}00356\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_e,\ node\_h,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00357}00357\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_g,\ node\_i,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00358}00358\ \ \ \ \ TEST\_ASSERT\_TRUE(\mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{graph}},\ node\_g,\ node\_j,\ \&label));}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00360}00360\ \ \ \ \ \textcolor{comment}{//\ Perform\ BFS\ starting\ from\ node\ A}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00361}00361\ \ \ \ \ \textcolor{keywordtype}{void}**\ result\ =\ \mbox{\hyperlink{bfs_8c_a237a09cde585ee4750f6419760f4021c}{breadth\_first\_visit}}(\mbox{\hyperlink{structgraph}{graph}},\ (\textcolor{keywordtype}{void}*)node\_a,\ test\_compare\_strings,\ test\_hash\_string);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00363}00363\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ result[i]\ !=\ NULL;\ i++)\{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00364}00364\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}},\ (\textcolor{keywordtype}{char}*)result[i]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00365}00365\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00366}00366\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00367}00367\ \ \ \ \ \textcolor{comment}{//\ Expected\ BFS\ order\ when\ starting\ from\ A}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00368}00368\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ expected\_order[]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00369}00369\ \ \ \ \ \ \ \ \ node\_a,\ \ \textcolor{comment}{//\ First\ node\ is\ A}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00370}00370\ \ \ \ \ \ \ \ \ node\_b,\ \ \textcolor{comment}{//\ Adjacent\ to\ A}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00371}00371\ \ \ \ \ \ \ \ \ node\_c,\ \ \textcolor{comment}{//\ Adjacent\ to\ A}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00372}00372\ \ \ \ \ \ \ \ \ node\_d,\ \ \textcolor{comment}{//\ Level\ 2\ nodes\ adjacent\ to\ B}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00373}00373\ \ \ \ \ \ \ \ \ node\_e,\ \ \textcolor{comment}{//\ Level\ 2\ nodes\ adjacent\ to\ B}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00374}00374\ \ \ \ \ \ \ \ \ node\_f,\ \ \textcolor{comment}{//\ Level\ 2\ nodes\ adjacent\ to\ C}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00375}00375\ \ \ \ \ \ \ \ \ node\_g,\ \ \textcolor{comment}{//\ Level\ 2\ nodes\ adjacent\ to\ C}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00376}00376\ \ \ \ \ \ \ \ \ node\_h,\ \ \textcolor{comment}{//\ Level\ 3\ node\ adjacent\ to\ E}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00377}00377\ \ \ \ \ \ \ \ \ node\_i,\ \ \textcolor{comment}{//\ Level\ 3\ node\ adjacent\ to\ G}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00378}00378\ \ \ \ \ \ \ \ \ node\_j\ \ \ \textcolor{comment}{//\ Level\ 3\ node\ adjacent\ to\ G}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00379}00379\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00380}00380\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00381}00381\ \ \ \ \ \textcolor{comment}{//\ Check\ the\ correctness\ of\ the\ BFS\ traversal\ order}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00382}00382\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 10;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00383}00383\ \ \ \ \ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(expected\_order[i],\ result[i]);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00384}00384\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00385}00385\ \ \ \ \ TEST\_ASSERT\_NULL(result[10]);\ \textcolor{comment}{//\ Ensure\ the\ list\ is\ terminated}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00386}00386\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00387}00387\ \ \ \ \ free(result);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00388}00388\ \}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00390}00390\ \textcolor{comment}{//\ Main\ test\ runner}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00391}00391\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00392}00392\ \ \ \ \ UNITY\_BEGIN();}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00393}00393\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00394}00394\ \ \ \ \ \textcolor{comment}{//\ Hash\ Table\ Tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00395}00395\ \ \ \ \ RUN\_TEST(test\_hash\_table\_create);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00396}00396\ \ \ \ \ RUN\_TEST(test\_hash\_table\_put\_get);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00397}00397\ \ \ \ \ RUN\_TEST(test\_hash\_table\_multiple\_puts);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00398}00398\ \ \ \ \ RUN\_TEST(test\_hash\_table\_overwrite);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00399}00399\ \ \ \ \ RUN\_TEST(test\_hash\_table\_contains\_key);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00400}00400\ \ \ \ \ RUN\_TEST(test\_hash\_table\_remove);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00401}00401\ \ \ \ \ RUN\_TEST(test\_hash\_table\_keyset);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00402}00402\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00403}00403\ \ \ \ \ \textcolor{comment}{//\ Graph\ Tests}}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00404}00404\ \ \ \ \ RUN\_TEST(test\_graph\_create);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00405}00405\ \ \ \ \ RUN\_TEST(test\_graph\_add\_node);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00406}00406\ \ \ \ \ RUN\_TEST(test\_graph\_add\_multiple\_nodes);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00407}00407\ \ \ \ \ RUN\_TEST(test\_graph\_add\_edge);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00408}00408\ \ \ \ \ RUN\_TEST(test\_graph\_add\_duplicate\_edge);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00409}00409\ \ \ \ \ RUN\_TEST(test\_graph\_get\_neighbours);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00410}00410\ \ \ \ \ RUN\_TEST(test\_graph\_remove\_node);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00411}00411\ \ \ \ \ RUN\_TEST(test\_graph\_remove\_edge);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00413}00413\ \ \ \ \ RUN\_TEST(test\_breadth\_first\_visit);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00414}00414\ \ \ \ \ RUN\_TEST(test\_bfs\_single\_node);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00415}00415\ \ \ \ \ RUN\_TEST(test\_bfs\_disconnected\_graph);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00416}00416\ \ \ \ \ RUN\_TEST(test\_bfs\_complex\_graph);}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00417}00417\ }
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00418}00418\ \ \ \ \ \textcolor{keywordflow}{return}\ UNITY\_END();}
+\DoxyCodeLine{\Hypertarget{test_8c_source_l00419}00419\ \}}
+
+\end{DoxyCode}
