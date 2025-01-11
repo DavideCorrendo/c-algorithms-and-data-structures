@@ -109,19 +109,24 @@ void merge(void **base, int first, int mid, int last, int (*compar)(const void *
 }
 
 void merge_sort_rec(void **base, int first, int last, int (*compar)(const void *, const void*)){
-    
     if(first < last){
         size_t mid = floor((first + last) / 2);
         merge_sort_rec(base, first, mid, compar);
         merge_sort_rec(base, mid + 1, last, compar);
         merge(base, first, mid, last, compar);
     }
-    
+
     return;
 }
 
 void merge_sort(void **base, int nitems, int (*compar)(const void *, const void*)) {
+    clock_t from = clock();
+
     merge_sort_rec(base, 0, nitems - 1, compar);
+
+    clock_t to = clock();
+    double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
+    printf("The time taken by the merge_sort function is: %f sec\n", time_taken);
 }
 
 void swap(void **a, void **b) {
@@ -171,6 +176,8 @@ void quick_sort_rec(void **arr, int left, int right, int (*compar)(const void *,
 
 // QuickSort wrapper
 void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const void *)) {
+    clock_t from = clock();
+
     int start, end;
 
     int low = nitems;
@@ -183,6 +190,10 @@ void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const vo
     quick_sort_rec(base, 0, start - 1, compar);   // Sezione inferiore
     quick_sort_rec(base, start, end, compar);    // Sezione centrale
     quick_sort_rec(base, end + 1, nitems - 1, compar); // Sezione superiore
+
+    clock_t to = clock();
+    double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
+    printf("The time taken by the quick_sort function is: %f sec\n", time_taken);
 }
 
 void free_records(Records **records) {

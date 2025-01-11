@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../src/hashtable.h"
+#include <time.h>
 
 typedef enum {false = 0, true = 1} Bool;
 

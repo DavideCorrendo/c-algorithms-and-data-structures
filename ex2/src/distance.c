@@ -75,6 +75,7 @@ int edit_distance(const char *s1, const char *s2, int **memo) {
 
 //find the closests words to a target word
 void find_closest_words(const char *dictionary[], int dict_size, char *target, int **memo) {
+    clock_t from = clock();
 
     int j = 0;
     //ignore every sign of punctuation
@@ -111,6 +112,10 @@ void find_closest_words(const char *dictionary[], int dict_size, char *target, i
     printf("\n");
 
     free(distances);
+
+    clock_t to = clock();
+    double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
+    printf("The time taken from the find_closest_words is: %f sec\n", time_taken);
 }
 
 //function to compare word distances(used in qsort)

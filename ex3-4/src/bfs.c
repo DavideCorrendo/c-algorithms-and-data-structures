@@ -4,6 +4,8 @@
 
 
 void** breadth_first_visit(Graph* gr, void* start, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*)) {
+    clock_t from = clock();
+
     hash(start);
     if (!gr || !start) return NULL;
 
@@ -55,5 +57,10 @@ void** breadth_first_visit(Graph* gr, void* start, int (*compare)(const void*, c
     visited[visited_count] = NULL;
 
     free(queue);
+
+    clock_t to = clock();
+    double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
+    printf("The time taken by the breadth_first_visit is: %f sec\n", time_taken);
+
     return visited;
 }

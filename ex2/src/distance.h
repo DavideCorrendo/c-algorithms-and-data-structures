@@ -6,6 +6,7 @@
 #include <string.h>
 #include <limits.h>
 #include <ctype.h>
+#include <time.h>
 
 typedef struct {
     char *word;
