@@ -41,6 +41,8 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    puts("grafo creato");
+
     char node1[256];
     char node2[256];
     char w[256];
@@ -78,6 +80,7 @@ int main(int argc, char *argv[]) {
         graph_free(gr);
         return EXIT_FAILURE;
     }
+    printf("visiting graph from %s...\n", start_node);
 
     void** res = breadth_first_visit(gr, start_node, compare_strings, hash_string);
     if (!res) {
@@ -98,9 +101,13 @@ int main(int argc, char *argv[]) {
         fprintf(fileout, "%s\n", (char*)res[i]);
     }
 
+    puts("result printed");
+
     fclose(fileout);
     graph_free(gr);
     free(res);
+    
+    puts("graph destroyed");
 
     return 0;
 }
