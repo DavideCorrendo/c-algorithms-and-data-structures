@@ -4,7 +4,7 @@
  */
 
 #include "distance.h"
-#define CORRECT_WORDS 3
+#define CORRECT_WORDS 5
 
 int min3(int a, int b, int c) {
     int min = a;
@@ -126,7 +126,7 @@ void find_closest_words(const char *dictionary[], int dict_size, char *target, i
     free(distances);
 
     clock_t end = clock();
-    printf("Time taken: %.2f seconds\n\n", 
+    printf("Time taken: %.4f seconds\n\n", 
            (double)(end - start) / CLOCKS_PER_SEC);
 }
 

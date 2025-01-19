@@ -53,11 +53,15 @@ int main(int argc, char *argv[]) {
             continue;
         }
 
-        char* node1_copy = malloc(30 * sizeof(char));
-        char* node2_copy = malloc(30 * sizeof(char));
+        char* node1_copy = strdup(node1);
+        char* node2_copy = strdup(node2);
 
-        strcpy(node1_copy, node1);
-        strcpy(node2_copy, node2);
+        if (!node1_copy || !node2_copy) {
+            free(node1_copy);  // Safe to free NULL
+            free(node2_copy);
+            fprintf(stderr, "Memory allocation failed\n");
+            continue;
+        }
 
         if (!graph_contains_node(gr, node1_copy)) {
             graph_add_node(gr, node1_copy);
