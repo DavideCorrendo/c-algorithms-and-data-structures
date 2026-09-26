@@ -1,11 +1,137 @@
-\doxysection{src/bfs.c File Reference}
+\doxysection{src/\+bfs.c File Reference}
 \hypertarget{bfs_8c}{}\label{bfs_8c}\index{src/bfs.c@{src/bfs.c}}
 
 
 Implementation of Breadth-\/\+First Search algorithm for graphs.  
 
 
-{\ttfamily \#include "{}bfs.\+h"{}}\newline
-{\ttfamily \#include $<$string.\+h$>$}\newline
-{\ttfamily \#include $<$stdlib.\+h$>$}\newline
-Include dependency graph for bfs.\+c\+:
+{\ttfamily \+\#include "{}bfs.\+h"{}}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for bfs.\+c:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bfs_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{bfs_8c_ab83d2c75abb69c99a5ff046e866b3352}{breadth\+\_\+first\+\_\+visit}} (Graph gr, void \texorpdfstring{$\ast$}{*}start, int(\texorpdfstring{$\ast$}{*}compare)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), unsigned long(\texorpdfstring{$\ast$}{*}hash)(const void \texorpdfstring{$\ast$}{*}))
+\begin{DoxyCompactList}\small\item\em Performs a breadth-\/first search traversal of a graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of Breadth-\/\+First Search algorithm for graphs. 
+
+This file contains the implementation of a breadth-\/first search algorithm that can be used with any graph implementation that provides the required interface. 
+
+Definition in file \doxymbox{\hyperlink{bfs_8c_source}{bfs.\+c}}.
+
+
+
+\label{bfs_8c_doc-func-members}
+\Hypertarget{bfs_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{bfs_8c_ab83d2c75abb69c99a5ff046e866b3352}\index{bfs.c@{bfs.c}!breadth\_first\_visit@{breadth\_first\_visit}}
+\index{breadth\_first\_visit@{breadth\_first\_visit}!bfs.c@{bfs.c}}
+\doxysubsubsection{\texorpdfstring{breadth\_first\_visit()}{breadth\_first\_visit()}}
+{\footnotesize\ttfamily \label{bfs_8c_ab83d2c75abb69c99a5ff046e866b3352} 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} breadth\+\_\+first\+\_\+visit (\begin{DoxyParamCaption}\item[{Graph}]{gr}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{start}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compare~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), }\item[{unsigned long(\texorpdfstring{$\ast$}{*}}]{hash~}{)(const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
+
+
+
+Performs a breadth-\/first search traversal of a graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gr} & Pointer to the graph structure \\
+\hline
+{\em start} & Pointer to the starting node \\
+\hline
+{\em compare} & Function pointer to compare two nodes \\
+\hline
+{\em hash} & Function pointer to generate hash value for a node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL-\/terminated array of pointers to visited nodes in BFS order, or NULL if an error occurs
+\end{DoxyReturn}
+Implements the breadth-\/first search algorithm using a queue. The function measures and prints the execution time. The returned array must be freed by the caller.
+
+\begin{DoxyNote}{Note}
+The hash parameter is used for compatibility with the graph interface but is not essential for the BFS algorithm itself. 
+\end{DoxyNote}
+
+
+Definition at line \doxymbox{\hyperlink{bfs_8c_source_l00028}{28}} of file \doxymbox{\hyperlink{bfs_8c_source}{bfs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ clock\_t\ from\ =\ clock();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !start)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_nodes\ =\ \doxymbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(gr);}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}**\ visited\_array\ =\ malloc((num\_nodes\ +\ 1)\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}**\ queue\ =\ malloc((num\_nodes\ +\ 1)\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (!visited\_array\ ||\ !queue)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ free(visited\_array);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ free(queue);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ visited\_map\ =\ \doxymbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\_table\_create}}(compare,\ hash);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (!visited\_map)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ free(visited\_array);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ free(queue);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{int}\ visited\_count\ =\ 0;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{int}\ queue\_front\ =\ 0,\ queue\_rear\ =\ 0;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ queue[queue\_rear++]\ =\ start;}
+\DoxyCodeLine{00053\ \ \ \ \ visited\_array[visited\_count++]\ =\ start;}
+\DoxyCodeLine{00054\ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(visited\_map,\ start,\ (\textcolor{keywordtype}{void}*)1);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{while}\ (queue\_front\ <\ queue\_rear)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ current\ =\ queue[queue\_front++];}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \doxymbox{\hyperlink{graph_8c_a659a2d632e551421d7add607f30cba31}{graph\_get\_neighbours}}(gr,\ current);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ neighbors[i]\ !=\ NULL;\ i++)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(visited\_map,\ neighbors[i]))\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(visited\_map,\ neighbors[i],\ (\textcolor{keywordtype}{void}*)1);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ queue[queue\_rear++]\ =\ neighbors[i];}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visited\_array[visited\_count++]\ =\ neighbors[i];}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ visited\_array[visited\_count]\ =\ NULL;}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ free(queue);}
+\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(visited\_map);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ clock\_t\ to\ =\ clock();}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{double}\ time\_taken\ =\ (double)(to\ -\/\ from)\ /\ CLOCKS\_PER\_SEC;}
+\DoxyCodeLine{00079\ \ \ \ \ printf(\textcolor{stringliteral}{"{}The\ time\ taken\ by\ the\ breadth\_first\_visit\ is:\ \%f\ sec\(\backslash\)n"{}},\ time\_taken);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{return}\ visited\_array;}
+\DoxyCodeLine{00082\ \}}
+
+\end{DoxyCode}
+
+
+References \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00289}{graph\+\_\+get\+\_\+neighbours()}}, \doxymbox{\hyperlink{graph_8c_source_l00209}{graph\+\_\+num\+\_\+nodes()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{bfs_8h_a237a09cde585ee4750f6419760f4021c}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, and \doxymbox{\hyperlink{main_8c_source_l00025}{main()}}.
+

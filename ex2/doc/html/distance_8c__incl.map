@@ -1,0 +1,17 @@
+<map id="src/distance.c" name="src/distance.c">
+<area shape="rect" id="Node000001" title="Implementation of edit distance calculation and word matching functions." alt="" coords="215,5,325,33"/>
+<area shape="rect" id="Node000002" href="$distance_8h.html" title="Header file containing declarations for edit distance calculation and word matching." alt="" coords="226,81,314,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,31,272,67,268,64,268,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,157,71,184"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="229,112,87,157,85,152,228,107"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="95,157,165,184"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="248,109,169,152,167,147,242,110"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="188,157,258,184"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="264,108,241,146,238,142,259,111"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="283,157,353,184"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="280,107,304,144,299,143,277,112"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="377,157,446,184"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="296,107,375,149,370,149,295,112"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="470,157,534,184"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="312,107,458,154,453,155,311,112"/>
+</map>

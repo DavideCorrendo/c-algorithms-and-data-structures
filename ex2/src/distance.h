@@ -56,13 +56,22 @@ void reset_memo(int **memo, int rows, int cols);
 void free_memo(int **memo, int rows);
 
 /**
- * @brief Calculates the edit distance between two strings
- * @param s1 First string
- * @param s2 Second string
- * @param memo Memoization matrix
- * @return Edit distance between s1 and s2
+ * @brief Calculates the edit distance between two strings using pure recursion
+ * @details Only allows insertion and deletion operations. Warning: Time complexity is exponential.
+ * @param s1 First string (target string)
+ * @param s2 Second string (source string)
+ * @return Minimum number of operations to transform s2 into s1
  */
-int edit_distance(const char *s1, const char *s2, int **memo);
+int edit_distance(const char *s1, const char *s2);
+
+/**
+ * @brief Calculates the edit distance using dynamic programming (memoization)
+ * @details Optimizes the recursive approach by allocating a matrix to store previously calculated distances.
+ * @param s1 First string (target string)
+ * @param s2 Second string (source string)
+ * @return Minimum number of operations to transform s2 into s1
+ */
+int edit_distance_dyn(const char *s1, const char *s2);
 
 /**
  * @brief Comparison function for qsort to sort WordDistance structures
@@ -79,6 +88,6 @@ int compare_distance(const void *a, const void *b);
  * @param target Target word to find matches for
  * @param memo Memoization matrix
  */
-void find_closest_words(const char **dictionary, int dict_size, char *target, int **memo);
+void find_closest_words(const char **dictionary, int dict_size, char *target);
 
 #endif

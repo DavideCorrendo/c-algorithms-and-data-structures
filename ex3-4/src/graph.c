@@ -7,6 +7,14 @@
 
 #include "graph.h"
 
+struct graph {
+    HashTable* nodes;
+    Bool is_directed;
+    Bool is_labelled;
+    int edge_count;
+};
+
+
 /**
  * @brief Creates a new graph
  * @param labelled Boolean indicating if edges have labels
@@ -57,25 +65,14 @@ Bool graph_is_labelled(const Graph* gr) {
  * @return true if node was added successfully, false otherwise
  * @details Creates a deep copy of the node value and initializes its adjacency list
  */
-Bool graph_add_node(Graph* gr, const void* node) {
+Bool graph_add_node(Graph gr, const void* node) {
     if (!gr || !node) return false;
-    
-    // Check if node already exists
     if (graph_contains_node(gr, node)) return false;
 
-    // Create new adjacency list for the node
     HashTable* adjacency_list = hash_table_create(gr->nodes->compare, gr->nodes->hash);
     if (!adjacency_list) return false;
 
-    // Create deep copy of node value
-    char* node_copy = strdup((const char*)node);
-    if (!node_copy) {
-        hash_table_free(adjacency_list);
-        return false;
-    }
-
-    // Add node and its adjacency list to graph
-    hash_table_put(gr->nodes, node_copy, adjacency_list);
+    hash_table_put(gr->nodes, node, adjacency_list);
     return true;
 }
 
@@ -88,45 +85,19 @@ Bool graph_add_node(Graph* gr, const void* node) {
  * @return true if edge was added successfully, false otherwise
  * @details For undirected graphs, adds edges in both directions
  */
-Bool graph_add_edge(Graph* gr, const void* node1, const void* node2, const void* label) {
+Bool graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label) {
     if (!gr || !node1 || !node2) return false;
     if (gr->is_labelled && !label) return false;
 
-    // Get adjacency lists for both nodes
     HashTable* adj1 = hash_table_get(gr->nodes, node1);
     HashTable* adj2 = hash_table_get(gr->nodes, node2);
     if (!adj1 || !adj2) return false;
 
-    // Check if edge already exists
-    if (hash_table_contains_key(adj1, node2)) {
-        return true;  // Edge already exists
-    }
+    if (hash_table_contains_key(adj1, node2)) return true;
 
-    // Create copy of label if graph is labelled
-    void* label_copy = NULL;
-    if (gr->is_labelled) {
-        label_copy = malloc(sizeof(float));
-        if (!label_copy) return false;
-        memcpy(label_copy, label, sizeof(float));
-    }
-
-    // Add forward edge
-    hash_table_put(adj1, node2, label_copy);
-
-    // For undirected graphs, add reverse edge
+    hash_table_put(adj1, node2, label); 
     if (!gr->is_directed) {
-        void* reverse_label = NULL;
-        if (gr->is_labelled) {
-            reverse_label = malloc(sizeof(float));
-            if (!reverse_label) {
-                // Cleanup if allocation fails
-                hash_table_remove(adj1, node2);
-                free(label_copy);
-                return false;
-            }
-            memcpy(reverse_label, label, sizeof(float));
-        }
-        hash_table_put(adj2, node1, reverse_label);
+        hash_table_put(adj2, node1, label); 
     }
 
     gr->edge_count++;

@@ -78,24 +78,10 @@ int main(int argc, char *argv[]) {
         if (len > max_word_len) max_word_len = len;
     }
 
-    // Initialize memoization matrix
-    int **memo = initialize_memo(max_word_len + 1, max_word_len + 1);
-    if (!memo) {
-        for (int i = 0; i < dict_size; i++) {
-            free(dictionary[i]);
-        }
-        free(dictionary);
-        return 1;
-    }
-
-    // Open and process correctme file
     FILE *correctme_fp = fopen(correctme_file, "r");
     if (!correctme_fp) {
         perror("Error opening correctme file");
-        free_memo(memo, max_word_len + 1);
-        for (int i = 0; i < dict_size; i++) {
-            free(dictionary[i]);
-        }
+        for (int i = 0; i < dict_size; i++) free(dictionary[i]);
         free(dictionary);
         return 1;
     }
@@ -103,7 +89,7 @@ int main(int argc, char *argv[]) {
     // Process words and find corrections
     clock_t start = clock();
     while (fscanf(correctme_fp, "%1023s", buffer) == 1) {
-        find_closest_words((const char **)dictionary, dict_size, buffer, memo);
+        find_closest_words((const char **)dictionary, dict_size, buffer);
     }
     clock_t end = clock();
     printf("Total processing time: %.2f seconds\n", 
@@ -111,10 +97,7 @@ int main(int argc, char *argv[]) {
 
     // Cleanup
     fclose(correctme_fp);
-    free_memo(memo, max_word_len + 1);
-    for (int i = 0; i < dict_size; i++) {
-        free(dictionary[i]);
-    }
+    for (int i = 0; i < dict_size; i++) free(dictionary[i]);
     free(dictionary);
 
     return 0;

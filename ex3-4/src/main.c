@@ -71,10 +71,12 @@ int main(int argc, char *argv[]) {
             graph_add_node(gr, node2_copy);
         }
 
-        float label = atof(w);
+        float* label_ptr = malloc(sizeof(float));
+        *label_ptr = atof(w);
         
-        if (!graph_add_edge(gr, node1_copy, node2_copy, &label)) {
+        if (!graph_add_edge(gr, node1_copy, node2_copy, label_ptr)) {
             fprintf(stderr, "Failed to add edge on line\n");
+            free(label_ptr); // Evita memory leak se fallisce
         }
     }
 

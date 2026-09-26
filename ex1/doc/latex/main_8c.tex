@@ -1,9 +1,105 @@
-\doxysection{src/main.c File Reference}
+\doxysection{src/\+main.c File Reference}
 \hypertarget{main_8c}{}\label{main_8c}\index{src/main.c@{src/main.c}}
 
 
 Main program entry point.  
 
 
-{\ttfamily \#include "{}sort.\+h"{}}\newline
-Include dependency graph for main.\+c\+:
+{\ttfamily \+\#include "{}sort.\+h"{}}\newline
+Include dependency graph for main.\+c:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\+[$\,$]\+)
+\begin{DoxyCompactList}\small\item\em Main function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main program entry point. 
+
+Handles command line arguments and initiates sorting
+
+Usage: program input\+\_\+file output\+\_\+file field\+\_\+num algo\+\_\+num
+\begin{DoxyItemize}
+\item field\+\_\+num: 1=string, 2=integer, 3=float
+\item algo\+\_\+num: 1=merge sort, 2=quicksort 
+\end{DoxyItemize}
+
+Definition in file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\label{main_8c_doc-func-members}
+\Hypertarget{main_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a0ddf1224851353fc92bfbff6f499fa97}\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8c_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\+[$\,$]}\end{DoxyParamCaption})}
+
+
+
+Main function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Argument count \\
+\hline
+{\em argv} & Argument values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, 1 on error 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00019}{19}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{if}(argc\ !=\ 5)\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ puts(\textcolor{stringliteral}{"{}ERROR\ IN\ THE\ INSERT\ OF\ THE\ COMMANDS"{}});}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ FILE\ *infile\ =\ fopen(argv[1],\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{if}(!infile)\{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ puts(\textcolor{stringliteral}{"{}ERROR\ IN\ THE\ INPUT\ FILE\ OPENING"{}});}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ FILE\ *outfile\ =\ fopen(argv[2],\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{if}(!outfile)\{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ fclose(outfile);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ puts(\textcolor{stringliteral}{"{}ERROR\ IN\ THE\ OUTPUT\ FILE\ OPENING"{}});}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ field\ =\ atoi(argv[3]);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ algo\ \ =\ atoi(argv[4]);}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_aff70d48025f2cfa56970ede9667e4180}{sort\_records}}(infile,\ outfile,\ field,\ algo);}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ fclose(infile);}
+\DoxyCodeLine{00044\ \ \ \ \ fclose(outfile);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00046\ \}}
+
+\end{DoxyCode}
+
+
+References \doxymbox{\hyperlink{main_8c_source_l00019}{main()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{main_8c_source_l00019}{main()}}.
+

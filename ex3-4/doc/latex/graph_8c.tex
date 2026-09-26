@@ -1,67 +1,80 @@
-\doxysection{src/graph.c File Reference}
+\doxysection{src/\+graph.c File Reference}
 \hypertarget{graph_8c}{}\label{graph_8c}\index{src/graph.c@{src/graph.c}}
 
 
 Implementation of graph data structure functions.  
 
 
-{\ttfamily \#include "{}graph.\+h"{}}\newline
-Include dependency graph for graph.\+c\+:
-% FIG 0
+{\ttfamily \+\#include "{}graph.\+h"{}}\newline
+Include dependency graph for graph.\+c:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{graph_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structgraph}{graph}}
+\begin{DoxyCompactList}\small\item\em Structure representing the graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5}{graph\+\_\+create}} (\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} labelled, \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} directed, int(\texorpdfstring{$\ast$}{*}compare)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), unsigned long(\texorpdfstring{$\ast$}{*}hash)(const void \texorpdfstring{$\ast$}{*}))
+Graph \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5}{graph\+\_\+create}} (\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} labelled, \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} directed, int(\texorpdfstring{$\ast$}{*}compare)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), unsigned long(\texorpdfstring{$\ast$}{*}hash)(const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Creates a new graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_ad496179ca331699b6f041d26873dd859}{graph\+\_\+is\+\_\+directed}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_ad496179ca331699b6f041d26873dd859}{graph\+\_\+is\+\_\+directed}} (const Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Checks if graph is directed. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_a4461245283642d82c6ef9480a0a876a0}{graph\+\_\+is\+\_\+labelled}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_a4461245283642d82c6ef9480a0a876a0}{graph\+\_\+is\+\_\+labelled}} (const Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Checks if graph has edge labels. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}{graph\+\_\+add\+\_\+node}} (\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_a804a20a46671b3b2206e046f7f6bb574}{graph\+\_\+add\+\_\+node}} (Graph gr, const void \texorpdfstring{$\ast$}{*}node)
 \begin{DoxyCompactList}\small\item\em Adds a new node to the graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_a65552ca6e0da43300381145ba24daea2}{graph\+\_\+add\+\_\+edge}} (\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2, const void \texorpdfstring{$\ast$}{*}label)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_a9543feef236a6ff0d22a5321c1c651d6}{graph\+\_\+add\+\_\+edge}} (Graph gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2, const void \texorpdfstring{$\ast$}{*}label)
 \begin{DoxyCompactList}\small\item\em Adds a new edge to the graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\+\_\+contains\+\_\+node}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\+\_\+contains\+\_\+node}} (const Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
 \begin{DoxyCompactList}\small\item\em Checks if a node exists in the graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\+\_\+contains\+\_\+edge}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\+\_\+contains\+\_\+edge}} (const Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2)
 \begin{DoxyCompactList}\small\item\em Checks if an edge exists in the graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_aba154e83b5bbc87190247fd4809179ce}{graph\+\_\+remove\+\_\+node}} (\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_aba154e83b5bbc87190247fd4809179ce}{graph\+\_\+remove\+\_\+node}} (Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
 \begin{DoxyCompactList}\small\item\em Removes a node and all its edges from the graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \mbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\+\_\+remove\+\_\+edge}} (\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2)
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} \doxymbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\+\_\+remove\+\_\+edge}} (Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2)
 \begin{DoxyCompactList}\small\item\em Removes an edge from the graph. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\+\_\+num\+\_\+nodes}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+int \doxymbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\+\_\+num\+\_\+nodes}} (const Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Gets the number of nodes in the graph. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\+\_\+num\+\_\+edges}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+int \doxymbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\+\_\+num\+\_\+edges}} (const Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Gets the number of edges in the graph. \end{DoxyCompactList}\item 
-void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{graph_8c_acab5f88db61de8aa6b9c933a6f441534}{graph\+\_\+get\+\_\+nodes}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{graph_8c_acab5f88db61de8aa6b9c933a6f441534}{graph\+\_\+get\+\_\+nodes}} (const Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Gets array of all nodes in the graph. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{structedge}{Edge}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0}{graph\+\_\+get\+\_\+edges}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+Edge \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0}{graph\+\_\+get\+\_\+edges}} (const Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Gets array of all edges in the graph. \end{DoxyCompactList}\item 
-void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{graph_8c_a659a2d632e551421d7add607f30cba31}{graph\+\_\+get\+\_\+neighbours}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{graph_8c_a659a2d632e551421d7add607f30cba31}{graph\+\_\+get\+\_\+neighbours}} (const Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
 \begin{DoxyCompactList}\small\item\em Gets array of neighboring nodes. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{graph_8c_a4ac5689d98e63a548b8b29162573e6ab}{graph\+\_\+num\+\_\+neighbours}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
+int \doxymbox{\hyperlink{graph_8c_a4ac5689d98e63a548b8b29162573e6ab}{graph\+\_\+num\+\_\+neighbours}} (const Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node)
 \begin{DoxyCompactList}\small\item\em Gets number of neighbors for a node. \end{DoxyCompactList}\item 
-void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}{graph\+\_\+get\+\_\+label}} (const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2)
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}{graph\+\_\+get\+\_\+label}} (const Graph \texorpdfstring{$\ast$}{*}gr, const void \texorpdfstring{$\ast$}{*}node1, const void \texorpdfstring{$\ast$}{*}node2)
 \begin{DoxyCompactList}\small\item\em Gets label of an edge. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee}{graph\+\_\+free}} (\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}gr)
+void \doxymbox{\hyperlink{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee}{graph\+\_\+free}} (Graph \texorpdfstring{$\ast$}{*}gr)
 \begin{DoxyCompactList}\small\item\em Frees all memory associated with the graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 Implementation of graph data structure functions. 
 
-Provides implementation for a generic graph structure supporting both directed/undirected graphs and optional edge labels 
+Provides implementation for a generic graph structure supporting both directed/\+undirected graphs and optional edge labels 
 
-Definition in file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition in file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 
+\label{graph_8c_doc-func-members}
+\Hypertarget{graph_8c_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{graph_8c_a65552ca6e0da43300381145ba24daea2}\label{graph_8c_a65552ca6e0da43300381145ba24daea2} 
-\index{graph.c@{graph.c}!graph\_add\_edge@{graph\_add\_edge}}
+\Hypertarget{graph_8c_a9543feef236a6ff0d22a5321c1c651d6}\index{graph.c@{graph.c}!graph\_add\_edge@{graph\_add\_edge}}
 \index{graph\_add\_edge@{graph\_add\_edge}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_add\_edge()}{graph\_add\_edge()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+add\+\_\+edge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{label }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a9543feef236a6ff0d22a5321c1c651d6} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+add\+\_\+edge (\begin{DoxyParamCaption}\item[{Graph}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{label}{}\end{DoxyParamCaption})}
 
 
 
@@ -83,71 +96,63 @@ Adds an edge to the graph.
 \begin{DoxyReturn}{Returns}
 true if edge was added successfully, false otherwise
 \end{DoxyReturn}
-For undirected graphs, adds edges in both directions 
+For undirected graphs, adds edges in both directions
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00091}{91}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Adds a new edge to the graph.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gr} & The graph \\
+\hline
+{\em node1} & Source node \\
+\hline
+{\em node2} & Destination node \\
+\hline
+{\em label} & Edge label (can be NULL for unlabelled graphs) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00088}{88}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}}\ \&\&\ !label)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Get\ adjacency\ lists\ for\ both\ nodes}}
-\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj1\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node1);}
-\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj2\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node2);}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adj1\ ||\ !adj2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00099\ }
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ edge\ already\ exists}}
-\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(adj1,\ node2))\ \{}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \ \textcolor{comment}{//\ Edge\ already\ exists}}
-\DoxyCodeLine{00103\ \ \ \ \ \}}
-\DoxyCodeLine{00104\ }
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Create\ copy\ of\ label\ if\ graph\ is\ labelled}}
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}*\ label\_copy\ =\ NULL;}
-\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}})\ \{}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ label\_copy\ =\ malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!label\_copy)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ memcpy(label\_copy,\ label,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
-\DoxyCodeLine{00111\ \ \ \ \ \}}
-\DoxyCodeLine{00112\ }
-\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Add\ forward\ edge}}
-\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(adj1,\ node2,\ label\_copy);}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ For\ undirected\ graphs,\ add\ reverse\ edge}}
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>\mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\_directed}})\ \{}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ reverse\_label\ =\ NULL;}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}})\ \{}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ reverse\_label\ =\ malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!reverse\_label)\ \{}
-\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cleanup\ if\ allocation\ fails}}
-\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(adj1,\ node2);}
-\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(label\_copy);}
-\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(reverse\_label,\ label,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
-\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(adj2,\ node1,\ reverse\_label);}
-\DoxyCodeLine{00130\ \ \ \ \ \}}
-\DoxyCodeLine{00131\ }
-\DoxyCodeLine{00132\ \ \ \ \ gr-\/>\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}}++;}
-\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>is\_labelled\ \&\&\ !label)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj1\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node1);}
+\DoxyCodeLine{00093\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj2\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node2);}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adj1\ ||\ !adj2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(adj1,\ node2))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(adj1,\ node2,\ label);\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>is\_directed)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(adj2,\ node1,\ label);\ }
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ gr-\/>edge\_count++;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00105\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00038}{graph\+::edge\+\_\+count}}, \mbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}, \mbox{\hyperlink{graph_8h_source_l00036}{graph\+::is\+\_\+directed}}, \mbox{\hyperlink{graph_8h_source_l00037}{graph\+::is\+\_\+labelled}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00088}{graph\+\_\+add\+\_\+edge()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}.
 
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00025}{main()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00088}{graph\+\_\+add\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8h_adc11dc0c4534a52c2e17d17fb1bc8a56}{graph\+\_\+is\+\_\+labelled()}}, and \doxymbox{\hyperlink{main_8c_source_l00025}{main()}}.
 
-\Hypertarget{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9}\label{graph_8c_ad42755b3cf2982009b5e230d6b79e2b9} 
-\index{graph.c@{graph.c}!graph\_add\_node@{graph\_add\_node}}
+\Hypertarget{graph_8c_a804a20a46671b3b2206e046f7f6bb574}\index{graph.c@{graph.c}!graph\_add\_node@{graph\_add\_node}}
 \index{graph\_add\_node@{graph\_add\_node}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_add\_node()}{graph\_add\_node()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+add\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a804a20a46671b3b2206e046f7f6bb574} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+add\+\_\+node (\begin{DoxyParamCaption}\item[{Graph}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
 
 
 
@@ -165,48 +170,51 @@ Adds a node to the graph.
 \begin{DoxyReturn}{Returns}
 true if node was added successfully, false otherwise
 \end{DoxyReturn}
-Creates a deep copy of the node value and initializes its adjacency list 
+Creates a deep copy of the node value and initializes its adjacency list
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00060}{60}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Adds a new node to the graph.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gr} & The graph \\
+\hline
+{\em node} & The node to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00068}{68}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00062\ \ \ \ \ }
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ node\ already\ exists}}
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\_contains\_node}}(gr,\ node))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Create\ new\ adjacency\ list\ for\ the\ node}}
-\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adjacency\_list\ =\ \mbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\_table\_create}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}}-\/>\mbox{\hyperlink{structHashTable_a1b681b5c16acf36b99bf2954508ac633}{compare}},\ gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}}-\/>\mbox{\hyperlink{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}{hash}});}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adjacency\_list)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Create\ deep\ copy\ of\ node\ value}}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{char}*\ node\_copy\ =\ strdup((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*)node);}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (!node\_copy)\ \{}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(adjacency\_list);}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00075\ \ \ \ \ \}}
-\DoxyCodeLine{00076\ }
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Add\ node\ and\ its\ adjacency\ list\ to\ graph}}
-\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node\_copy,\ adjacency\_list);}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00080\ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\_contains\_node}}(gr,\ node))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adjacency\_list\ =\ \doxymbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\_table\_create}}(gr-\/>nodes-\/>\doxymbox{\hyperlink{structHashTable_a62c176448e74abc055da52c97b219d10}{compare}},\ gr-\/>nodes-\/>\doxymbox{\hyperlink{structHashTable_a2747e6e6fa402544346341ec2a9d8015}{hash}});}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adjacency\_list)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\_table\_put}}(gr-\/>nodes,\ node,\ adjacency\_list);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table\+::compare}}, \mbox{\hyperlink{graph_8c_source_l00142}{graph\+\_\+contains\+\_\+node()}}, \mbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table\+::hash}}, \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table::\+compare}}, \doxymbox{\hyperlink{graph_8c_source_l00068}{graph\+\_\+add\+\_\+node()}}, \doxymbox{\hyperlink{graph_8c_source_l00113}{graph\+\_\+contains\+\_\+node()}}, \doxymbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table::\+hash}}, \doxymbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}.
 
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00025}{main()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00068}{graph\+\_\+add\+\_\+node()}}, \doxymbox{\hyperlink{graph_8h_adc11dc0c4534a52c2e17d17fb1bc8a56}{graph\+\_\+is\+\_\+labelled()}}, and \doxymbox{\hyperlink{main_8c_source_l00025}{main()}}.
 
-\Hypertarget{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}\label{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551} 
-\index{graph.c@{graph.c}!graph\_contains\_edge@{graph\_contains\_edge}}
+\Hypertarget{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}\index{graph.c@{graph.c}!graph\_contains\_edge@{graph\_contains\_edge}}
 \index{graph\_contains\_edge@{graph\_contains\_edge}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_contains\_edge()}{graph\_contains\_edge()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+contains\+\_\+edge (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2 }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+contains\+\_\+edge (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2}{}\end{DoxyParamCaption})}
 
 
 
@@ -226,27 +234,31 @@ true if edge exists, false otherwise
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00154}{154}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00125}{125}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00156\ \ \ \ \ }
-\DoxyCodeLine{00157\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node1);}
-\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ \&\&\ \mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(adj,\ node2);}
-\DoxyCodeLine{00159\ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node1);}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ \&\&\ \doxymbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(adj,\ node2);}
+\DoxyCodeLine{00130\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00125}{graph\+\_\+contains\+\_\+edge()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}.
 
-\Hypertarget{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}\label{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd} 
-\index{graph.c@{graph.c}!graph\_contains\_node@{graph\_contains\_node}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00125}{graph\+\_\+contains\+\_\+edge()}}, and \doxymbox{\hyperlink{graph_8h_a9df7bab7dcd52aac6ea10c9e9d88e274}{graph\+\_\+contains\+\_\+edge()}}.
+
+\Hypertarget{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}\index{graph.c@{graph.c}!graph\_contains\_node@{graph\_contains\_node}}
 \index{graph\_contains\_node@{graph\_contains\_node}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_contains\_node()}{graph\_contains\_node()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+contains\+\_\+node (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+contains\+\_\+node (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
 
 
 
@@ -264,29 +276,29 @@ true if node exists, false otherwise
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00142}{142}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00113}{113}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node);}
-\DoxyCodeLine{00145\ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(gr-\/>nodes,\ node);}
+\DoxyCodeLine{00116\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00113}{graph\+\_\+contains\+\_\+node()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}, and \mbox{\hyperlink{main_8c_source_l00025}{main()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00068}{graph\+\_\+add\+\_\+node()}}, \doxymbox{\hyperlink{graph_8c_source_l00113}{graph\+\_\+contains\+\_\+node()}}, \doxymbox{\hyperlink{graph_8h_a7bbba9f456900525b6ea34d99c36f5e0}{graph\+\_\+contains\+\_\+node()}}, and \doxymbox{\hyperlink{main_8c_source_l00025}{main()}}.
 
-\Hypertarget{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5}\label{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5} 
-\index{graph.c@{graph.c}!graph\_create@{graph\_create}}
+\Hypertarget{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5}\index{graph.c@{graph.c}!graph\_create@{graph\_create}}
 \index{graph\_create@{graph\_create}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_create()}{graph\_create()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*} graph\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}}]{labelled,  }\item[{\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}}]{directed,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compare,  }\item[{unsigned long(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*})}]{hash }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5} 
+Graph \texorpdfstring{$\ast$}{*} graph\+\_\+create (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}}]{labelled}{, }\item[{\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}}]{directed}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compare~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), }\item[{unsigned long(\texorpdfstring{$\ast$}{*}}]{hash~}{)(const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
@@ -304,45 +316,59 @@ Creates a new graph.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Pointer to new Graph structure, NULL if allocation fails 
+Pointer to new Graph structure, NULL if allocation fails
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em labelled} & Whether the graph has edge labels \\
+\hline
+{\em directed} & Whether the graph is directed \\
+\hline
+{\em compare} & Function for comparing node values \\
+\hline
+{\em hash} & Function for hashing node values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created graph, NULL on failure 
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00018}{18}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00026}{26}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{structgraph}{Graph}}*\ gr\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structgraph}{Graph}}));}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr)\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ \ \ \ \ gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}}\ =\ \mbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\_table\_create}}(compare,\ hash);}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}})\ \{}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ free(gr);}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00026\ \ \ \ \ \}}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \ \ \ \ gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}}\ =\ labelled;}
-\DoxyCodeLine{00029\ \ \ \ \ gr-\/>\mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\_directed}}\ =\ directed;}
-\DoxyCodeLine{00030\ \ \ \ \ gr-\/>\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}}\ =\ 0;}
-\DoxyCodeLine{00031\ }
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ gr;}
-\DoxyCodeLine{00033\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ Graph*\ gr\ =\ malloc(\textcolor{keyword}{sizeof}(Graph));}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ gr-\/>nodes\ =\ \doxymbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\_table\_create}}(compare,\ hash);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>nodes)\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ free(gr);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00034\ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ gr-\/>is\_labelled\ =\ labelled;}
+\DoxyCodeLine{00037\ \ \ \ \ gr-\/>is\_directed\ =\ directed;}
+\DoxyCodeLine{00038\ \ \ \ \ gr-\/>edge\_count\ =\ 0;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ gr;}
+\DoxyCodeLine{00041\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00038}{graph\+::edge\+\_\+count}}, \mbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, \mbox{\hyperlink{graph_8h_source_l00036}{graph\+::is\+\_\+directed}}, \mbox{\hyperlink{graph_8h_source_l00037}{graph\+::is\+\_\+labelled}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00026}{graph\+\_\+create()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}.
 
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00025}{main()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00026}{graph\+\_\+create()}}, and \doxymbox{\hyperlink{main_8c_source_l00025}{main()}}.
 
-\Hypertarget{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee}\label{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee} 
-\index{graph.c@{graph.c}!graph\_free@{graph\_free}}
+\Hypertarget{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee}\index{graph.c@{graph.c}!graph\_free@{graph\_free}}
 \index{graph\_free@{graph\_free}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_free()}{graph\_free()}}
-{\footnotesize\ttfamily void graph\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee} 
+void graph\+\_\+free (\begin{DoxyParamCaption}\item[{Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
@@ -355,66 +381,64 @@ Frees all memory associated with the graph.
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00356}{356}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00327}{327}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr)\ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00358\ }
-\DoxyCodeLine{00359\ \ \ \ \ \textcolor{comment}{//\ Free\ all\ nodes\ and\ their\ adjacency\ lists}}
-\DoxyCodeLine{00360\ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}})\ \{}
-\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}}-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};\ i++)\ \{}
-\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ entry\ =\ gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}}-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[i];}
-\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (entry)\ \{}
-\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ node\ key\ (strdup'd\ in\ add\_node)}}
-\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free((\textcolor{keywordtype}{void}*)entry-\/>\mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}});}
-\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ adjacency\ list\ and\ its\ contents}}
-\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry-\/>\mbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}})\ \{}
-\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ (\mbox{\hyperlink{structHashTable}{HashTable}}*)entry-\/>\mbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}};}
-\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}})\ \{}
-\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ edge\ labels}}
-\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj);}
-\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
-\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ neighbors[j]\ !=\ NULL;\ j++)\ \{}
-\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ label\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj,\ neighbors[j]);}
-\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(label);}
-\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
-\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(adj);}
-\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entry\ =\ entry-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
-\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}});}
-\DoxyCodeLine{00387\ \ \ \ \ \}}
-\DoxyCodeLine{00388\ }
-\DoxyCodeLine{00389\ \ \ \ \ free(gr);}
-\DoxyCodeLine{00390\ \}}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ Free\ all\ nodes\ and\ their\ adjacency\ lists}}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>nodes)\ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ gr-\/>nodes-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};\ i++)\ \{}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ entry\ =\ gr-\/>nodes-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[i];}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (entry)\ \{}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ node\ key\ (strdup'd\ in\ add\_node)}}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free((\textcolor{keywordtype}{void}*)entry-\/>\doxymbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}});}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ adjacency\ list\ and\ its\ contents}}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry-\/>\doxymbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}})\ \{}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ (\doxymbox{\hyperlink{structHashTable}{HashTable}}*)entry-\/>\doxymbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}};}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>is\_labelled)\ \{}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ edge\ labels}}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj);}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ neighbors[j]\ !=\ NULL;\ j++)\ \{}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ label\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj,\ neighbors[j]);}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(label);}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(adj);}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entry\ =\ entry-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(gr-\/>nodes);}
+\DoxyCodeLine{00358\ \ \ \ \ \}}
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ \ \ \ \ free(gr);}
+\DoxyCodeLine{00361\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, \mbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{graph_8h_source_l00037}{graph\+::is\+\_\+labelled}}, \mbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node\+::key}}, \mbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node\+::next}}, \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}, and \mbox{\hyperlink{hashtable_8h_source_l00024}{Hash\+Node\+::value}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{graph_8c_source_l00327}{graph\+\_\+free()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \doxymbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node::\+key}}, \doxymbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node::\+next}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00024}{Hash\+Node::\+value}}.
 
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00025}{main()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00327}{graph\+\_\+free()}}, \doxymbox{\hyperlink{graph_8h_a3070794fa9b8acbc60f7bc4e7e90e125}{graph\+\_\+free()}}, and \doxymbox{\hyperlink{main_8c_source_l00025}{main()}}.
 
-\Hypertarget{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0}\label{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0} 
-\index{graph.c@{graph.c}!graph\_get\_edges@{graph\_get\_edges}}
+\Hypertarget{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0}\index{graph.c@{graph.c}!graph\_get\_edges@{graph\_get\_edges}}
 \index{graph\_get\_edges@{graph\_get\_edges}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_get\_edges()}{graph\_get\_edges()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structedge}{Edge}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+edges (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0} 
+Edge \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+edges (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
 Gets array of all edges in the graph. 
-
-Gets an array of all edges in the graph.
 
 
 \begin{DoxyParams}{Parameters}
@@ -426,73 +450,75 @@ NULL-\/terminated array of Edge pointers, NULL if gr is NULL or empty
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00265}{265}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00236}{236}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ gr-\/>\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}}\ ==\ 0)\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00267\ }
-\DoxyCodeLine{00268\ \ \ \ \ \textcolor{comment}{//\ Allocate\ array\ for\ edges}}
-\DoxyCodeLine{00269\ \ \ \ \ \mbox{\hyperlink{structedge}{Edge}}**\ edges\ =\ malloc((gr-\/>\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}}\ +\ 1)\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structedge}{Edge}}*));}
-\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{if}\ (!edges)\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00271\ }
-\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ 0;}
-\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordtype}{void}**\ nodes\ =\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}});}
-\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodes)\ \{}
-\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ free(edges);}
-\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00277\ \ \ \ \ \}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ gr-\/>edge\_count\ ==\ 0)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ Allocate\ array\ for\ edges}}
+\DoxyCodeLine{00240\ \ \ \ \ Edge**\ edges\ =\ malloc((gr-\/>edge\_count\ +\ 1)\ *\ \textcolor{keyword}{sizeof}(Edge*));}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{if}\ (!edges)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ 0;}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordtype}{void}**\ nodes\ =\ \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(gr-\/>nodes);}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordflow}{if}\ (!nodes)\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ free(edges);}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00248\ \ \ \ \ \}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{comment}{//\ Iterate\ through\ all\ nodes\ and\ their\ edges}}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ nodes[i]\ !=\ NULL;\ i++)\ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ nodes[i]);}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj);}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ neighbors[j]\ !=\ NULL;\ j++)\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge*\ \doxymbox{\hyperlink{structedge}{edge}}\ =\ malloc(\textcolor{keyword}{sizeof}(Edge));}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{structedge}{edge}})\ \{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cleanup\ on\ allocation\ failure}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ index;\ k++)\ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(edges[k]);}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(edges);}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(nodes);}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structedge}{edge}}-\/>\doxymbox{\hyperlink{structedge_ada87dc38a600171c6e2e0c865e3d082b}{source}}\ =\ nodes[i];}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structedge}{edge}}-\/>\doxymbox{\hyperlink{structedge_a598a9d6fff0660afe8660ea0682b5a2e}{dest}}\ =\ neighbors[j];}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structedge}{edge}}-\/>\doxymbox{\hyperlink{structedge_a6d88f86d5490af1f0bc2903904f7dd0d}{label}}\ =\ \doxymbox{\hyperlink{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}{graph\_get\_label}}(gr,\ nodes[i],\ neighbors[j]);}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ edges[index++]\ =\ \doxymbox{\hyperlink{structedge}{edge}};}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00276\ \ \ \ \ \}}
+\DoxyCodeLine{00277\ \ \ \ \ free(nodes);}
 \DoxyCodeLine{00278\ }
-\DoxyCodeLine{00279\ \ \ \ \ \textcolor{comment}{//\ Iterate\ through\ all\ nodes\ and\ their\ edges}}
-\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ nodes[i]\ !=\ NULL;\ i++)\ \{}
-\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ nodes[i]);}
-\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj);}
-\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
-\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ neighbors[j]\ !=\ NULL;\ j++)\ \{}
-\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structedge}{Edge}}*\ \mbox{\hyperlink{structedge}{edge}}\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structedge}{Edge}}));}
-\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{structedge}{edge}})\ \{}
-\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cleanup\ on\ allocation\ failure}}
-\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ index;\ k++)\ \{}
-\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(edges[k]);}
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(edges);}
-\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
-\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(nodes);}
-\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00297\ }
-\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structedge}{edge}}-\/>\mbox{\hyperlink{structedge_ada87dc38a600171c6e2e0c865e3d082b}{source}}\ =\ nodes[i];}
-\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structedge}{edge}}-\/>\mbox{\hyperlink{structedge_a598a9d6fff0660afe8660ea0682b5a2e}{dest}}\ =\ neighbors[j];}
-\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structedge}{edge}}-\/>\mbox{\hyperlink{structedge_a6d88f86d5490af1f0bc2903904f7dd0d}{label}}\ =\ \mbox{\hyperlink{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}{graph\_get\_label}}(gr,\ nodes[i],\ neighbors[j]);}
-\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ edges[index++]\ =\ \mbox{\hyperlink{structedge}{edge}};}
-\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ free(neighbors);}
-\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00305\ \ \ \ \ \}}
-\DoxyCodeLine{00306\ \ \ \ \ free(nodes);}
-\DoxyCodeLine{00307\ }
-\DoxyCodeLine{00308\ \ \ \ \ edges[index]\ =\ NULL;\ \textcolor{comment}{//\ NULL\ terminate\ array}}
-\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keywordflow}{return}\ edges;}
-\DoxyCodeLine{00310\ \}}
+\DoxyCodeLine{00279\ \ \ \ \ edges[index]\ =\ NULL;\ \textcolor{comment}{//\ NULL\ terminate\ array}}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordflow}{return}\ edges;}
+\DoxyCodeLine{00281\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00026}{edge\+::dest}}, \mbox{\hyperlink{graph_8h_source_l00038}{graph\+::edge\+\_\+count}}, \mbox{\hyperlink{graph_8c_source_l00345}{graph\+\_\+get\+\_\+label()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{graph_8h_source_l00027}{edge\+::label}}, \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}, and \mbox{\hyperlink{graph_8h_source_l00025}{edge\+::source}}.
+References \doxymbox{\hyperlink{graph_8h_source_l00026}{edge::\+dest}}, \doxymbox{\hyperlink{graph_8c_source_l00236}{graph\+\_\+get\+\_\+edges()}}, \doxymbox{\hyperlink{graph_8c_source_l00316}{graph\+\_\+get\+\_\+label()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \doxymbox{\hyperlink{graph_8h_source_l00027}{edge::\+label}}, and \doxymbox{\hyperlink{graph_8h_source_l00025}{edge::\+source}}.
 
-\Hypertarget{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}\label{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2} 
-\index{graph.c@{graph.c}!graph\_get\_label@{graph\_get\_label}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00236}{graph\+\_\+get\+\_\+edges()}}, and \doxymbox{\hyperlink{graph_8h_a93c958bd73cdccadc269324fdd6b155b}{graph\+\_\+get\+\_\+edges()}}.
+
+\Hypertarget{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}\index{graph.c@{graph.c}!graph\_get\_label@{graph\_get\_label}}
 \index{graph\_get\_label@{graph\_get\_label}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_get\_label()}{graph\_get\_label()}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+label (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2 }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2} 
+void \texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+label (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2}{}\end{DoxyParamCaption})}
 
 
 
 Gets label of an edge. 
-
-Gets the label of an edge.
 
 
 \begin{DoxyParams}{Parameters}
@@ -508,37 +534,35 @@ Pointer to edge label, NULL if edge not found or graph unlabelled
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00345}{345}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00316}{316}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00347\ }
-\DoxyCodeLine{00348\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node1);}
-\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ ?\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj,\ node2)\ :\ NULL;}
-\DoxyCodeLine{00350\ \}}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node1);}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ ?\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj,\ node2)\ :\ NULL;}
+\DoxyCodeLine{00321\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00316}{graph\+\_\+get\+\_\+label()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00265}{graph\+\_\+get\+\_\+edges()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00236}{graph\+\_\+get\+\_\+edges()}}, \doxymbox{\hyperlink{graph_8c_source_l00316}{graph\+\_\+get\+\_\+label()}}, and \doxymbox{\hyperlink{graph_8h_a8a62d564c4707d279533a6f242b9bf48}{graph\+\_\+get\+\_\+label()}}.
 
-\Hypertarget{graph_8c_a659a2d632e551421d7add607f30cba31}\label{graph_8c_a659a2d632e551421d7add607f30cba31} 
-\index{graph.c@{graph.c}!graph\_get\_neighbours@{graph\_get\_neighbours}}
+\Hypertarget{graph_8c_a659a2d632e551421d7add607f30cba31}\index{graph.c@{graph.c}!graph\_get\_neighbours@{graph\_get\_neighbours}}
 \index{graph\_get\_neighbours@{graph\_get\_neighbours}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_get\_neighbours()}{graph\_get\_neighbours()}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+neighbours (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a659a2d632e551421d7add607f30cba31} 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+neighbours (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
 
 
 
 Gets array of neighboring nodes. 
-
-Gets an array of all neighboring nodes.
 
 
 \begin{DoxyParams}{Parameters}
@@ -552,37 +576,35 @@ NULL-\/terminated array of neighbor pointers, NULL if node not found
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00318}{318}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00289}{289}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ NULL;}
-\DoxyCodeLine{00320\ \ \ \ \ }
-\DoxyCodeLine{00321\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node);}
-\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ ?\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj)\ :\ NULL;}
-\DoxyCodeLine{00323\ \}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00291\ \ \ \ \ }
+\DoxyCodeLine{00292\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node);}
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ ?\ \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj)\ :\ NULL;}
+\DoxyCodeLine{00294\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00289}{graph\+\_\+get\+\_\+neighbours()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}.
 
 
 
-Referenced by \mbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}.
+Referenced by \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00289}{graph\+\_\+get\+\_\+neighbours()}}, and \doxymbox{\hyperlink{graph_8h_aeab15ea049b389929b1a5a4714b4fe76}{graph\+\_\+get\+\_\+neighbours()}}.
 
-\Hypertarget{graph_8c_acab5f88db61de8aa6b9c933a6f441534}\label{graph_8c_acab5f88db61de8aa6b9c933a6f441534} 
-\index{graph.c@{graph.c}!graph\_get\_nodes@{graph\_get\_nodes}}
+\Hypertarget{graph_8c_acab5f88db61de8aa6b9c933a6f441534}\index{graph.c@{graph.c}!graph\_get\_nodes@{graph\_get\_nodes}}
 \index{graph\_get\_nodes@{graph\_get\_nodes}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_get\_nodes()}{graph\_get\_nodes()}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+nodes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_acab5f88db61de8aa6b9c933a6f441534} 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} graph\+\_\+get\+\_\+nodes (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
 Gets array of all nodes in the graph. 
-
-Gets an array of all nodes in the graph.
 
 
 \begin{DoxyParams}{Parameters}
@@ -594,30 +616,32 @@ NULL-\/terminated array of node pointers, NULL if gr is NULL
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00256}{256}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00227}{227}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}})\ :\ NULL;}
-\DoxyCodeLine{00258\ \}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(gr-\/>nodes)\ :\ NULL;}
+\DoxyCodeLine{00229\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00227}{graph\+\_\+get\+\_\+nodes()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}.
 
-\Hypertarget{graph_8c_ad496179ca331699b6f041d26873dd859}\label{graph_8c_ad496179ca331699b6f041d26873dd859} 
-\index{graph.c@{graph.c}!graph\_is\_directed@{graph\_is\_directed}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00227}{graph\+\_\+get\+\_\+nodes()}}, and \doxymbox{\hyperlink{graph_8h_a4584a43a171cb67ab2c0b2d3dd338039}{graph\+\_\+get\+\_\+nodes()}}.
+
+\Hypertarget{graph_8c_ad496179ca331699b6f041d26873dd859}\index{graph.c@{graph.c}!graph\_is\_directed@{graph\_is\_directed}}
 \index{graph\_is\_directed@{graph\_is\_directed}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_is\_directed()}{graph\_is\_directed()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+is\+\_\+directed (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_ad496179ca331699b6f041d26873dd859} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+is\+\_\+directed (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
 Checks if graph is directed. 
-
-Checks if the graph is directed.
 
 
 \begin{DoxyParams}{Parameters}
@@ -629,30 +653,32 @@ true if graph is directed, false otherwise or if gr is NULL
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00040}{40}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00048}{48}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ gr-\/>\mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\_directed}}\ :\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00042\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ gr-\/>is\_directed\ :\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00036}{graph\+::is\+\_\+directed}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00048}{graph\+\_\+is\+\_\+directed()}}.
 
-\Hypertarget{graph_8c_a4461245283642d82c6ef9480a0a876a0}\label{graph_8c_a4461245283642d82c6ef9480a0a876a0} 
-\index{graph.c@{graph.c}!graph\_is\_labelled@{graph\_is\_labelled}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00048}{graph\+\_\+is\+\_\+directed()}}, and \doxymbox{\hyperlink{graph_8h_a1019d4212c286f6030040cf3e257a5bf}{graph\+\_\+is\+\_\+directed()}}.
+
+\Hypertarget{graph_8c_a4461245283642d82c6ef9480a0a876a0}\index{graph.c@{graph.c}!graph\_is\_labelled@{graph\_is\_labelled}}
 \index{graph\_is\_labelled@{graph\_is\_labelled}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_is\_labelled()}{graph\_is\_labelled()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+is\+\_\+labelled (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a4461245283642d82c6ef9480a0a876a0} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+is\+\_\+labelled (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
 Checks if graph has edge labels. 
-
-Checks if the graph has edge labels.
 
 
 \begin{DoxyParams}{Parameters}
@@ -664,24 +690,28 @@ true if graph has edge labels, false otherwise or if gr is NULL
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00049}{49}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00057}{57}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}}\ :\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00051\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ gr-\/>is\_labelled\ :\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00059\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00037}{graph\+::is\+\_\+labelled}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00057}{graph\+\_\+is\+\_\+labelled()}}.
 
-\Hypertarget{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}\label{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1} 
-\index{graph.c@{graph.c}!graph\_num\_edges@{graph\_num\_edges}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00057}{graph\+\_\+is\+\_\+labelled()}}, and \doxymbox{\hyperlink{graph_8h_adc11dc0c4534a52c2e17d17fb1bc8a56}{graph\+\_\+is\+\_\+labelled()}}.
+
+\Hypertarget{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}\index{graph.c@{graph.c}!graph\_num\_edges@{graph\_num\_edges}}
 \index{graph\_num\_edges@{graph\_num\_edges}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_num\_edges()}{graph\_num\_edges()}}
-{\footnotesize\ttfamily int graph\+\_\+num\+\_\+edges (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1} 
+int graph\+\_\+num\+\_\+edges (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
@@ -697,30 +727,32 @@ Number of edges, 0 if gr is NULL
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00247}{247}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00218}{218}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ gr-\/>\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}}\ :\ 0;}
-\DoxyCodeLine{00249\ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ gr-\/>edge\_count\ :\ 0;}
+\DoxyCodeLine{00220\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00038}{graph\+::edge\+\_\+count}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00218}{graph\+\_\+num\+\_\+edges()}}.
 
-\Hypertarget{graph_8c_a4ac5689d98e63a548b8b29162573e6ab}\label{graph_8c_a4ac5689d98e63a548b8b29162573e6ab} 
-\index{graph.c@{graph.c}!graph\_num\_neighbours@{graph\_num\_neighbours}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00218}{graph\+\_\+num\+\_\+edges()}}, and \doxymbox{\hyperlink{graph_8h_a69b44db28c04e12395fefa3d58278281}{graph\+\_\+num\+\_\+edges()}}.
+
+\Hypertarget{graph_8c_a4ac5689d98e63a548b8b29162573e6ab}\index{graph.c@{graph.c}!graph\_num\_neighbours@{graph\_num\_neighbours}}
 \index{graph\_num\_neighbours@{graph\_num\_neighbours}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_num\_neighbours()}{graph\_num\_neighbours()}}
-{\footnotesize\ttfamily int graph\+\_\+num\+\_\+neighbours (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a4ac5689d98e63a548b8b29162573e6ab} 
+int graph\+\_\+num\+\_\+neighbours (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
 
 
 
 Gets number of neighbors for a node. 
-
-Gets the number of neighbors for a node.
 
 
 \begin{DoxyParams}{Parameters}
@@ -734,27 +766,31 @@ Number of neighbors, 0 if node not found
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00331}{331}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00302}{302}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00332\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00333\ }
-\DoxyCodeLine{00334\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node);}
-\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ ?\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(adj)\ :\ 0;}
-\DoxyCodeLine{00336\ \}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node);}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{return}\ adj\ ?\ \doxymbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(adj)\ :\ 0;}
+\DoxyCodeLine{00307\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00302}{graph\+\_\+num\+\_\+neighbours()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}.
 
-\Hypertarget{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}\label{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41} 
-\index{graph.c@{graph.c}!graph\_num\_nodes@{graph\_num\_nodes}}
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00302}{graph\+\_\+num\+\_\+neighbours()}}, and \doxymbox{\hyperlink{graph_8h_aea72dff139f3a9596021b6453f2bdb76}{graph\+\_\+num\+\_\+neighbours()}}.
+
+\Hypertarget{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}\index{graph.c@{graph.c}!graph\_num\_nodes@{graph\_num\_nodes}}
 \index{graph\_num\_nodes@{graph\_num\_nodes}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_num\_nodes()}{graph\_num\_nodes()}}
-{\footnotesize\ttfamily int graph\+\_\+num\+\_\+nodes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41} 
+int graph\+\_\+num\+\_\+nodes (\begin{DoxyParamCaption}\item[{const Graph \texorpdfstring{$\ast$}{*}}]{gr}{}\end{DoxyParamCaption})}
 
 
 
@@ -770,28 +806,28 @@ Number of nodes, 0 if gr is NULL
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00238}{238}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00209}{209}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}})\ :\ 0;}
-\DoxyCodeLine{00240\ \}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{return}\ gr\ ?\ \doxymbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\_table\_size}}(gr-\/>nodes)\ :\ 0;}
+\DoxyCodeLine{00211\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00209}{graph\+\_\+num\+\_\+nodes()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}.
 
 
 
-Referenced by \mbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}.
+Referenced by \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00209}{graph\+\_\+num\+\_\+nodes()}}, and \doxymbox{\hyperlink{graph_8h_adcb38e3a44ea722dc302eeb1abd7f105}{graph\+\_\+num\+\_\+nodes()}}.
 
-\Hypertarget{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}\label{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa} 
-\index{graph.c@{graph.c}!graph\_remove\_edge@{graph\_remove\_edge}}
+\Hypertarget{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}\index{graph.c@{graph.c}!graph\_remove\_edge@{graph\_remove\_edge}}
 \index{graph\_remove\_edge@{graph\_remove\_edge}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_remove\_edge()}{graph\_remove\_edge()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+remove\+\_\+edge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2 }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+remove\+\_\+edge (\begin{DoxyParamCaption}\item[{Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node1}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node2}{}\end{DoxyParamCaption})}
 
 
 
@@ -811,64 +847,62 @@ true if edge was removed successfully, false otherwise
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00199}{199}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00170}{170}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00201\ }
-\DoxyCodeLine{00202\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj1\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node1);}
-\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adj1)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00204\ }
-\DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//\ Remove\ edge(s)}}
-\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(adj1,\ node2))\ \{}
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ label\ if\ graph\ is\ labelled}}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}})\ \{}
-\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ label\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj1,\ node2);}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ free(label);}
-\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(adj1,\ node2);}
-\DoxyCodeLine{00213\ }
-\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Remove\ reverse\ edge\ for\ undirected\ graphs}}
-\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>\mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\_directed}})\ \{}
-\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj2\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node2);}
-\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (adj2)\ \{}
-\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}})\ \{}
-\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ reverse\_label\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj2,\ node1);}
-\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(reverse\_label);}
-\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(adj2,\ node1);}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00225\ }
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ gr-\/>\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}}-\/-\/;}
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00228\ \ \ \ \ \}}
-\DoxyCodeLine{00229\ }
-\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00231\ \}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node1\ ||\ !node2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj1\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node1);}
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adj1)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//\ Remove\ edge(s)}}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\_table\_contains\_key}}(adj1,\ node2))\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ label\ if\ graph\ is\ labelled}}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>is\_labelled)\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ label\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj1,\ node2);}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ free(label);}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(adj1,\ node2);}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Remove\ reverse\ edge\ for\ undirected\ graphs}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>is\_directed)\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj2\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node2);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (adj2)\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gr-\/>is\_labelled)\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ reverse\_label\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(adj2,\ node1);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(reverse\_label);}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(adj2,\ node1);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ gr-\/>edge\_count-\/-\/;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00199\ \ \ \ \ \}}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00202\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8h_source_l00038}{graph\+::edge\+\_\+count}}, \mbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}, \mbox{\hyperlink{graph_8h_source_l00036}{graph\+::is\+\_\+directed}}, \mbox{\hyperlink{graph_8h_source_l00037}{graph\+::is\+\_\+labelled}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00170}{graph\+\_\+remove\+\_\+edge()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00170}{graph\+\_\+remove\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8h_aaa375f1e572f6b6ebd3761a70f35a00f}{graph\+\_\+remove\+\_\+edge()}}, and \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}.
 
-\Hypertarget{graph_8c_aba154e83b5bbc87190247fd4809179ce}\label{graph_8c_aba154e83b5bbc87190247fd4809179ce} 
-\index{graph.c@{graph.c}!graph\_remove\_node@{graph\_remove\_node}}
+\Hypertarget{graph_8c_aba154e83b5bbc87190247fd4809179ce}\index{graph.c@{graph.c}!graph\_remove\_node@{graph\_remove\_node}}
 \index{graph\_remove\_node@{graph\_remove\_node}!graph.c@{graph.c}}
 \doxysubsubsection{\texorpdfstring{graph\_remove\_node()}{graph\_remove\_node()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+remove\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structgraph}{Graph}} \texorpdfstring{$\ast$}{*}}]{gr,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{node }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{graph_8c_aba154e83b5bbc87190247fd4809179ce} 
+\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}} graph\+\_\+remove\+\_\+node (\begin{DoxyParamCaption}\item[{Graph \texorpdfstring{$\ast$}{*}}]{gr}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
 
 
 
 Removes a node and all its edges from the graph. 
-
-Removes a node from the graph.
 
 
 \begin{DoxyParams}{Parameters}
@@ -882,37 +916,41 @@ true if node was removed successfully, false otherwise
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{graph_8c_source_l00167}{167}} of file \mbox{\hyperlink{graph_8c_source}{graph.\+c}}.
+Definition at line \doxymbox{\hyperlink{graph_8c_source_l00138}{138}} of file \doxymbox{\hyperlink{graph_8c_source}{graph.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00169\ }
-\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node);}
-\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adj)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00172\ }
-\DoxyCodeLine{00173\ \ \ \ \ \textcolor{comment}{//\ Remove\ all\ edges\ connected\ to\ this\ node}}
-\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj);}
-\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ neighbors[i]\ !=\ NULL;\ i++)\ \{}
-\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(gr,\ node,\ neighbors[i]);}
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>\mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\_directed}})\ \{}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(gr,\ neighbors[i],\ node);}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ free(neighbors);}
-\DoxyCodeLine{00183\ \ \ \ \ \}}
-\DoxyCodeLine{00184\ }
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{comment}{//\ Free\ adjacency\ list\ and\ remove\ node}}
-\DoxyCodeLine{00186\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(adj);}
-\DoxyCodeLine{00187\ \ \ \ \ \mbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(gr-\/>\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}},\ node);}
-\DoxyCodeLine{00188\ }
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00190\ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr\ ||\ !node)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ adj\ =\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(gr-\/>nodes,\ node);}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{if}\ (!adj)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ Remove\ all\ edges\ connected\ to\ this\ node}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}**\ neighbors\ =\ \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\_table\_keyset}}(adj);}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{if}\ (neighbors)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ neighbors[i]\ !=\ NULL;\ i++)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(gr,\ node,\ neighbors[i]);}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!gr-\/>is\_directed)\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(gr,\ neighbors[i],\ node);}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ free(neighbors);}
+\DoxyCodeLine{00154\ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//\ Free\ adjacency\ list\ and\ remove\ node}}
+\DoxyCodeLine{00157\ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\_table\_free}}(adj);}
+\DoxyCodeLine{00158\ \ \ \ \ \doxymbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\_table\_remove}}(gr-\/>nodes,\ node);}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00161\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}, \mbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \mbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \mbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}, \mbox{\hyperlink{graph_8h_source_l00036}{graph\+::is\+\_\+directed}}, and \mbox{\hyperlink{graph_8h_source_l00035}{graph\+::nodes}}.
+References \doxymbox{\hyperlink{graph_8c_source_l00170}{graph\+\_\+remove\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}, and \doxymbox{\hyperlink{graph_8h_afe396bebaac1cf13fd17b41b4793a1ae}{graph\+\_\+remove\+\_\+node()}}.
 

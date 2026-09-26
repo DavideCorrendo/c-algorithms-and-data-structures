@@ -8,8 +8,8 @@ SRC_DIR = src
 TEST_DIR = tests
 
 # Target executables
-TARGET = $(BIN_DIR)/sort_program
-TEST_TARGET = $(BIN_DIR)/run_tests
+TARGET = $(BIN_DIR)/main_ex1
+TEST_TARGET = $(BIN_DIR)/test_ex1
 
 # Source files
 SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/sort.c

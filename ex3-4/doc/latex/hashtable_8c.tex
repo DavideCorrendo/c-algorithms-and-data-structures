@@ -1,31 +1,37 @@
-\doxysection{src/hashtable.c File Reference}
+\doxysection{src/\+hashtable.c File Reference}
 \hypertarget{hashtable_8c}{}\label{hashtable_8c}\index{src/hashtable.c@{src/hashtable.c}}
 
 
 Implementation of a generic hash table data structure.  
 
 
-{\ttfamily \#include "{}hashtable.\+h"{}}\newline
-Include dependency graph for hashtable.\+c\+:
-% FIG 0
+{\ttfamily \+\#include "{}hashtable.\+h"{}}\newline
+Include dependency graph for hashtable.\+c:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{hashtable_8c__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\+\_\+table\+\_\+create}} (int(\texorpdfstring{$\ast$}{*}compare)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), unsigned long(\texorpdfstring{$\ast$}{*}hash)(const void \texorpdfstring{$\ast$}{*}))
+\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}{hash\+\_\+table\+\_\+create}} (int(\texorpdfstring{$\ast$}{*}compare)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), unsigned long(\texorpdfstring{$\ast$}{*}hash)(const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Creates a new hash table. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\+\_\+table\+\_\+put}} (\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key, const void \texorpdfstring{$\ast$}{*}value)
+void \doxymbox{\hyperlink{hashtable_8c_acf160eec43da978b0881b0328bcbd107}{hash\+\_\+table\+\_\+put}} (\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key, const void \texorpdfstring{$\ast$}{*}value)
 \begin{DoxyCompactList}\small\item\em Inserts or updates a key-\/value pair in the hash table. \end{DoxyCompactList}\item 
-void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\+\_\+table\+\_\+get}} (const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key)
+void \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\+\_\+table\+\_\+get}} (const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key)
 \begin{DoxyCompactList}\small\item\em Retrieves the value associated with a given key. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\+\_\+table\+\_\+contains\+\_\+key}} (const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key)
+int \doxymbox{\hyperlink{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}{hash\+\_\+table\+\_\+contains\+\_\+key}} (const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key)
 \begin{DoxyCompactList}\small\item\em Checks if a key exists in the hash table. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\+\_\+table\+\_\+remove}} (\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key)
+void \doxymbox{\hyperlink{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}{hash\+\_\+table\+\_\+remove}} (\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table, const void \texorpdfstring{$\ast$}{*}key)
 \begin{DoxyCompactList}\small\item\em Removes a key-\/value pair from the hash table. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\+\_\+table\+\_\+size}} (const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table)
+int \doxymbox{\hyperlink{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}{hash\+\_\+table\+\_\+size}} (const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table)
 \begin{DoxyCompactList}\small\item\em Returns the number of key-\/value pairs in the hash table. \end{DoxyCompactList}\item 
-void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\+\_\+table\+\_\+keyset}} (const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table)
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}{hash\+\_\+table\+\_\+keyset}} (const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table)
 \begin{DoxyCompactList}\small\item\em Returns an array of all keys in the hash table. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\+\_\+table\+\_\+free}} (\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table)
+void \doxymbox{\hyperlink{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}{hash\+\_\+table\+\_\+free}} (\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}table)
 \begin{DoxyCompactList}\small\item\em Frees all memory associated with the hash table. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -34,16 +40,18 @@ Implementation of a generic hash table data structure.
 
 This file contains the implementation of a hash table that supports generic key-\/value pairs using void pointers. The hash table uses chaining for collision resolution. 
 
-Definition in file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+Definition in file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 
+\label{hashtable_8c_doc-func-members}
+\Hypertarget{hashtable_8c_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}\label{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_contains\_key@{hash\_table\_contains\_key}}
+\Hypertarget{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151}\index{hashtable.c@{hashtable.c}!hash\_table\_contains\_key@{hash\_table\_contains\_key}}
 \index{hash\_table\_contains\_key@{hash\_table\_contains\_key}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_contains\_key()}{hash\_table\_contains\_key()}}
-{\footnotesize\ttfamily int hash\+\_\+table\+\_\+contains\+\_\+key (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{key }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_a2a39adfbd34785a5f9596bf816bfe151} 
+int hash\+\_\+table\+\_\+contains\+\_\+key (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
 
 
 
@@ -57,32 +65,42 @@ Checks if a key exists in the hash table.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 if the key exists, 0 otherwise 
+1 if the key exists, 0 otherwise
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table \\
+\hline
+{\em key} & The key to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if key exists, 0 otherwise 
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00086}{86}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00086}{86}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(table,\ key)\ !=\ NULL;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}{hash\_table\_get}}(table,\ key)\ !=\ NULL;}
 \DoxyCodeLine{00088\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}.
+References \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00154}{graph\+\_\+contains\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00142}{graph\+\_\+contains\+\_\+node()}}, and \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}.
+Referenced by \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00088}{graph\+\_\+add\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00125}{graph\+\_\+contains\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00113}{graph\+\_\+contains\+\_\+node()}}, \doxymbox{\hyperlink{graph_8c_source_l00170}{graph\+\_\+remove\+\_\+edge()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}.
 
-\Hypertarget{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}\label{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_create@{hash\_table\_create}}
+\Hypertarget{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c}\index{hashtable.c@{hashtable.c}!hash\_table\_create@{hash\_table\_create}}
 \index{hash\_table\_create@{hash\_table\_create}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_create()}{hash\_table\_create()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*} hash\+\_\+table\+\_\+create (\begin{DoxyParamCaption}\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compare,  }\item[{unsigned long(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*})}]{hash }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_a68a49ff5c1d766ce7889ea86b267297c} 
+\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*} hash\+\_\+table\+\_\+create (\begin{DoxyParamCaption}\item[{int(\texorpdfstring{$\ast$}{*}}]{f1~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}), }\item[{unsigned long(\texorpdfstring{$\ast$}{*}}]{f2~}{)(const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
@@ -98,37 +116,49 @@ Creates a new hash table.
 \begin{DoxyReturn}{Returns}
 Pointer to the newly created hash table, or NULL if allocation fails
 \end{DoxyReturn}
-Initializes a hash table with a default size of 16 buckets. The compare and hash functions must be provided by the caller for proper key management. 
+Initializes a hash table with a default size of 16 buckets. The compare and hash functions must be provided by the caller for proper key management.
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00019}{19}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+
+\begin{DoxyParams}{Parameters}
+{\em f1} & Comparison function for keys \\
+\hline
+{\em f2} & Hash function for keys \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created hash table, NULL on failure 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00019}{19}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ initial\_bucket\_count\ =\ 16;}
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ table\ =\ (\mbox{\hyperlink{structHashTable}{HashTable}}*)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structHashTable}{HashTable}}));}
-\DoxyCodeLine{00022\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}\ =\ (\mbox{\hyperlink{structHashNode}{HashNode}}**)calloc(initial\_bucket\_count,\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structHashNode}{HashNode}}*));}
-\DoxyCodeLine{00023\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}}\ =\ initial\_bucket\_count;}
-\DoxyCodeLine{00024\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}\ =\ 0;}
-\DoxyCodeLine{00025\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_a1b681b5c16acf36b99bf2954508ac633}{compare}}\ =\ compare;}
-\DoxyCodeLine{00026\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}{hash}}\ =\ hash;}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{structHashTable}{HashTable}}*\ table\ =\ (\doxymbox{\hyperlink{structHashTable}{HashTable}}*)malloc(\textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structHashTable}{HashTable}}));}
+\DoxyCodeLine{00022\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}\ =\ (\doxymbox{\hyperlink{structHashNode}{HashNode}}**)calloc(initial\_bucket\_count,\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structHashNode}{HashNode}}*));}
+\DoxyCodeLine{00023\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}}\ =\ initial\_bucket\_count;}
+\DoxyCodeLine{00024\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}\ =\ 0;}
+\DoxyCodeLine{00025\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_a62c176448e74abc055da52c97b219d10}{compare}}\ =\ compare;}
+\DoxyCodeLine{00026\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_a2747e6e6fa402544346341ec2a9d8015}{hash}}\ =\ hash;}
 \DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ table;}
 \DoxyCodeLine{00028\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, \mbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table\+::compare}}, \mbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table\+::hash}}, and \mbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table\+::size}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table::\+compare}}, \doxymbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table::\+hash}}, \doxymbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table::\+size}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}, and \mbox{\hyperlink{graph_8c_source_l00018}{graph\+\_\+create()}}.
+Referenced by \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00068}{graph\+\_\+add\+\_\+node()}}, \doxymbox{\hyperlink{graph_8c_source_l00026}{graph\+\_\+create()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00019}{hash\+\_\+table\+\_\+create()}}.
 
-\Hypertarget{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}\label{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_free@{hash\_table\_free}}
+\Hypertarget{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0}\index{hashtable.c@{hashtable.c}!hash\_table\_free@{hash\_table\_free}}
 \index{hash\_table\_free@{hash\_table\_free}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_free()}{hash\_table\_free()}}
-{\footnotesize\ttfamily void hash\+\_\+table\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_ab62c6e386806e103c659021f0bb4c0a0} 
+void hash\+\_\+table\+\_\+free (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{}\end{DoxyParamCaption})}
 
 
 
@@ -139,41 +169,48 @@ Frees all memory associated with the hash table.
 {\em table} & Pointer to the hash table to free\\
 \hline
 \end{DoxyParams}
-Frees all nodes, buckets, and the table structure itself. Does not free the memory of stored keys and values as they might be used elsewhere. 
+Frees all nodes, buckets, and the table structure itself. Does not free the memory of stored keys and values as they might be used elsewhere.
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00156}{156}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table to free \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00156}{156}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (!table)\ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ table-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};\ i++)\ \{}
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[i];}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ table-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};\ i++)\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[i];}
 \DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (current)\ \{}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ temp\ =\ current;}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ current\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ temp\ =\ current;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ current\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ free(temp);}
 \DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00166\ \ \ \ \ \}}
-\DoxyCodeLine{00167\ \ \ \ \ free(table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}});}
+\DoxyCodeLine{00167\ \ \ \ \ free(table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}});}
 \DoxyCodeLine{00168\ \ \ \ \ free(table);}
 \DoxyCodeLine{00169\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, and \mbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node\+::next}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node::\+next}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}, \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, and \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}.
+Referenced by \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00327}{graph\+\_\+free()}}, \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00156}{hash\+\_\+table\+\_\+free()}}.
 
-\Hypertarget{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}\label{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_get@{hash\_table\_get}}
+\Hypertarget{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac}\index{hashtable.c@{hashtable.c}!hash\_table\_get@{hash\_table\_get}}
 \index{hash\_table\_get@{hash\_table\_get}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_get()}{hash\_table\_get()}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} hash\+\_\+table\+\_\+get (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{key }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_a84539f156ecff3fc35040a53fb51e4ac} 
+void \texorpdfstring{$\ast$}{*} hash\+\_\+table\+\_\+get (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
 
 
 
@@ -191,20 +228,34 @@ Retrieves the value associated with a key.
 \begin{DoxyReturn}{Returns}
 Pointer to the value if found, NULL otherwise
 \end{DoxyReturn}
-Searches the appropriate bucket for the key and returns its associated value. Returns NULL if the key is not found in the table. 
+Searches the appropriate bucket for the key and returns its associated value. Returns NULL if the key is not found in the table.
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00068}{68}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+Retrieves the value associated with a given key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table \\
+\hline
+{\em key} & The key to look up \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The associated value, or NULL if key not found 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00068}{68}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\_value\ =\ table-\/>\mbox{\hyperlink{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}{hash}}(key)\ \%\ table-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};}
-\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\_value\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a2747e6e6fa402544346341ec2a9d8015}{hash}}(key)\ \%\ table-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};}
+\DoxyCodeLine{00070\ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
 \DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{while}\ (current)\ \{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (table-\/>\mbox{\hyperlink{structHashTable_a1b681b5c16acf36b99bf2954508ac633}{compare}}(current-\/>\mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}},\ key)\ ==\ 0)\ \{}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ current-\/>\mbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (table-\/>\doxymbox{\hyperlink{structHashTable_a62c176448e74abc055da52c97b219d10}{compare}}(current-\/>\doxymbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}},\ key)\ ==\ 0)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ current-\/>\doxymbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}};}
 \DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ current\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ current\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00076\ \ \ \ \ \}}
 \DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
 \DoxyCodeLine{00078\ \}}
@@ -212,17 +263,17 @@ Definition at line \mbox{\hyperlink{hashtable_8c_source_l00068}{68}} of file \mb
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, \mbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table\+::compare}}, \mbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table\+::hash}}, \mbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node\+::key}}, \mbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node\+::next}}, and \mbox{\hyperlink{hashtable_8h_source_l00024}{Hash\+Node\+::value}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table::\+compare}}, \doxymbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table::\+hash}}, \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}, \doxymbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node::\+key}}, \doxymbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node::\+next}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00024}{Hash\+Node::\+value}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00154}{graph\+\_\+contains\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{graph_8c_source_l00265}{graph\+\_\+get\+\_\+edges()}}, \mbox{\hyperlink{graph_8c_source_l00345}{graph\+\_\+get\+\_\+label()}}, \mbox{\hyperlink{graph_8c_source_l00318}{graph\+\_\+get\+\_\+neighbours()}}, \mbox{\hyperlink{graph_8c_source_l00331}{graph\+\_\+num\+\_\+neighbours()}}, \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}, and \mbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00088}{graph\+\_\+add\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00125}{graph\+\_\+contains\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00327}{graph\+\_\+free()}}, \doxymbox{\hyperlink{graph_8c_source_l00236}{graph\+\_\+get\+\_\+edges()}}, \doxymbox{\hyperlink{graph_8c_source_l00316}{graph\+\_\+get\+\_\+label()}}, \doxymbox{\hyperlink{graph_8c_source_l00289}{graph\+\_\+get\+\_\+neighbours()}}, \doxymbox{\hyperlink{graph_8c_source_l00302}{graph\+\_\+num\+\_\+neighbours()}}, \doxymbox{\hyperlink{graph_8c_source_l00170}{graph\+\_\+remove\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}, \doxymbox{\hyperlink{hashtable_8c_source_l00086}{hash\+\_\+table\+\_\+contains\+\_\+key()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00068}{hash\+\_\+table\+\_\+get()}}.
 
-\Hypertarget{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}\label{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_keyset@{hash\_table\_keyset}}
+\Hypertarget{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe}\index{hashtable.c@{hashtable.c}!hash\_table\_keyset@{hash\_table\_keyset}}
 \index{hash\_table\_keyset@{hash\_table\_keyset}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_keyset()}{hash\_table\_keyset()}}
-{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} hash\+\_\+table\+\_\+keyset (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_a7d1ea19d9bfaff5464c2f0c9a1504bbe} 
+void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} hash\+\_\+table\+\_\+keyset (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{}\end{DoxyParamCaption})}
 
 
 
@@ -236,41 +287,51 @@ Returns an array of all keys in the hash table.
 \begin{DoxyReturn}{Returns}
 NULL-\/terminated array of pointers to all keys
 \end{DoxyReturn}
-Allocates and returns a new array containing pointers to all keys in the table. The caller is responsible for freeing the returned array. 
+Allocates and returns a new array containing pointers to all keys in the table. The caller is responsible for freeing the returned array.
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00134}{134}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL-\/terminated array of keys 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00134}{134}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{void}**\ keys\ =\ (\textcolor{keywordtype}{void}**)malloc((table-\/>\mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}\ +\ 1)\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{void}**\ keys\ =\ (\textcolor{keywordtype}{void}**)malloc((table-\/>\doxymbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}\ +\ 1)\ *\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*));}
 \DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ 0;}
 \DoxyCodeLine{00137\ \ \ \ \ }
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ table-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};\ i++)\ \{}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[i];}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ table-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};\ i++)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[i];}
 \DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (current)\ \{}
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ keys[index++]\ =\ current-\/>\mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}};}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ current\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ keys[index++]\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ current\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00144\ \ \ \ \ \}}
-\DoxyCodeLine{00145\ \ \ \ \ keys[table-\/>\mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}]\ =\ NULL;}
+\DoxyCodeLine{00145\ \ \ \ \ keys[table-\/>\doxymbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}]\ =\ NULL;}
 \DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{return}\ keys;}
 \DoxyCodeLine{00147\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, \mbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node\+::key}}, \mbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node\+::next}}, and \mbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table\+::size}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}, \doxymbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node::\+key}}, \doxymbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node::\+next}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table::\+size}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00356}{graph\+\_\+free()}}, \mbox{\hyperlink{graph_8c_source_l00265}{graph\+\_\+get\+\_\+edges()}}, \mbox{\hyperlink{graph_8c_source_l00318}{graph\+\_\+get\+\_\+neighbours()}}, \mbox{\hyperlink{graph_8c_source_l00256}{graph\+\_\+get\+\_\+nodes()}}, and \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00327}{graph\+\_\+free()}}, \doxymbox{\hyperlink{graph_8c_source_l00236}{graph\+\_\+get\+\_\+edges()}}, \doxymbox{\hyperlink{graph_8c_source_l00289}{graph\+\_\+get\+\_\+neighbours()}}, \doxymbox{\hyperlink{graph_8c_source_l00227}{graph\+\_\+get\+\_\+nodes()}}, \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00134}{hash\+\_\+table\+\_\+keyset()}}.
 
-\Hypertarget{hashtable_8c_acf160eec43da978b0881b0328bcbd107}\label{hashtable_8c_acf160eec43da978b0881b0328bcbd107} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_put@{hash\_table\_put}}
+\Hypertarget{hashtable_8c_acf160eec43da978b0881b0328bcbd107}\index{hashtable.c@{hashtable.c}!hash\_table\_put@{hash\_table\_put}}
 \index{hash\_table\_put@{hash\_table\_put}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_put()}{hash\_table\_put()}}
-{\footnotesize\ttfamily void hash\+\_\+table\+\_\+put (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{key,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{value }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_acf160eec43da978b0881b0328bcbd107} 
+void hash\+\_\+table\+\_\+put (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})}
 
 
 
@@ -285,47 +346,58 @@ Inserts or updates a key-\/value pair in the hash table.
 {\em value} & Pointer to the value\\
 \hline
 \end{DoxyParams}
-If the key already exists, its value is updated. Otherwise, a new key-\/value pair is inserted into the appropriate bucket. The function handles collisions using chaining. 
+If the key already exists, its value is updated. Otherwise, a new key-\/value pair is inserted into the appropriate bucket. The function handles collisions using chaining.
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00039}{39}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table \\
+\hline
+{\em key} & The key to insert \\
+\hline
+{\em value} & The value to associate with the key \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00039}{39}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\_value\ =\ table-\/>\mbox{\hyperlink{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}{hash}}(key)\ \%\ table-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\_value\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a2747e6e6fa402544346341ec2a9d8015}{hash}}(key)\ \%\ table-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};}
 \DoxyCodeLine{00041\ \ \ \ \ }
-\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
+\DoxyCodeLine{00042\ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
 \DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{while}\ (current)\ \{}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (table-\/>\mbox{\hyperlink{structHashTable_a1b681b5c16acf36b99bf2954508ac633}{compare}}(current-\/>\mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}},\ key)\ ==\ 0)\ \{}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ current-\/>\mbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}}\ =\ (\textcolor{keywordtype}{void}*)value;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (table-\/>\doxymbox{\hyperlink{structHashTable_a62c176448e74abc055da52c97b219d10}{compare}}(current-\/>\doxymbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}},\ key)\ ==\ 0)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ current-\/>\doxymbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}}\ =\ (\textcolor{keywordtype}{void}*)value;}
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ current\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ current\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00049\ \ \ \ \ \}}
 \DoxyCodeLine{00050\ \ \ \ \ }
-\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ new\_node\ =\ (\mbox{\hyperlink{structHashNode}{HashNode}}*)malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structHashNode}{HashNode}}));}
-\DoxyCodeLine{00052\ \ \ \ \ new\_node-\/>\mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}}\ =\ (\textcolor{keywordtype}{void}*)key;}
-\DoxyCodeLine{00053\ \ \ \ \ new\_node-\/>\mbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}}\ =\ (\textcolor{keywordtype}{void}*)value;}
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ new\_node\ =\ (\doxymbox{\hyperlink{structHashNode}{HashNode}}*)malloc(\textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structHashNode}{HashNode}}));}
+\DoxyCodeLine{00052\ \ \ \ \ new\_node-\/>\doxymbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}}\ =\ (\textcolor{keywordtype}{void}*)key;}
+\DoxyCodeLine{00053\ \ \ \ \ new\_node-\/>\doxymbox{\hyperlink{structHashNode_a6ae4d33712292a282972b284fd27e27d}{value}}\ =\ (\textcolor{keywordtype}{void}*)value;}
 \DoxyCodeLine{00054\ \ \ \ \ }
-\DoxyCodeLine{00055\ \ \ \ \ new\_node-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}}\ =\ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
-\DoxyCodeLine{00056\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value]\ =\ new\_node;}
-\DoxyCodeLine{00057\ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}++;}
+\DoxyCodeLine{00055\ \ \ \ \ new\_node-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}}\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
+\DoxyCodeLine{00056\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value]\ =\ new\_node;}
+\DoxyCodeLine{00057\ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}++;}
 \DoxyCodeLine{00058\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, \mbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table\+::compare}}, \mbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table\+::hash}}, \mbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node\+::key}}, \mbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node\+::next}}, \mbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table\+::size}}, and \mbox{\hyperlink{hashtable_8h_source_l00024}{Hash\+Node\+::value}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table::\+compare}}, \doxymbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table::\+hash}}, \doxymbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}, \doxymbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node::\+key}}, \doxymbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node::\+next}}, \doxymbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table::\+size}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00024}{Hash\+Node::\+value}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, and \mbox{\hyperlink{graph_8c_source_l00060}{graph\+\_\+add\+\_\+node()}}.
+Referenced by \doxymbox{\hyperlink{bfs_8c_source_l00028}{breadth\+\_\+first\+\_\+visit()}}, \doxymbox{\hyperlink{graph_8c_source_l00088}{graph\+\_\+add\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00068}{graph\+\_\+add\+\_\+node()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00039}{hash\+\_\+table\+\_\+put()}}.
 
-\Hypertarget{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}\label{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_remove@{hash\_table\_remove}}
+\Hypertarget{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3}\index{hashtable.c@{hashtable.c}!hash\_table\_remove@{hash\_table\_remove}}
 \index{hash\_table\_remove@{hash\_table\_remove}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_remove()}{hash\_table\_remove()}}
-{\footnotesize\ttfamily void hash\+\_\+table\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{key }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_aab24d9d84e62d35a1a2783071e5216e3} 
+void hash\+\_\+table\+\_\+remove (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
 
 
 
@@ -338,47 +410,56 @@ Removes a key-\/value pair from the hash table.
 {\em key} & Pointer to the key to remove\\
 \hline
 \end{DoxyParams}
-Removes the node containing the specified key and its associated value. If the key is not found, the function does nothing. 
+Removes the node containing the specified key and its associated value. If the key is not found, the function does nothing.
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00097}{97}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table \\
+\hline
+{\em key} & The key to remove \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00097}{97}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\_value\ =\ table-\/>\mbox{\hyperlink{structHashTable_a1b49858aed1eca33e6925561ee48d0e5}{hash}}(key)\ \%\ table-\/>\mbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};}
-\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
-\DoxyCodeLine{00100\ \ \ \ \ \mbox{\hyperlink{structHashNode}{HashNode}}*\ prev\ =\ NULL;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ hash\_value\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a2747e6e6fa402544346341ec2a9d8015}{hash}}(key)\ \%\ table-\/>\doxymbox{\hyperlink{structHashTable_a071ad113322bdab9e3edd8991fa54cb1}{bucket\_count}};}
+\DoxyCodeLine{00099\ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ current\ =\ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value];}
+\DoxyCodeLine{00100\ \ \ \ \ \doxymbox{\hyperlink{structHashNode}{HashNode}}*\ prev\ =\ NULL;}
 \DoxyCodeLine{00101\ \ \ \ \ }
 \DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{while}\ (current)\ \{}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (table-\/>\mbox{\hyperlink{structHashTable_a1b681b5c16acf36b99bf2954508ac633}{compare}}(current-\/>\mbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}},\ key)\ ==\ 0)\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (table-\/>\doxymbox{\hyperlink{structHashTable_a62c176448e74abc055da52c97b219d10}{compare}}(current-\/>\doxymbox{\hyperlink{structHashNode_a33fe9a4c955e0b679fcb639aafb84c36}{key}},\ key)\ ==\ 0)\ \{}
 \DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (prev)\ \{}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}}\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}}\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value]\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_a579f11d40e112ae62246f9fbf5a146c6}{buckets}}[hash\_value]\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ free(current);}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ table-\/>\mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}-\/-\/;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ table-\/>\doxymbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}}-\/-\/;}
 \DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ prev\ =\ current;}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ current\ =\ current-\/>\mbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ current\ =\ current-\/>\doxymbox{\hyperlink{structHashNode_a3213171b5cdc2bfab119ce74c9971e36}{next}};}
 \DoxyCodeLine{00115\ \ \ \ \ \}}
 \DoxyCodeLine{00116\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table\+::bucket\+\_\+count}}, \mbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table\+::buckets}}, \mbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table\+::compare}}, \mbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table\+::hash}}, \mbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node\+::key}}, \mbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node\+::next}}, and \mbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table\+::size}}.
+References \doxymbox{\hyperlink{hashtable_8h_source_l00034}{Hash\+Table::\+bucket\+\_\+count}}, \doxymbox{\hyperlink{hashtable_8h_source_l00033}{Hash\+Table::\+buckets}}, \doxymbox{\hyperlink{hashtable_8h_source_l00036}{Hash\+Table::\+compare}}, \doxymbox{\hyperlink{hashtable_8h_source_l00037}{Hash\+Table::\+hash}}, \doxymbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}, \doxymbox{\hyperlink{hashtable_8h_source_l00023}{Hash\+Node::\+key}}, \doxymbox{\hyperlink{hashtable_8h_source_l00025}{Hash\+Node::\+next}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table::\+size}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00091}{graph\+\_\+add\+\_\+edge()}}, \mbox{\hyperlink{graph_8c_source_l00199}{graph\+\_\+remove\+\_\+edge()}}, and \mbox{\hyperlink{graph_8c_source_l00167}{graph\+\_\+remove\+\_\+node()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00170}{graph\+\_\+remove\+\_\+edge()}}, \doxymbox{\hyperlink{graph_8c_source_l00138}{graph\+\_\+remove\+\_\+node()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00097}{hash\+\_\+table\+\_\+remove()}}.
 
-\Hypertarget{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}\label{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e} 
-\index{hashtable.c@{hashtable.c}!hash\_table\_size@{hash\_table\_size}}
+\Hypertarget{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e}\index{hashtable.c@{hashtable.c}!hash\_table\_size@{hash\_table\_size}}
 \index{hash\_table\_size@{hash\_table\_size}!hashtable.c@{hashtable.c}}
 \doxysubsubsection{\texorpdfstring{hash\_table\_size()}{hash\_table\_size()}}
-{\footnotesize\ttfamily int hash\+\_\+table\+\_\+size (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{hashtable_8c_a11577e12e76323c3ac8c8e8387df356e} 
+int hash\+\_\+table\+\_\+size (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structHashTable}{Hash\+Table}} \texorpdfstring{$\ast$}{*}}]{table}{}\end{DoxyParamCaption})}
 
 
 
@@ -392,24 +473,34 @@ Returns the number of elements in the hash table.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Number of entries in the table 
+Number of entries in the table
+\end{DoxyReturn}
+Returns the number of key-\/value pairs in the hash table.
+
+
+\begin{DoxyParams}{Parameters}
+{\em table} & The hash table \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of elements in the table 
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{hashtable_8c_source_l00123}{123}} of file \mbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
+Definition at line \doxymbox{\hyperlink{hashtable_8c_source_l00123}{123}} of file \doxymbox{\hyperlink{hashtable_8c_source}{hashtable.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}\ table-\/>\mbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}};}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}\ table-\/>\doxymbox{\hyperlink{structHashTable_ad732056fce42df5162c810b4dd28fca1}{size}};}
 \DoxyCodeLine{00125\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table\+::size}}.
+References \doxymbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}, and \doxymbox{\hyperlink{hashtable_8h_source_l00035}{Hash\+Table::\+size}}.
 
 
 
-Referenced by \mbox{\hyperlink{graph_8c_source_l00331}{graph\+\_\+num\+\_\+neighbours()}}, and \mbox{\hyperlink{graph_8c_source_l00238}{graph\+\_\+num\+\_\+nodes()}}.
+Referenced by \doxymbox{\hyperlink{graph_8c_source_l00302}{graph\+\_\+num\+\_\+neighbours()}}, \doxymbox{\hyperlink{graph_8c_source_l00209}{graph\+\_\+num\+\_\+nodes()}}, and \doxymbox{\hyperlink{hashtable_8c_source_l00123}{hash\+\_\+table\+\_\+size()}}.
 

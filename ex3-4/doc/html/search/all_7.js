@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['key_0',['key',['../structHashNode.html#a33fe9a4c955e0b679fcb639aafb84c36',1,'HashNode']]]
+  ['label_0',['label',['../structedge.html#a6d88f86d5490af1f0bc2903904f7dd0d',1,'edge']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['edge_5fcount_0',['edge_count',['../structgraph.html#a2cf75c5e36016b12cfa133504969c54f',1,'graph']]]
+  ['hash_0',['hash',['../structHashTable.html#a2747e6e6fa402544346341ec2a9d8015',1,'HashTable']]]
 ];

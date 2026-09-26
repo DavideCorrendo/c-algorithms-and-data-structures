@@ -68,10 +68,10 @@ static int edit_distance_memo(const char *s1, const char *s2, int i, int j, int 
         return memo[i][j];
     }
 
-    // Calculate cost of operations
-    int d_noop = (s1[i - 1] == s2[j - 1]) ? 
-                 edit_distance_memo(s1, s2, i - 1, j - 1, memo) : 
-                 1 + edit_distance_memo(s1, s2, i - 1, j - 1, memo);
+    int d_noop = INT_MAX;
+    if (s1[i - 1] == s2[j - 1]) {
+        d_noop = edit_distance_memo(s1, s2, i - 1, j - 1, memo);
+    }
     
     int d_canc = 1 + edit_distance_memo(s1, s2, i, j - 1, memo);
     int d_ins = 1 + edit_distance_memo(s1, s2, i - 1, j, memo);
@@ -80,23 +80,43 @@ static int edit_distance_memo(const char *s1, const char *s2, int i, int j, int 
     return memo[i][j];
 }
 
-int edit_distance(const char *s1, const char *s2, int **memo) {
-    int len1 = strlen(s1);
-    int len2 = strlen(s2);
-
-    reset_memo(memo, len1 + 1, len2 + 1);
-    return edit_distance_memo(s1, s2, len1, len2, memo);
+int edit_distance(const char *s1, const char *s2) {
+    if (strlen(s1) == 0) return strlen(s2);
+    if (strlen(s2) == 0) return strlen(s1);
+    
+    int d_noop = INT_MAX;
+    if (s1[0] == s2[0]) {
+        d_noop = edit_distance(s1 + 1, s2 + 1);
+    }
+    int d_canc = 1 + edit_distance(s1, s2 + 1);
+    int d_ins = 1 + edit_distance(s1 + 1, s2);
+    
+    return min3(d_noop, d_canc, d_ins);
 }
 
-void find_closest_words(const char *dictionary[], int dict_size, char *target, int **memo) {
+int edit_distance_dyn(const char *s1, const char *s2) {
+    int len1 = strlen(s1);
+    int len2 = strlen(s2);
+    int **memo = initialize_memo(len1 + 1, len2 + 1);
+    
+    int result = edit_distance_memo(s1, s2, len1, len2, memo);
+    
+    free_memo(memo, len1 + 1);
+    return result;
+}   
+
+void find_closest_words(const char *dictionary[], int dict_size, char *target) {
     clock_t start = clock();
 
     // Remove punctuation and convert to lowercase
     int j = 0;
-    for (int i = 0; target[i] != '\0'; i++) {
-        if (!ispunct(target[i])) {
-            target[j++] = tolower(target[i]);
-        }
+    for (int i = 0; i < dict_size; i++) {
+        int dict_word_len = strlen(dictionary[i]);
+        if (abs(target_len - dict_word_len) > 3) continue;
+
+        distances[count].word = (char *)dictionary[i];
+        distances[count].distance = edit_distance(target, dictionary[i], memo);
+        count++;
     }
     target[j] = '\0';
 

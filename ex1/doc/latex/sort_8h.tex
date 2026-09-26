@@ -1,57 +1,69 @@
-\doxysection{src/sort.h File Reference}
+\doxysection{src/\+sort.h File Reference}
 \hypertarget{sort_8h}{}\label{sort_8h}\index{src/sort.h@{src/sort.h}}
 
 
 Header file for sorting algorithms.  
 
 
-{\ttfamily \#include $<$stdlib.\+h$>$}\newline
-{\ttfamily \#include $<$stdio.\+h$>$}\newline
-{\ttfamily \#include $<$string.\+h$>$}\newline
-{\ttfamily \#include $<$math.\+h$>$}\newline
-{\ttfamily \#include $<$time.\+h$>$}\newline
-Include dependency graph for sort.\+h\+:
-% FIG 0
-This graph shows which files directly or indirectly include this file\+:
-% FIG 1
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$math.\+h$>$}\newline
+{\ttfamily \+\#include $<$time.\+h$>$}\newline
+Include dependency graph for sort.\+h:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sort_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{sort_8h__dep__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \mbox{\hyperlink{struct__Records}{\+\_\+\+Records}}
+struct \doxymbox{\hyperlink{struct__Records}{\+\_\+\+Records}}
 \begin{DoxyCompactList}\small\item\em Structure for storing multi-\/field records. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef struct \mbox{\hyperlink{struct__Records}{\+\_\+\+Records}} \mbox{\hyperlink{sort_8h_a7ebb6261b130ae895bf277427cb1cbbf}{Records}}
+typedef struct \doxymbox{\hyperlink{struct__Records}{\+\_\+\+Records}} \doxymbox{\hyperlink{sort_8h_a7ebb6261b130ae895bf277427cb1cbbf}{Records}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{struct__Records}{Records}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b}{records\+\_\+create}} ()
+Records \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b}{records\+\_\+create}} ()
 \begin{DoxyCompactList}\small\item\em Creates an array of Record structures. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_a77bb77defc06c8546a6badf40a52e0b0}{free\+\_\+records}} (\mbox{\hyperlink{struct__Records}{Records}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}records)
+void \doxymbox{\hyperlink{sort_8h_a77bb77defc06c8546a6badf40a52e0b0}{free\+\_\+records}} (Records \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}records)
 \begin{DoxyCompactList}\small\item\em Frees memory allocated for Records array. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{sort_8h_a9c381db2e8691840bd4179a7ff3dc753}{compare\+\_\+f1}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
-\begin{DoxyCompactList}\small\item\em Compares two records by field1 (string) \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{sort_8h_a3ec095b53162c0b67582330fb5fea2aa}{compare\+\_\+f2}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
-\begin{DoxyCompactList}\small\item\em Compares two records by field2 (integer) \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{sort_8h_a04608605cfc734f04f4719acff068fc5}{compare\+\_\+f3}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
-\begin{DoxyCompactList}\small\item\em Compares two records by field3 (float) \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_aff70d48025f2cfa56970ede9667e4180}{sort\+\_\+records}} (FILE \texorpdfstring{$\ast$}{*}infile, FILE \texorpdfstring{$\ast$}{*}outfile, size\+\_\+t field, size\+\_\+t algo)
+int \doxymbox{\hyperlink{sort_8h_a9c381db2e8691840bd4179a7ff3dc753}{compare\+\_\+f1}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compares two records by field1 (string). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{sort_8h_a3ec095b53162c0b67582330fb5fea2aa}{compare\+\_\+f2}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compares two records by field2 (integer). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{sort_8h_a04608605cfc734f04f4719acff068fc5}{compare\+\_\+f3}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compares two records by field3 (float). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{sort_8h_aff70d48025f2cfa56970ede9667e4180}{sort\+\_\+records}} (FILE \texorpdfstring{$\ast$}{*}infile, FILE \texorpdfstring{$\ast$}{*}outfile, size\+\_\+t field, size\+\_\+t algo)
 \begin{DoxyCompactList}\small\item\em Main sorting function. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_a015c6f934416db768ce5e9fcd2072faa}{merge}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int first, int mid, int last, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
+void \doxymbox{\hyperlink{sort_8h_a015c6f934416db768ce5e9fcd2072faa}{merge}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int first, int mid, int last, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Merges two sorted subarrays. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_abe01a2c4be22f39d2c841556e1686016}{merge\+\_\+sort\+\_\+rec}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int first, int last, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
+void \doxymbox{\hyperlink{sort_8h_abe01a2c4be22f39d2c841556e1686016}{merge\+\_\+sort\+\_\+rec}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int first, int last, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Recursive merge sort function. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\+\_\+sort}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int nitems, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
+void \doxymbox{\hyperlink{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\+\_\+sort}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int nitems, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Merge sort wrapper with timing. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_a65fb3038fc2b214b1e80142022812fcf}{swap}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}a, void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}b)
+void \doxymbox{\hyperlink{sort_8h_a65fb3038fc2b214b1e80142022812fcf}{swap}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}a, void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}b)
 \begin{DoxyCompactList}\small\item\em Swaps two elements. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int left, int right, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
+int \doxymbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int left, int right, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Partitions array for quicksort. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad}{quick\+\_\+sort\+\_\+rec}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int left, int right, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
+void \doxymbox{\hyperlink{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad}{quick\+\_\+sort\+\_\+rec}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, int left, int right, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Recursive quicksort function. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{sort_8h_afd0315445eb73304a4b6cb2718dc520f}{quick\+\_\+sort}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, size\+\_\+t nitems, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
+void \doxymbox{\hyperlink{sort_8h_afd0315445eb73304a4b6cb2718dc520f}{quick\+\_\+sort}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}base, size\+\_\+t nitems, int(\texorpdfstring{$\ast$}{*}compar)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*}))
 \begin{DoxyCompactList}\small\item\em Quicksort wrapper with timing. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -60,33 +72,39 @@ Header file for sorting algorithms.
 
 Contains declarations for sorting functions and record management 
 
-Definition in file \mbox{\hyperlink{sort_8h_source}{sort.\+h}}.
+Definition in file \doxymbox{\hyperlink{sort_8h_source}{sort.\+h}}.
 
 
 
+\label{sort_8h_doc-typedef-members}
+\Hypertarget{sort_8h_doc-typedef-members}
 \doxysubsection{Typedef Documentation}
-\Hypertarget{sort_8h_a7ebb6261b130ae895bf277427cb1cbbf}\label{sort_8h_a7ebb6261b130ae895bf277427cb1cbbf} 
-\index{sort.h@{sort.h}!Records@{Records}}
+\Hypertarget{sort_8h_a7ebb6261b130ae895bf277427cb1cbbf}\index{sort.h@{sort.h}!Records@{Records}}
 \index{Records@{Records}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{Records}{Records}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct__Records}{\+\_\+\+Records}} \mbox{\hyperlink{struct__Records}{Records}}}
+{\footnotesize\ttfamily \label{sort_8h_a7ebb6261b130ae895bf277427cb1cbbf} 
+typedef struct \doxymbox{\hyperlink{struct__Records}{\+\_\+\+Records}} Records}
 
 
 
-Definition at line \mbox{\hyperlink{sort_8h_source_l00020}{20}} of file \mbox{\hyperlink{sort_8h_source}{sort.\+h}}.
+Definition at line \doxymbox{\hyperlink{sort_8h_source_l00020}{20}} of file \doxymbox{\hyperlink{sort_8h_source}{sort.\+h}}.
 
 
 
+\label{sort_8h_doc-func-members}
+\Hypertarget{sort_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{sort_8h_a9c381db2e8691840bd4179a7ff3dc753}\label{sort_8h_a9c381db2e8691840bd4179a7ff3dc753} 
-\index{sort.h@{sort.h}!compare\_f1@{compare\_f1}}
+\Hypertarget{sort_8h_a9c381db2e8691840bd4179a7ff3dc753}\index{sort.h@{sort.h}!compare\_f1@{compare\_f1}}
 \index{compare\_f1@{compare\_f1}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{compare\_f1()}{compare\_f1()}}
-{\footnotesize\ttfamily int compare\+\_\+f1 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a9c381db2e8691840bd4179a7ff3dc753} 
+int compare\+\_\+f1 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
 
 
 
-Compares two records by field1 (string) 
+Compares two records by field1 (string). 
+
+String field comparison implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -98,30 +116,36 @@ Compares two records by field1 (string)
 \begin{DoxyReturn}{Returns}
 Comparison result (-\/1, 0, or 1)
 \end{DoxyReturn}
-Compares two records by field1 (string) 
+Compares two records by field1 (string). 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00048}{48}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00048}{48}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ strcmp(((\mbox{\hyperlink{struct__Records}{Records}}*)a)-\/>field1,\ ((\mbox{\hyperlink{struct__Records}{Records}}*)b)-\/>field1);}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ strcmp(((Records*)a)-\/>field1,\ ((Records*)b)-\/>field1);}
 \DoxyCodeLine{00050\ \}}
 
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00048}{compare\+\_\+f1()}}.
 
-\Hypertarget{sort_8h_a3ec095b53162c0b67582330fb5fea2aa}\label{sort_8h_a3ec095b53162c0b67582330fb5fea2aa} 
-\index{sort.h@{sort.h}!compare\_f2@{compare\_f2}}
+
+
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00048}{compare\+\_\+f1()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
+
+\Hypertarget{sort_8h_a3ec095b53162c0b67582330fb5fea2aa}\index{sort.h@{sort.h}!compare\_f2@{compare\_f2}}
 \index{compare\_f2@{compare\_f2}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{compare\_f2()}{compare\_f2()}}
-{\footnotesize\ttfamily int compare\+\_\+f2 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a3ec095b53162c0b67582330fb5fea2aa} 
+int compare\+\_\+f2 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
 
 
 
-Compares two records by field2 (integer) 
+Compares two records by field2 (integer). 
+
+Integer field comparison implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -133,30 +157,36 @@ Compares two records by field2 (integer)
 \begin{DoxyReturn}{Returns}
 Difference between field2 values
 \end{DoxyReturn}
-Compares two records by field2 (integer) 
+Compares two records by field2 (integer). 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00055}{55}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00055}{55}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\mbox{\hyperlink{struct__Records}{Records}}*)a)-\/>field2\ -\/\ ((\mbox{\hyperlink{struct__Records}{Records}}*)b)-\/>field2;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ ((Records*)a)-\/>field2\ -\/\ ((Records*)b)-\/>field2;}
 \DoxyCodeLine{00057\ \}}
 
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00055}{compare\+\_\+f2()}}.
 
-\Hypertarget{sort_8h_a04608605cfc734f04f4719acff068fc5}\label{sort_8h_a04608605cfc734f04f4719acff068fc5} 
-\index{sort.h@{sort.h}!compare\_f3@{compare\_f3}}
+
+
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00055}{compare\+\_\+f2()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
+
+\Hypertarget{sort_8h_a04608605cfc734f04f4719acff068fc5}\index{sort.h@{sort.h}!compare\_f3@{compare\_f3}}
 \index{compare\_f3@{compare\_f3}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{compare\_f3()}{compare\_f3()}}
-{\footnotesize\ttfamily int compare\+\_\+f3 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a04608605cfc734f04f4719acff068fc5} 
+int compare\+\_\+f3 (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
 
 
 
-Compares two records by field3 (float) 
+Compares two records by field3 (float). 
+
+Float field comparison implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -168,31 +198,37 @@ Compares two records by field3 (float)
 \begin{DoxyReturn}{Returns}
 -\/1 if a$<$b, 0 if equal, 1 if a$>$b
 \end{DoxyReturn}
-Compares two records by field3 (float) 
+Compares two records by field3 (float). 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00062}{62}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00062}{62}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{float}\ diff\ =\ ((\mbox{\hyperlink{struct__Records}{Records}}*)a)-\/>field3\ -\/\ ((\mbox{\hyperlink{struct__Records}{Records}}*)b)-\/>field3;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{float}\ diff\ =\ ((Records*)a)-\/>field3\ -\/\ ((Records*)b)-\/>field3;}
 \DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ (diff\ >\ 0)\ -\/\ (diff\ <\ 0);}
 \DoxyCodeLine{00065\ \}}
 
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00062}{compare\+\_\+f3()}}.
 
-\Hypertarget{sort_8h_a77bb77defc06c8546a6badf40a52e0b0}\label{sort_8h_a77bb77defc06c8546a6badf40a52e0b0} 
-\index{sort.h@{sort.h}!free\_records@{free\_records}}
+
+
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00062}{compare\+\_\+f3()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
+
+\Hypertarget{sort_8h_a77bb77defc06c8546a6badf40a52e0b0}\index{sort.h@{sort.h}!free\_records@{free\_records}}
 \index{free\_records@{free\_records}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{free\_records()}{free\_records()}}
-{\footnotesize\ttfamily void free\+\_\+records (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct__Records}{Records}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{records }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a77bb77defc06c8546a6badf40a52e0b0} 
+void free\+\_\+records (\begin{DoxyParamCaption}\item[{Records \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{records}{}\end{DoxyParamCaption})}
 
 
 
 Frees memory allocated for Records array. 
+
+Frees all allocated memory.
 
 
 \begin{DoxyParams}{Parameters}
@@ -201,32 +237,38 @@ Frees memory allocated for Records array.
 \end{DoxyParams}
 Frees memory allocated for Records array. 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00223}{223}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00197}{197}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00224\ \ \ \ \ puts(\textcolor{stringliteral}{"{}destruction\ of\ data\ structure"{}});}
-\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ CAPACITY;\ i++)\ \{}
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ free(records[i]);}
-\DoxyCodeLine{00227\ \ \ \ \ \}}
-\DoxyCodeLine{00228\ \ \ \ \ free(records);}
-\DoxyCodeLine{00229\ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00198\ \ \ \ \ puts(\textcolor{stringliteral}{"{}destruction\ of\ data\ structure"{}});}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ CAPACITY;\ i++)\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ free(records[i]);}
+\DoxyCodeLine{00201\ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ free(records);}
+\DoxyCodeLine{00203\ \}}
 
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00197}{free\+\_\+records()}}.
 
-\Hypertarget{sort_8h_a015c6f934416db768ce5e9fcd2072faa}\label{sort_8h_a015c6f934416db768ce5e9fcd2072faa} 
-\index{sort.h@{sort.h}!merge@{merge}}
+
+
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00197}{free\+\_\+records()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
+
+\Hypertarget{sort_8h_a015c6f934416db768ce5e9fcd2072faa}\index{sort.h@{sort.h}!merge@{merge}}
 \index{merge@{merge}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{merge()}{merge()}}
-{\footnotesize\ttfamily void merge (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base,  }\item[{int}]{first,  }\item[{int}]{mid,  }\item[{int}]{last,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compar }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a015c6f934416db768ce5e9fcd2072faa} 
+void merge (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base}{, }\item[{int}]{first}{, }\item[{int}]{mid}{, }\item[{int}]{last}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compar~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
 Merges two sorted subarrays. 
+
+Merge implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -245,7 +287,7 @@ Merges two sorted subarrays.
 
 Merges two sorted subarrays using temporary arrays 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00071}{71}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00071}{71}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -304,17 +346,23 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00071}{71}} of file \mbox{\h
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00071}{merge()}}.
 
-\Hypertarget{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2}\label{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2} 
-\index{sort.h@{sort.h}!merge\_sort@{merge\_sort}}
+
+
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00071}{merge()}}, and \doxymbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
+
+\Hypertarget{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2}\index{sort.h@{sort.h}!merge\_sort@{merge\_sort}}
 \index{merge\_sort@{merge\_sort}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{merge\_sort()}{merge\_sort()}}
-{\footnotesize\ttfamily void merge\+\_\+sort (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base,  }\item[{int}]{nitems,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compar }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a8ee57ded9b73a556f6c5bf10c221e0a2} 
+void merge\+\_\+sort (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base}{, }\item[{int}]{nitems}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compar~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
 Merge sort wrapper with timing. 
+
+Merge sort wrapper with timing measurement.
 
 
 \begin{DoxyParams}{Parameters}
@@ -327,13 +375,13 @@ Merge sort wrapper with timing.
 \end{DoxyParams}
 Merge sort wrapper with timing. 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00139}{139}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00139}{139}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00140\ \ \ \ \ clock\_t\ from\ =\ clock();}
-\DoxyCodeLine{00141\ \ \ \ \ \mbox{\hyperlink{sort_8c_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(base,\ 0,\ nitems\ -\/\ 1,\ compar);}
+\DoxyCodeLine{00141\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(base,\ 0,\ nitems\ -\/\ 1,\ compar);}
 \DoxyCodeLine{00142\ \ \ \ \ clock\_t\ to\ =\ clock();}
 \DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{double}\ time\_taken\ =\ (double)(to\ -\/\ from)\ /\ CLOCKS\_PER\_SEC;}
 \DoxyCodeLine{00144\ \ \ \ \ printf(\textcolor{stringliteral}{"{}The\ time\ taken\ by\ the\ merge\_sort\ function\ is:\ \%f\ sec\(\backslash\)n"{}},\ time\_taken);}
@@ -342,21 +390,23 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00139}{139}} of file \mbox{\
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00139}{merge\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
 
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00139}{merge\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
 
-\Hypertarget{sort_8h_abe01a2c4be22f39d2c841556e1686016}\label{sort_8h_abe01a2c4be22f39d2c841556e1686016} 
-\index{sort.h@{sort.h}!merge\_sort\_rec@{merge\_sort\_rec}}
+\Hypertarget{sort_8h_abe01a2c4be22f39d2c841556e1686016}\index{sort.h@{sort.h}!merge\_sort\_rec@{merge\_sort\_rec}}
 \index{merge\_sort\_rec@{merge\_sort\_rec}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{merge\_sort\_rec()}{merge\_sort\_rec()}}
-{\footnotesize\ttfamily void merge\+\_\+sort\+\_\+rec (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base,  }\item[{int}]{first,  }\item[{int}]{last,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compar }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_abe01a2c4be22f39d2c841556e1686016} 
+void merge\+\_\+sort\+\_\+rec (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base}{, }\item[{int}]{first}{, }\item[{int}]{last}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compar~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
 Recursive merge sort function. 
+
+Recursive merge sort implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -371,16 +421,16 @@ Recursive merge sort function.
 \end{DoxyParams}
 Recursive merge sort function. 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00126}{126}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00126}{126}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordflow}{if}(first\ <\ last)\{}
 \DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ mid\ =\ floor((first\ +\ last)\ /\ 2);}
-\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(base,\ first,\ mid,\ compar);}
-\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(base,\ mid\ +\ 1,\ last,\ compar);}
-\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_a015c6f934416db768ce5e9fcd2072faa}{merge}}(base,\ first,\ mid,\ last,\ compar);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(base,\ first,\ mid,\ compar);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_abe01a2c4be22f39d2c841556e1686016}{merge\_sort\_rec}}(base,\ mid\ +\ 1,\ last,\ compar);}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a015c6f934416db768ce5e9fcd2072faa}{merge}}(base,\ first,\ mid,\ last,\ compar);}
 \DoxyCodeLine{00132\ \ \ \ \ \}}
 \DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00134\ \}}
@@ -388,17 +438,17 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00126}{126}} of file \mbox{\
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{sort_8c_source_l00071}{merge()}}, and \mbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00071}{merge()}}, and \doxymbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
 
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00139}{merge\+\_\+sort()}}, and \mbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00139}{merge\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00126}{merge\+\_\+sort\+\_\+rec()}}.
 
-\Hypertarget{sort_8h_a1ed51a67b213306883813b070e5ecd62}\label{sort_8h_a1ed51a67b213306883813b070e5ecd62} 
-\index{sort.h@{sort.h}!partition@{partition}}
+\Hypertarget{sort_8h_a1ed51a67b213306883813b070e5ecd62}\index{sort.h@{sort.h}!partition@{partition}}
 \index{partition@{partition}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{partition()}{partition()}}
-{\footnotesize\ttfamily int partition (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base,  }\item[{int}]{left,  }\item[{int}]{right,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compar }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a1ed51a67b213306883813b070e5ecd62} 
+int partition (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base}{, }\item[{int}]{left}{, }\item[{int}]{right}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compar~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
@@ -418,11 +468,19 @@ Partitions array for quicksort.
 \begin{DoxyReturn}{Returns}
 Partition position 
 \end{DoxyReturn}
-\Hypertarget{sort_8h_afd0315445eb73304a4b6cb2718dc520f}\label{sort_8h_afd0315445eb73304a4b6cb2718dc520f} 
-\index{sort.h@{sort.h}!quick\_sort@{quick\_sort}}
+
+
+References \doxymbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition()}}, \doxymbox{\hyperlink{sort_8c_source_l00182}{quick\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00159}{quick\+\_\+sort\+\_\+rec()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition()}}.
+
+\Hypertarget{sort_8h_afd0315445eb73304a4b6cb2718dc520f}\index{sort.h@{sort.h}!quick\_sort@{quick\_sort}}
 \index{quick\_sort@{quick\_sort}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{quick\_sort()}{quick\_sort()}}
-{\footnotesize\ttfamily void quick\+\_\+sort (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base,  }\item[{size\+\_\+t}]{nitems,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compar }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_afd0315445eb73304a4b6cb2718dc520f} 
+void quick\+\_\+sort (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{base}{, }\item[{size\+\_\+t}]{nitems}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compar~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
@@ -439,45 +497,42 @@ Quicksort wrapper with timing.
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00203}{203}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00182}{182}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00204\ \ \ \ \ clock\_t\ from\ =\ clock();}
-\DoxyCodeLine{00205\ }
-\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{int}\ start,\ end;}
-\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordtype}{int}\ low\ =\ nitems;}
-\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{int}\ high\ =\ nitems\ -\/\ low;}
-\DoxyCodeLine{00209\ }
-\DoxyCodeLine{00210\ \ \ \ \ \mbox{\hyperlink{sort_8c_a382c0606cecba2849ebdd4a51f4be2e2}{threewaypartition}}(base,\ nitems,\ \&low,\ \&high,\ compar,\ \&start,\ \&end);}
-\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(base,\ 0,\ start\ -\/\ 1,\ compar);}
-\DoxyCodeLine{00212\ \ \ \ \ \mbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(base,\ start,\ end,\ compar);}
-\DoxyCodeLine{00213\ \ \ \ \ \mbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(base,\ end\ +\ 1,\ nitems\ -\/\ 1,\ compar);}
-\DoxyCodeLine{00214\ }
-\DoxyCodeLine{00215\ \ \ \ \ clock\_t\ to\ =\ clock();}
-\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{double}\ time\_taken\ =\ (double)(to\ -\/\ from)\ /\ CLOCKS\_PER\_SEC;}
-\DoxyCodeLine{00217\ \ \ \ \ printf(\textcolor{stringliteral}{"{}The\ time\ taken\ by\ the\ quick\_sort\ function\ is:\ \%f\ sec\(\backslash\)n"{}},\ time\_taken);}
-\DoxyCodeLine{00218\ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00183\ \ \ \ \ clock\_t\ from\ =\ clock();}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{if}\ (nitems\ >\ 0)\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(base,\ 0,\ nitems\ -\/\ 1,\ compar);}
+\DoxyCodeLine{00187\ \ \ \ \ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ clock\_t\ to\ =\ clock();}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{double}\ time\_taken\ =\ (double)(to\ -\/\ from)\ /\ CLOCKS\_PER\_SEC;}
+\DoxyCodeLine{00191\ \ \ \ \ printf(\textcolor{stringliteral}{"{}The\ time\ taken\ by\ quick\_sort\ function\ is:\ \%f\ sec\(\backslash\)n"{}},\ time\_taken);}
+\DoxyCodeLine{00192\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{sort_8c_source_l00180}{quick\+\_\+sort\+\_\+rec()}}, and \mbox{\hyperlink{sort_8c_source_l00160}{threewaypartition()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00182}{quick\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00159}{quick\+\_\+sort\+\_\+rec()}}.
 
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+Referenced by \doxymbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition()}}, \doxymbox{\hyperlink{sort_8c_source_l00182}{quick\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
 
-\Hypertarget{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad}\label{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad} 
-\index{sort.h@{sort.h}!quick\_sort\_rec@{quick\_sort\_rec}}
+\Hypertarget{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad}\index{sort.h@{sort.h}!quick\_sort\_rec@{quick\_sort\_rec}}
 \index{quick\_sort\_rec@{quick\_sort\_rec}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{quick\_sort\_rec()}{quick\_sort\_rec()}}
-{\footnotesize\ttfamily void quick\+\_\+sort\+\_\+rec (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{arr,  }\item[{int}]{left,  }\item[{int}]{right,  }\item[{int(\texorpdfstring{$\ast$}{*})(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}]{compar }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a1128b7f689ea59f3198342ae6d88a8ad} 
+void quick\+\_\+sort\+\_\+rec (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{arr}{, }\item[{int}]{left}{, }\item[{int}]{right}{, }\item[{int(\texorpdfstring{$\ast$}{*}}]{compar~}{)(const void \texorpdfstring{$\ast$}{*}, const void \texorpdfstring{$\ast$}{*})}\end{DoxyParamCaption})}
 
 
 
 Recursive quicksort function. 
+
+Recursive quicksort implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -492,48 +547,50 @@ Recursive quicksort function.
 \end{DoxyParams}
 Recursive quicksort function. 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00180}{180}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00159}{159}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordflow}{if}\ (left\ >=\ right)\ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{void}\ *pivot\ =\ arr[(left\ +\ right)\ /\ 2];}
-\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ left,\ j\ =\ right;}
-\DoxyCodeLine{00185\ }
-\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <=\ j)\ \{}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (compar(arr[i],\ pivot)\ <\ 0)\ i++;}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (compar(arr[j],\ pivot)\ >\ 0)\ j-\/-\/;}
-\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <=\ j)\ \{}
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_a65fb3038fc2b214b1e80142022812fcf}{swap}}(\&arr[i],\ \&arr[j]);}
-\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ j-\/-\/;}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00194\ \ \ \ \ \}}
-\DoxyCodeLine{00195\ }
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{if}\ (left\ <\ j)\ \mbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(arr,\ left,\ j,\ compar);}
-\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ right)\ \mbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(arr,\ i,\ right,\ compar);}
-\DoxyCodeLine{00198\ \}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{if}\ (left\ >=\ right)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ *pivot\ =\ arr[(left\ +\ right)\ /\ 2];}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ left,\ j\ =\ right;}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <=\ j)\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (compar(arr[i],\ pivot)\ <\ 0)\ i++;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (compar(arr[j],\ pivot)\ >\ 0)\ j-\/-\/;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <=\ j)\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a65fb3038fc2b214b1e80142022812fcf}{swap}}(\&arr[i],\ \&arr[j]);}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ j-\/-\/;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \ \ \}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{if}\ (left\ <\ j)\ \doxymbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(arr,\ left,\ j,\ compar);}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ right)\ \doxymbox{\hyperlink{sort_8c_afc1b2ef0a8a1ade6bf949ef603cf7271}{quick\_sort\_rec}}(arr,\ i,\ right,\ compar);}
+\DoxyCodeLine{00177\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{sort_8c_source_l00180}{quick\+\_\+sort\+\_\+rec()}}, and \mbox{\hyperlink{sort_8c_source_l00150}{swap()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00159}{quick\+\_\+sort\+\_\+rec()}}, and \doxymbox{\hyperlink{sort_8c_source_l00150}{swap()}}.
 
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00203}{quick\+\_\+sort()}}, and \mbox{\hyperlink{sort_8c_source_l00180}{quick\+\_\+sort\+\_\+rec()}}.
+Referenced by \doxymbox{\hyperlink{sort_8h_a1ed51a67b213306883813b070e5ecd62}{partition()}}, \doxymbox{\hyperlink{sort_8c_source_l00182}{quick\+\_\+sort()}}, and \doxymbox{\hyperlink{sort_8c_source_l00159}{quick\+\_\+sort\+\_\+rec()}}.
 
-\Hypertarget{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b}\label{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b} 
-\index{sort.h@{sort.h}!records\_create@{records\_create}}
+\Hypertarget{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b}\index{sort.h@{sort.h}!records\_create@{records\_create}}
 \index{records\_create@{records\_create}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{records\_create()}{records\_create()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct__Records}{Records}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} records\+\_\+create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a83b839a3201a3cbf5cb8c3efb499cf6b} 
+Records \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} records\+\_\+create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 
 
 
 Creates an array of Record structures. 
+
+Creates and initializes Records array.
 
 \begin{DoxyReturn}{Returns}
 Pointer to array of Record pointers 
@@ -550,12 +607,12 @@ Initialized array of Record pointers
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00015}{15}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00015}{15}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}\ **records\ =\ malloc(CAPACITY\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct__Records}{Records}}*));}
+\DoxyCodeLine{00016\ \ \ \ \ Records\ **records\ =\ malloc(CAPACITY\ *\ \textcolor{keyword}{sizeof}(Records*));}
 \DoxyCodeLine{00017\ }
 \DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{if}(records\ ==\ NULL)\{}
 \DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}MEMORY\ EMPTY"{}});}
@@ -563,7 +620,7 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00015}{15}} of file \mbox{\h
 \DoxyCodeLine{00021\ \ \ \ \ \}}
 \DoxyCodeLine{00022\ \ \ \ \ }
 \DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ CAPACITY;\ i++)\{}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ records[i]\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct__Records}{Records}}));}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ records[i]\ =\ malloc(\textcolor{keyword}{sizeof}(Records));}
 \DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(records[i]\ ==\ NULL)\{}
 \DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ i;\ j++)\ \{}
 \DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(records[j]);}
@@ -575,10 +632,10 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00015}{15}} of file \mbox{\h
 \DoxyCodeLine{00033\ \ \ \ \ \}}
 \DoxyCodeLine{00034\ }
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ CAPACITY;\ i++)\{}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 0;}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[0]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 0;}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[0]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 0;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 0;}
 \DoxyCodeLine{00040\ \ \ \ \ \}}
 \DoxyCodeLine{00041\ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ records;}
@@ -587,21 +644,23 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00015}{15}} of file \mbox{\h
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{sort_8h_source_l00024}{\+\_\+\+Records\+::field1}}, \mbox{\hyperlink{sort_8h_source_l00025}{\+\_\+\+Records\+::field2}}, \mbox{\hyperlink{sort_8h_source_l00026}{\+\_\+\+Records\+::field3}}, and \mbox{\hyperlink{sort_8h_source_l00023}{\+\_\+\+Records\+::id}}.
+References \doxymbox{\hyperlink{sort_8h_source_l00024}{\+\_\+\+Records::\+field1}}, \doxymbox{\hyperlink{sort_8h_source_l00025}{\+\_\+\+Records::\+field2}}, \doxymbox{\hyperlink{sort_8h_source_l00026}{\+\_\+\+Records::\+field3}}, \doxymbox{\hyperlink{sort_8h_source_l00023}{\+\_\+\+Records::\+id}}, and \doxymbox{\hyperlink{sort_8c_source_l00015}{records\+\_\+create()}}.
 
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00234}{sort\+\_\+records()}}.
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00015}{records\+\_\+create()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
 
-\Hypertarget{sort_8h_aff70d48025f2cfa56970ede9667e4180}\label{sort_8h_aff70d48025f2cfa56970ede9667e4180} 
-\index{sort.h@{sort.h}!sort\_records@{sort\_records}}
+\Hypertarget{sort_8h_aff70d48025f2cfa56970ede9667e4180}\index{sort.h@{sort.h}!sort\_records@{sort\_records}}
 \index{sort\_records@{sort\_records}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{sort\_records()}{sort\_records()}}
-{\footnotesize\ttfamily void sort\+\_\+records (\begin{DoxyParamCaption}\item[{FILE \texorpdfstring{$\ast$}{*}}]{infile,  }\item[{FILE \texorpdfstring{$\ast$}{*}}]{outfile,  }\item[{size\+\_\+t}]{field,  }\item[{size\+\_\+t}]{algo }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_aff70d48025f2cfa56970ede9667e4180} 
+void sort\+\_\+records (\begin{DoxyParamCaption}\item[{FILE \texorpdfstring{$\ast$}{*}}]{infile}{, }\item[{FILE \texorpdfstring{$\ast$}{*}}]{outfile}{, }\item[{size\+\_\+t}]{field}{, }\item[{size\+\_\+t}]{algo}{}\end{DoxyParamCaption})}
 
 
 
 Main sorting function. 
+
+Main sorting function implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -616,60 +675,62 @@ Main sorting function.
 \end{DoxyParams}
 Main sorting function. 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00234}{234}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00208}{208}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00235\ \ \ \ \ puts(\textcolor{stringliteral}{"{}creation\ data\ structure"{}});}
-\DoxyCodeLine{00236\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}\ **records\ =\ \mbox{\hyperlink{sort_8c_a83b839a3201a3cbf5cb8c3efb499cf6b}{records\_create}}();}
-\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordtype}{int}\ cont\ =\ 0;}
-\DoxyCodeLine{00238\ }
-\DoxyCodeLine{00239\ \ \ \ \ puts(\textcolor{stringliteral}{"{}reading\ file"{}});}
-\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordflow}{while}(fscanf(infile,\ \textcolor{stringliteral}{"{}\%d,\%[\string^,],\%d,\%f\(\backslash\)n"{}},\ \&records[cont]-\/>\textcolor{keywordtype}{id},\ }
-\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ records[cont]-\/>field1,\ \&records[cont]-\/>field2,\ }
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \&records[cont]-\/>field3)\ ==\ 4)\{}
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ cont++;}
-\DoxyCodeLine{00244\ \ \ \ \ \}}
-\DoxyCodeLine{00245\ }
-\DoxyCodeLine{00246\ \ \ \ \ int\ (*compare)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*)\ =\ NULL;}
-\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordflow}{if}(field\ ==\ 1)\{compare\ =\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}};\}}
-\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(field\ ==\ 2)\{compare\ =\ \mbox{\hyperlink{sort_8c_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}};\}}
-\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(field\ ==\ 3)\{compare\ =\ \mbox{\hyperlink{sort_8c_a04608605cfc734f04f4719acff068fc5}{compare\_f3}};\}}
-\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{else}\{printf(\textcolor{stringliteral}{"{}FIELD\ VALUE\ NOT\ VALID"{}});\ exit(1);\}}
-\DoxyCodeLine{00251\ }
-\DoxyCodeLine{00252\ \ \ \ \ puts(\textcolor{stringliteral}{"{}sorting..."{}});}
-\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordflow}{if}(algo\ ==\ 1)\{\mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}\ **)records,\ cont,\ compare);\}}
-\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(algo\ ==\ 2)\{\mbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}\ **)records,\ cont,\ compare);\}}
-\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{else}\{printf(\textcolor{stringliteral}{"{}ALGO\ VALUE\ NOT\ VALID"{}});\ exit(1);\}}
-\DoxyCodeLine{00256\ }
-\DoxyCodeLine{00257\ \ \ \ \ puts(\textcolor{stringliteral}{"{}printing\ result"{}});}
-\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ cont;\ i++)\{}
-\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ fprintf(outfile,\ \textcolor{stringliteral}{"{}\%d,\%s,\%d,\%.2f\(\backslash\)n"{}},\ records[i]-\/>\textcolor{keywordtype}{id},\ }
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ records[i]-\/>field1,\ records[i]-\/>field2,\ records[i]-\/>field3);}
-\DoxyCodeLine{00261\ \ \ \ \ \}}
-\DoxyCodeLine{00262\ }
-\DoxyCodeLine{00263\ \ \ \ \ \mbox{\hyperlink{sort_8c_a77bb77defc06c8546a6badf40a52e0b0}{free\_records}}(records);}
-\DoxyCodeLine{00264\ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00209\ \ \ \ \ puts(\textcolor{stringliteral}{"{}creation\ data\ structure"{}});}
+\DoxyCodeLine{00210\ \ \ \ \ Records\ **records\ =\ \doxymbox{\hyperlink{sort_8c_a83b839a3201a3cbf5cb8c3efb499cf6b}{records\_create}}();}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{int}\ cont\ =\ 0;}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ puts(\textcolor{stringliteral}{"{}reading\ file"{}});}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordflow}{while}(fscanf(infile,\ \textcolor{stringliteral}{"{}\%d,\%[\string^,],\%d,\%f\(\backslash\)n"{}},\ \&records[cont]-\/>\textcolor{keywordtype}{id},\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ records[cont]-\/>field1,\ \&records[cont]-\/>field2,\ }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \&records[cont]-\/>field3)\ ==\ 4)\{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ cont++;}
+\DoxyCodeLine{00218\ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ int\ (*compare)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*)\ =\ NULL;}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{if}(field\ ==\ 1)\{compare\ =\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}};\}}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(field\ ==\ 2)\{compare\ =\ \doxymbox{\hyperlink{sort_8c_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}};\}}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(field\ ==\ 3)\{compare\ =\ \doxymbox{\hyperlink{sort_8c_a04608605cfc734f04f4719acff068fc5}{compare\_f3}};\}}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordflow}{else}\{printf(\textcolor{stringliteral}{"{}FIELD\ VALUE\ NOT\ VALID"{}});\ exit(1);\}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ puts(\textcolor{stringliteral}{"{}sorting..."{}});}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordflow}{if}(algo\ ==\ 1)\{\doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}\ **)records,\ cont,\ compare);\}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(algo\ ==\ 2)\{\doxymbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}\ **)records,\ cont,\ compare);\}}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{else}\{printf(\textcolor{stringliteral}{"{}ALGO\ VALUE\ NOT\ VALID"{}});\ exit(1);\}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ puts(\textcolor{stringliteral}{"{}printing\ result"{}});}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ cont;\ i++)\{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ fprintf(outfile,\ \textcolor{stringliteral}{"{}\%d,\%s,\%d,\%.2f\(\backslash\)n"{}},\ records[i]-\/>\textcolor{keywordtype}{id},\ }
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ records[i]-\/>field1,\ records[i]-\/>field2,\ records[i]-\/>field3);}
+\DoxyCodeLine{00235\ \ \ \ \ \}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a77bb77defc06c8546a6badf40a52e0b0}{free\_records}}(records);}
+\DoxyCodeLine{00238\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{sort_8c_source_l00048}{compare\+\_\+f1()}}, \mbox{\hyperlink{sort_8c_source_l00055}{compare\+\_\+f2()}}, \mbox{\hyperlink{sort_8c_source_l00062}{compare\+\_\+f3()}}, \mbox{\hyperlink{sort_8c_source_l00223}{free\+\_\+records()}}, \mbox{\hyperlink{sort_8c_source_l00139}{merge\+\_\+sort()}}, \mbox{\hyperlink{sort_8c_source_l00203}{quick\+\_\+sort()}}, and \mbox{\hyperlink{sort_8c_source_l00015}{records\+\_\+create()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00048}{compare\+\_\+f1()}}, \doxymbox{\hyperlink{sort_8c_source_l00055}{compare\+\_\+f2()}}, \doxymbox{\hyperlink{sort_8c_source_l00062}{compare\+\_\+f3()}}, \doxymbox{\hyperlink{sort_8c_source_l00197}{free\+\_\+records()}}, \doxymbox{\hyperlink{sort_8c_source_l00139}{merge\+\_\+sort()}}, \doxymbox{\hyperlink{sort_8c_source_l00182}{quick\+\_\+sort()}}, \doxymbox{\hyperlink{sort_8c_source_l00015}{records\+\_\+create()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
 
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00019}{main()}}.
+Referenced by \doxymbox{\hyperlink{main_8c_source_l00019}{main()}}, and \doxymbox{\hyperlink{sort_8c_source_l00208}{sort\+\_\+records()}}.
 
-\Hypertarget{sort_8h_a65fb3038fc2b214b1e80142022812fcf}\label{sort_8h_a65fb3038fc2b214b1e80142022812fcf} 
-\index{sort.h@{sort.h}!swap@{swap}}
+\Hypertarget{sort_8h_a65fb3038fc2b214b1e80142022812fcf}\index{sort.h@{sort.h}!swap@{swap}}
 \index{swap@{swap}!sort.h@{sort.h}}
 \doxysubsubsection{\texorpdfstring{swap()}{swap()}}
-{\footnotesize\ttfamily void swap (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{a,  }\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{sort_8h_a65fb3038fc2b214b1e80142022812fcf} 
+void swap (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{a}{, }\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
 
 
 
 Swaps two elements. 
+
+Element swap implementation.
 
 
 \begin{DoxyParams}{Parameters}
@@ -680,7 +741,7 @@ Swaps two elements.
 \end{DoxyParams}
 Swaps two elements. 
 
-Definition at line \mbox{\hyperlink{sort_8c_source_l00150}{150}} of file \mbox{\hyperlink{sort_8c_source}{sort.\+c}}.
+Definition at line \doxymbox{\hyperlink{sort_8c_source_l00150}{150}} of file \doxymbox{\hyperlink{sort_8c_source}{sort.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -693,5 +754,9 @@ Definition at line \mbox{\hyperlink{sort_8c_source_l00150}{150}} of file \mbox{\
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{sort_8c_source_l00180}{quick\+\_\+sort\+\_\+rec()}}, and \mbox{\hyperlink{sort_8c_source_l00160}{threewaypartition()}}.
+References \doxymbox{\hyperlink{sort_8c_source_l00150}{swap()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{sort_8c_source_l00159}{quick\+\_\+sort\+\_\+rec()}}, and \doxymbox{\hyperlink{sort_8c_source_l00150}{swap()}}.
 

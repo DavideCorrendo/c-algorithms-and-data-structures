@@ -25,66 +25,58 @@
  * @note The hash parameter is used for compatibility with the graph interface
  * but is not essential for the BFS algorithm itself.
  */
-void** breadth_first_visit(Graph* gr, void* start, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*)) {
+void** breadth_first_visit(Graph gr, void* start, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*)) {
     clock_t from = clock();
-
-    hash(start); // Used for interface compatibility
     if (!gr || !start) return NULL;
 
-    // Allocate memory for visited nodes array
     int num_nodes = graph_num_nodes(gr);
-    void** visited = malloc((num_nodes + 1) * sizeof(void*));
-    if (!visited) return NULL;
-
-    // Allocate memory for BFS queue
+    void** visited_array = malloc((num_nodes + 1) * sizeof(void*));
     void** queue = malloc((num_nodes + 1) * sizeof(void*));
-    if (!queue) {
-        free(visited);
+    
+    if (!visited_array || !queue) {
+        free(visited_array);
+        free(queue);
+        return NULL;
+    }
+    
+    HashTable* visited_map = hash_table_create(compare, hash);
+    if (!visited_map) {
+        free(visited_array);
+        free(queue);
         return NULL;
     }
 
     int visited_count = 0;
     int queue_front = 0, queue_rear = 0;
 
-    // Initialize BFS with start node
     queue[queue_rear++] = start;
-    visited[visited_count++] = start;
+    visited_array[visited_count++] = start;
+    hash_table_put(visited_map, start, (void*)1);
 
-    // Main BFS loop
     while (queue_front < queue_rear) {
         void* current = queue[queue_front++];
-
-        // Process all neighbors of current node
         void** neighbors = graph_get_neighbours(gr, current);
+        
         if (neighbors) {
             for (int i = 0; neighbors[i] != NULL; i++) {
-                // Check if neighbor has been visited
-                int is_visited = 0;
-                for (int j = 0; j < visited_count; j++) {
-                    if (compare(neighbors[i], visited[j]) == 0) {
-                        is_visited = 1;
-                        break;
-                    }
-                }
-
-                // Add unvisited neighbors to queue
-                if (!is_visited) {
+                if (!hash_table_contains_key(visited_map, neighbors[i])) {
+                    hash_table_put(visited_map, neighbors[i], (void*)1);
                     queue[queue_rear++] = neighbors[i];
-                    visited[visited_count++] = neighbors[i];
+                    visited_array[visited_count++] = neighbors[i];
                 }
             }
             free(neighbors);
         }
     }
 
-    // Null-terminate the visited array
-    visited[visited_count] = NULL;
-
-    // Clean up and measure execution time
+    visited_array[visited_count] = NULL;
+    
     free(queue);
+    hash_table_free(visited_map);
+
     clock_t to = clock();
     double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
     printf("The time taken by the breadth_first_visit is: %f sec\n", time_taken);
 
-    return visited;
+    return visited_array;
 }

@@ -1,41 +1,55 @@
-\doxysection{src/distance.h File Reference}
+\doxysection{src/\+distance.h File Reference}
 \hypertarget{distance_8h}{}\label{distance_8h}\index{src/distance.h@{src/distance.h}}
 
 
 Header file containing declarations for edit distance calculation and word matching.  
 
 
-{\ttfamily \#include $<$stdio.\+h$>$}\newline
-{\ttfamily \#include $<$stdlib.\+h$>$}\newline
-{\ttfamily \#include $<$string.\+h$>$}\newline
-{\ttfamily \#include $<$limits.\+h$>$}\newline
-{\ttfamily \#include $<$ctype.\+h$>$}\newline
-{\ttfamily \#include $<$time.\+h$>$}\newline
-Include dependency graph for distance.\+h\+:
-% FIG 0
-This graph shows which files directly or indirectly include this file\+:
-% FIG 1
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$limits.\+h$>$}\newline
+{\ttfamily \+\#include $<$ctype.\+h$>$}\newline
+{\ttfamily \+\#include $<$time.\+h$>$}\newline
+Include dependency graph for distance.\+h:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{distance_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{distance_8h__dep__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \mbox{\hyperlink{structWordDistance}{Word\+Distance}}
+struct \doxymbox{\hyperlink{structWordDistance}{Word\+Distance}}
 \begin{DoxyCompactList}\small\item\em Structure to store a word and its edit distance from a target word. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{distance_8h_a242710ffc6c186821800ab581fc06174}{min3}} (int a, int b, int c)
+int \doxymbox{\hyperlink{distance_8h_a242710ffc6c186821800ab581fc06174}{min3}} (int a, int b, int c)
 \begin{DoxyCompactList}\small\item\em Finds the minimum value among three integers. \end{DoxyCompactList}\item 
-int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{distance_8h_a248b96ee59cc18b8a662707d19a64b74}{initialize\+\_\+memo}} (int rows, int cols)
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{distance_8h_a248b96ee59cc18b8a662707d19a64b74}{initialize\+\_\+memo}} (int rows, int cols)
 \begin{DoxyCompactList}\small\item\em Initializes the memoization matrix. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{distance_8h_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\+\_\+memo}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}memo, int rows, int cols)
+void \doxymbox{\hyperlink{distance_8h_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\+\_\+memo}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}memo, int rows, int cols)
 \begin{DoxyCompactList}\small\item\em Resets all values in the memoization matrix to -\/1. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{distance_8h_a82c6f74dd09e412629f96cb1f0a8efdc}{free\+\_\+memo}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}memo, int rows)
+void \doxymbox{\hyperlink{distance_8h_a82c6f74dd09e412629f96cb1f0a8efdc}{free\+\_\+memo}} (int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}memo, int rows)
 \begin{DoxyCompactList}\small\item\em Frees the memory allocated for the memoization matrix. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{distance_8h_ab2e796d864101098b33e6c5622fcbeb6}{edit\+\_\+distance}} (const char \texorpdfstring{$\ast$}{*}s1, const char \texorpdfstring{$\ast$}{*}s2, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}memo)
-\begin{DoxyCompactList}\small\item\em Calculates the edit distance between two strings. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{distance_8h_a46c0aae85f38c367db13b394c70a2e82}{compare\+\_\+distance}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
+int \doxymbox{\hyperlink{distance_8h_ad170e25f754763fb5217e2c473deda31}{edit\+\_\+distance}} (const char \texorpdfstring{$\ast$}{*}s1, const char \texorpdfstring{$\ast$}{*}s2)
+\begin{DoxyCompactList}\small\item\em Calculates the edit distance between two strings using pure recursion. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{distance_8h_a2ac0f2c8635bbfed59bbc1d10670a36e}{edit\+\_\+distance\+\_\+dyn}} (const char \texorpdfstring{$\ast$}{*}s1, const char \texorpdfstring{$\ast$}{*}s2)
+\begin{DoxyCompactList}\small\item\em Calculates the edit distance using dynamic programming (memoization). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{distance_8h_a46c0aae85f38c367db13b394c70a2e82}{compare\+\_\+distance}} (const void \texorpdfstring{$\ast$}{*}a, const void \texorpdfstring{$\ast$}{*}b)
 \begin{DoxyCompactList}\small\item\em Comparison function for qsort to sort \doxylink{structWordDistance}{Word\+Distance} structures. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{distance_8h_a640e35c53937abda8c98468e5a50319f}{find\+\_\+closest\+\_\+words}} (const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dictionary, int dict\+\_\+size, char \texorpdfstring{$\ast$}{*}target, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}memo)
+void \doxymbox{\hyperlink{distance_8h_ac0107fbd3dfb267d97f1a497dc36a95d}{find\+\_\+closest\+\_\+words}} (const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dictionary, int dict\+\_\+size, char \texorpdfstring{$\ast$}{*}target)
 \begin{DoxyCompactList}\small\item\em Finds the closest matching words for a given target word. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -44,16 +58,18 @@ Header file containing declarations for edit distance calculation and word match
 
 This module provides functionality to find similar words based on edit distance 
 
-Definition in file \mbox{\hyperlink{distance_8h_source}{distance.\+h}}.
+Definition in file \doxymbox{\hyperlink{distance_8h_source}{distance.\+h}}.
 
 
 
+\label{distance_8h_doc-func-members}
+\Hypertarget{distance_8h_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{distance_8h_a46c0aae85f38c367db13b394c70a2e82}\label{distance_8h_a46c0aae85f38c367db13b394c70a2e82} 
-\index{distance.h@{distance.h}!compare\_distance@{compare\_distance}}
+\Hypertarget{distance_8h_a46c0aae85f38c367db13b394c70a2e82}\index{distance.h@{distance.h}!compare\_distance@{compare\_distance}}
 \index{compare\_distance@{compare\_distance}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{compare\_distance()}{compare\_distance()}}
-{\footnotesize\ttfamily int compare\+\_\+distance (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const void \texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_a46c0aae85f38c367db13b394c70a2e82} 
+int compare\+\_\+distance (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{a}{, }\item[{const void \texorpdfstring{$\ast$}{*}}]{b}{}\end{DoxyParamCaption})}
 
 
 
@@ -71,61 +87,123 @@ Difference between distances
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{distance_8c_source_l00133}{133}} of file \mbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00153}{153}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\mbox{\hyperlink{structWordDistance}{WordDistance}}\ *)a)-\/>distance\ -\/\ ((\mbox{\hyperlink{structWordDistance}{WordDistance}}\ *)b)-\/>distance;}
-\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\doxymbox{\hyperlink{structWordDistance}{WordDistance}}\ *)a)-\/>distance\ -\/\ ((\doxymbox{\hyperlink{structWordDistance}{WordDistance}}\ *)b)-\/>distance;}
+\DoxyCodeLine{00155\ \}}
 
 \end{DoxyCode}
-\Hypertarget{distance_8h_ab2e796d864101098b33e6c5622fcbeb6}\label{distance_8h_ab2e796d864101098b33e6c5622fcbeb6} 
-\index{distance.h@{distance.h}!edit\_distance@{edit\_distance}}
+
+
+References \doxymbox{\hyperlink{distance_8c_source_l00153}{compare\+\_\+distance()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00153}{compare\+\_\+distance()}}.
+
+\Hypertarget{distance_8h_ad170e25f754763fb5217e2c473deda31}\index{distance.h@{distance.h}!edit\_distance@{edit\_distance}}
 \index{edit\_distance@{edit\_distance}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{edit\_distance()}{edit\_distance()}}
-{\footnotesize\ttfamily int edit\+\_\+distance (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s1,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{s2,  }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{memo }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_ad170e25f754763fb5217e2c473deda31} 
+int edit\+\_\+distance (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s1}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s2}{}\end{DoxyParamCaption})}
 
 
 
-Calculates the edit distance between two strings. 
+Calculates the edit distance between two strings using pure recursion. 
 
-
+Only allows insertion and deletion operations. Warning: Time complexity is exponential. 
 \begin{DoxyParams}{Parameters}
-{\em s1} & First string \\
+{\em s1} & First string (target string) \\
 \hline
-{\em s2} & Second string \\
-\hline
-{\em memo} & Memoization matrix \\
+{\em s2} & Second string (source string) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Edit distance between s1 and s2 
+Minimum number of operations to transform s2 into s1 
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{distance_8c_source_l00083}{83}} of file \mbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00083}{83}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ len1\ =\ strlen(s1);}
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{int}\ len2\ =\ strlen(s2);}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{distance_8c_af5cafbd4dd6863b8eb89ebb327f83dbd}{reset\_memo}}(memo,\ len1\ +\ 1,\ len2\ +\ 1);}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ len1,\ len2,\ memo);}
-\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (strlen(s1)\ ==\ 0)\ \textcolor{keywordflow}{return}\ strlen(s2);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{if}\ (strlen(s2)\ ==\ 0)\ \textcolor{keywordflow}{return}\ strlen(s1);}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{int}\ d\_noop\ =\ INT\_MAX;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{if}\ (s1[0]\ ==\ s2[0])\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ d\_noop\ =\ \doxymbox{\hyperlink{distance_8c_ad170e25f754763fb5217e2c473deda31}{edit\_distance}}(s1\ +\ 1,\ s2\ +\ 1);}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{int}\ d\_canc\ =\ 1\ +\ \doxymbox{\hyperlink{distance_8c_ad170e25f754763fb5217e2c473deda31}{edit\_distance}}(s1,\ s2\ +\ 1);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ d\_ins\ =\ 1\ +\ \doxymbox{\hyperlink{distance_8c_ad170e25f754763fb5217e2c473deda31}{edit\_distance}}(s1\ +\ 1,\ s2);}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{distance_8c_a242710ffc6c186821800ab581fc06174}{min3}}(d\_noop,\ d\_canc,\ d\_ins);}
+\DoxyCodeLine{00095\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{distance_8c_source_l00063}{edit\+\_\+distance\+\_\+memo()}}, and \mbox{\hyperlink{distance_8c_source_l00037}{reset\+\_\+memo()}}.
+References \doxymbox{\hyperlink{distance_8c_source_l00083}{edit\+\_\+distance()}}, and \doxymbox{\hyperlink{distance_8c_source_l00009}{min3()}}.
 
-\Hypertarget{distance_8h_a640e35c53937abda8c98468e5a50319f}\label{distance_8h_a640e35c53937abda8c98468e5a50319f} 
-\index{distance.h@{distance.h}!find\_closest\_words@{find\_closest\_words}}
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00083}{edit\+\_\+distance()}}.
+
+\Hypertarget{distance_8h_a2ac0f2c8635bbfed59bbc1d10670a36e}\index{distance.h@{distance.h}!edit\_distance\_dyn@{edit\_distance\_dyn}}
+\index{edit\_distance\_dyn@{edit\_distance\_dyn}!distance.h@{distance.h}}
+\doxysubsubsection{\texorpdfstring{edit\_distance\_dyn()}{edit\_distance\_dyn()}}
+{\footnotesize\ttfamily \label{distance_8h_a2ac0f2c8635bbfed59bbc1d10670a36e} 
+int edit\+\_\+distance\+\_\+dyn (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s1}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{s2}{}\end{DoxyParamCaption})}
+
+
+
+Calculates the edit distance using dynamic programming (memoization). 
+
+Optimizes the recursive approach by allocating a matrix to store previously calculated distances. 
+\begin{DoxyParams}{Parameters}
+{\em s1} & First string (target string) \\
+\hline
+{\em s2} & Second string (source string) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Minimum number of operations to transform s2 into s1 
+\end{DoxyReturn}
+
+
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00097}{97}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{int}\ len1\ =\ strlen(s1);}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{int}\ len2\ =\ strlen(s2);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{int}\ **memo\ =\ \doxymbox{\hyperlink{distance_8c_a248b96ee59cc18b8a662707d19a64b74}{initialize\_memo}}(len1\ +\ 1,\ len2\ +\ 1);}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ \doxymbox{\hyperlink{distance_8c_adb3359e4a6f2c3706f0e137d3d5ff3bb}{edit\_distance\_memo}}(s1,\ s2,\ len1,\ len2,\ memo);}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \doxymbox{\hyperlink{distance_8c_a82c6f74dd09e412629f96cb1f0a8efdc}{free\_memo}}(memo,\ len1\ +\ 1);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00106\ \}\ \ \ }
+
+\end{DoxyCode}
+
+
+References \doxymbox{\hyperlink{distance_8c_source_l00097}{edit\+\_\+distance\+\_\+dyn()}}, \doxymbox{\hyperlink{distance_8c_source_l00063}{edit\+\_\+distance\+\_\+memo()}}, \doxymbox{\hyperlink{distance_8c_source_l00045}{free\+\_\+memo()}}, and \doxymbox{\hyperlink{distance_8c_source_l00016}{initialize\+\_\+memo()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00097}{edit\+\_\+distance\+\_\+dyn()}}.
+
+\Hypertarget{distance_8h_ac0107fbd3dfb267d97f1a497dc36a95d}\index{distance.h@{distance.h}!find\_closest\_words@{find\_closest\_words}}
 \index{find\_closest\_words@{find\_closest\_words}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{find\_closest\_words()}{find\_closest\_words()}}
-{\footnotesize\ttfamily void find\+\_\+closest\+\_\+words (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dictionary,  }\item[{int}]{dict\+\_\+size,  }\item[{char \texorpdfstring{$\ast$}{*}}]{target,  }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{memo }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_ac0107fbd3dfb267d97f1a497dc36a95d} 
+void find\+\_\+closest\+\_\+words (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dictionary}{, }\item[{int}]{dict\+\_\+size}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{target}{}\end{DoxyParamCaption})}
 
 
 
@@ -142,11 +220,11 @@ Finds the closest matching words for a given target word.
 {\em memo} & Memoization matrix \\
 \hline
 \end{DoxyParams}
-\Hypertarget{distance_8h_a82c6f74dd09e412629f96cb1f0a8efdc}\label{distance_8h_a82c6f74dd09e412629f96cb1f0a8efdc} 
-\index{distance.h@{distance.h}!free\_memo@{free\_memo}}
+\Hypertarget{distance_8h_a82c6f74dd09e412629f96cb1f0a8efdc}\index{distance.h@{distance.h}!free\_memo@{free\_memo}}
 \index{free\_memo@{free\_memo}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{free\_memo()}{free\_memo()}}
-{\footnotesize\ttfamily void free\+\_\+memo (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{memo,  }\item[{int}]{rows }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_a82c6f74dd09e412629f96cb1f0a8efdc} 
+void free\+\_\+memo (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{memo}{, }\item[{int}]{rows}{}\end{DoxyParamCaption})}
 
 
 
@@ -161,7 +239,7 @@ Frees the memory allocated for the memoization matrix.
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{distance_8c_source_l00045}{45}} of file \mbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00045}{45}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -177,13 +255,17 @@ Definition at line \mbox{\hyperlink{distance_8c_source_l00045}{45}} of file \mbo
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00016}{main()}}.
+References \doxymbox{\hyperlink{distance_8c_source_l00045}{free\+\_\+memo()}}.
 
-\Hypertarget{distance_8h_a248b96ee59cc18b8a662707d19a64b74}\label{distance_8h_a248b96ee59cc18b8a662707d19a64b74} 
-\index{distance.h@{distance.h}!initialize\_memo@{initialize\_memo}}
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00097}{edit\+\_\+distance\+\_\+dyn()}}, and \doxymbox{\hyperlink{distance_8c_source_l00045}{free\+\_\+memo()}}.
+
+\Hypertarget{distance_8h_a248b96ee59cc18b8a662707d19a64b74}\index{distance.h@{distance.h}!initialize\_memo@{initialize\_memo}}
 \index{initialize\_memo@{initialize\_memo}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{initialize\_memo()}{initialize\_memo()}}
-{\footnotesize\ttfamily int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} initialize\+\_\+memo (\begin{DoxyParamCaption}\item[{int}]{rows,  }\item[{int}]{cols }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_a248b96ee59cc18b8a662707d19a64b74} 
+int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} initialize\+\_\+memo (\begin{DoxyParamCaption}\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
 
 
 
@@ -201,7 +283,7 @@ Pointer to the initialized memoization matrix
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{distance_8c_source_l00016}{16}} of file \mbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00016}{16}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -229,13 +311,17 @@ Definition at line \mbox{\hyperlink{distance_8c_source_l00016}{16}} of file \mbo
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00016}{main()}}.
+References \doxymbox{\hyperlink{distance_8c_source_l00016}{initialize\+\_\+memo()}}.
 
-\Hypertarget{distance_8h_a242710ffc6c186821800ab581fc06174}\label{distance_8h_a242710ffc6c186821800ab581fc06174} 
-\index{distance.h@{distance.h}!min3@{min3}}
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00097}{edit\+\_\+distance\+\_\+dyn()}}, and \doxymbox{\hyperlink{distance_8c_source_l00016}{initialize\+\_\+memo()}}.
+
+\Hypertarget{distance_8h_a242710ffc6c186821800ab581fc06174}\index{distance.h@{distance.h}!min3@{min3}}
 \index{min3@{min3}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{min3()}{min3()}}
-{\footnotesize\ttfamily int min3 (\begin{DoxyParamCaption}\item[{int}]{a,  }\item[{int}]{b,  }\item[{int}]{c }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_a242710ffc6c186821800ab581fc06174} 
+int min3 (\begin{DoxyParamCaption}\item[{int}]{a}{, }\item[{int}]{b}{, }\item[{int}]{c}{}\end{DoxyParamCaption})}
 
 
 
@@ -255,7 +341,7 @@ The minimum value among a, b, and c
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{distance_8c_source_l00009}{9}} of file \mbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00009}{9}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -269,13 +355,17 @@ Definition at line \mbox{\hyperlink{distance_8c_source_l00009}{9}} of file \mbox
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{distance_8c_source_l00063}{edit\+\_\+distance\+\_\+memo()}}.
+References \doxymbox{\hyperlink{distance_8c_source_l00009}{min3()}}.
 
-\Hypertarget{distance_8h_af5cafbd4dd6863b8eb89ebb327f83dbd}\label{distance_8h_af5cafbd4dd6863b8eb89ebb327f83dbd} 
-\index{distance.h@{distance.h}!reset\_memo@{reset\_memo}}
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00083}{edit\+\_\+distance()}}, \doxymbox{\hyperlink{distance_8c_source_l00063}{edit\+\_\+distance\+\_\+memo()}}, and \doxymbox{\hyperlink{distance_8c_source_l00009}{min3()}}.
+
+\Hypertarget{distance_8h_af5cafbd4dd6863b8eb89ebb327f83dbd}\index{distance.h@{distance.h}!reset\_memo@{reset\_memo}}
 \index{reset\_memo@{reset\_memo}!distance.h@{distance.h}}
 \doxysubsubsection{\texorpdfstring{reset\_memo()}{reset\_memo()}}
-{\footnotesize\ttfamily void reset\+\_\+memo (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{memo,  }\item[{int}]{rows,  }\item[{int}]{cols }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{distance_8h_af5cafbd4dd6863b8eb89ebb327f83dbd} 
+void reset\+\_\+memo (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{memo}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
 
 
 
@@ -292,7 +382,7 @@ Resets all values in the memoization matrix to -\/1.
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{distance_8c_source_l00037}{37}} of file \mbox{\hyperlink{distance_8c_source}{distance.\+c}}.
+Definition at line \doxymbox{\hyperlink{distance_8c_source_l00037}{37}} of file \doxymbox{\hyperlink{distance_8c_source}{distance.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -307,5 +397,9 @@ Definition at line \mbox{\hyperlink{distance_8c_source_l00037}{37}} of file \mbo
 \end{DoxyCode}
 
 
-Referenced by \mbox{\hyperlink{distance_8c_source_l00083}{edit\+\_\+distance()}}.
+References \doxymbox{\hyperlink{distance_8c_source_l00037}{reset\+\_\+memo()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{distance_8c_source_l00037}{reset\+\_\+memo()}}.
 

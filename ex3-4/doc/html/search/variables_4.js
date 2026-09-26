@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hash_0',['hash',['../structHashTable.html#a1b49858aed1eca33e6925561ee48d0e5',1,'HashTable']]]
+  ['key_0',['key',['../structHashNode.html#a33fe9a4c955e0b679fcb639aafb84c36',1,'HashNode']]]
 ];

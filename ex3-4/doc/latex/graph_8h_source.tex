@@ -1,66 +1,62 @@
 \doxysection{graph.\+h}
 \hypertarget{graph_8h_source}{}\label{graph_8h_source}\index{src/graph.h@{src/graph.h}}
-\mbox{\hyperlink{graph_8h}{Go to the documentation of this file.}}
+\doxymbox{\hyperlink{graph_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00007}00007\ }
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifndef\ GRAPH\_H}}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00009}00009\ \textcolor{preprocessor}{\#define\ GRAPH\_H}}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00010}00010\ }
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <string.h>}}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}../src/hashtable.h"{}}}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{hashtable_8h}{../src/hashtable.h}}"{}}}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <time.h>}}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00018}\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{00018}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{\textcolor{keyword}{false}\ =\ 0,\ \textcolor{keyword}{true}\ =\ 1\}\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}};}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00018}\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{00018}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{\textcolor{keyword}{false}\ =\ 0,\ \textcolor{keyword}{true}\ =\ 1\}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}};}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00019}00019\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00024}\mbox{\hyperlink{structedge}{00024}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structedge}{edge}}\ \{}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00025}\mbox{\hyperlink{structedge_ada87dc38a600171c6e2e0c865e3d082b}{00025}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structedge_ada87dc38a600171c6e2e0c865e3d082b}{source}};\ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00026}\mbox{\hyperlink{structedge_a598a9d6fff0660afe8660ea0682b5a2e}{00026}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structedge_a598a9d6fff0660afe8660ea0682b5a2e}{dest}};\ \ \ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00027}\mbox{\hyperlink{structedge_a6d88f86d5490af1f0bc2903904f7dd0d}{00027}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structedge_a6d88f86d5490af1f0bc2903904f7dd0d}{label}};\ \ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00028}00028\ \}\ \mbox{\hyperlink{structedge}{Edge}};}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00024}\doxymbox{\hyperlink{structedge}{00024}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structedge}{edge}}\ \{}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00025}\doxymbox{\hyperlink{structedge_ada87dc38a600171c6e2e0c865e3d082b}{00025}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{structedge_ada87dc38a600171c6e2e0c865e3d082b}{source}};\ \ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00026}\doxymbox{\hyperlink{structedge_a598a9d6fff0660afe8660ea0682b5a2e}{00026}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{structedge_a598a9d6fff0660afe8660ea0682b5a2e}{dest}};\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00027}\doxymbox{\hyperlink{structedge_a6d88f86d5490af1f0bc2903904f7dd0d}{00027}}\ \ \ \ \ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{structedge_a6d88f86d5490af1f0bc2903904f7dd0d}{label}};\ \ \ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00028}00028\ \}\ Edge;}
 \DoxyCodeLine{\Hypertarget{graph_8h_source_l00029}00029\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00034}\mbox{\hyperlink{structgraph}{00034}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgraph}{graph}}\ \{}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00035}\mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{00035}}\ \ \ \ \ \mbox{\hyperlink{structHashTable}{HashTable}}*\ \mbox{\hyperlink{structgraph_a1777271f3807584ccd092d71a876f0bd}{nodes}};\ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00036}\mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{00036}}\ \ \ \ \ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{structgraph_a281098f7296782d1fde87ac063c4d855}{is\_directed}};\ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00037}\mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{00037}}\ \ \ \ \ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{structgraph_a4d11e6c85943080376d99ec93c665d12}{is\_labelled}};\ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00038}\mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{00038}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structgraph_a2cf75c5e36016b12cfa133504969c54f}{edge\_count}};\ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00039}00039\ \}\ \mbox{\hyperlink{structgraph}{Graph}};}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00040}00040\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00049}00049\ \mbox{\hyperlink{structgraph}{Graph}}*\ \mbox{\hyperlink{graph_8h_aab314f3449e9138e9a0f8919aacf6ec5}{graph\_create}}(\mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ labelled,\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ directed,\ \textcolor{keywordtype}{int}\ (*compare)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*),\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ (*hash)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00050}00050\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00056}00056\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_ad496179ca331699b6f041d26873dd859}{graph\_is\_directed}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00057}00057\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00063}00063\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_a4461245283642d82c6ef9480a0a876a0}{graph\_is\_labelled}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00064}00064\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00071}00071\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_ad42755b3cf2982009b5e230d6b79e2b9}{graph\_add\_node}}(\mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00072}00072\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00081}00081\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_a65552ca6e0da43300381145ba24daea2}{graph\_add\_edge}}(\mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ label);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00082}00082\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00089}00089\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\_contains\_node}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00090}00090\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00098}00098\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\_contains\_edge}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00099}00099\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00106}00106\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_aba154e83b5bbc87190247fd4809179ce}{graph\_remove\_node}}(\mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00107}00107\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00115}00115\ \mbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \mbox{\hyperlink{graph_8h_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(\mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00116}00116\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00122}00122\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{graph_8h_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00123}00123\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00129}00129\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{graph_8h_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00130}00130\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00136}00136\ \textcolor{keywordtype}{void}**\ \mbox{\hyperlink{graph_8h_acab5f88db61de8aa6b9c933a6f441534}{graph\_get\_nodes}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00137}00137\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00143}00143\ \mbox{\hyperlink{structedge}{Edge}}**\ \mbox{\hyperlink{graph_8h_a8057d0f1c1a39d6e65febeb120ad53a0}{graph\_get\_edges}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00144}00144\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00151}00151\ \textcolor{keywordtype}{void}**\ \mbox{\hyperlink{graph_8h_a659a2d632e551421d7add607f30cba31}{graph\_get\_neighbours}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00152}00152\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00159}00159\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{graph_8h_a4ac5689d98e63a548b8b29162573e6ab}{graph\_num\_neighbours}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00160}00160\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00168}00168\ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{graph_8h_a61b75859f3d7a5091c1934db2d32a9b2}{graph\_get\_label}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structgraph}{Graph}}*\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00169}00169\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00174}00174\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{graph_8h_a16bd4c9bff7ee047d3f07132711c99ee}{graph\_free}}(\mbox{\hyperlink{structgraph}{Graph}}*\ gr);}
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00175}00175\ }
-\DoxyCodeLine{\Hypertarget{graph_8h_source_l00176}00176\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GRAPH\_H}}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00034}00034\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structgraph}{graph}}\ *Graph;}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00044}00044\ Graph\ \doxymbox{\hyperlink{graph_8c_aab314f3449e9138e9a0f8919aacf6ec5}{graph\_create}}(\doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ labelled,\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ directed,\ \textcolor{keywordtype}{int}\ (*compare)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*),\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ (*hash)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*));}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00051}\doxymbox{\hyperlink{graph_8h_a1019d4212c286f6030040cf3e257a5bf}{00051}}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_ad496179ca331699b6f041d26873dd859}{graph\_is\_directed}}(\textcolor{keyword}{const}\ Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00058}\doxymbox{\hyperlink{graph_8h_adc11dc0c4534a52c2e17d17fb1bc8a56}{00058}}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_a4461245283642d82c6ef9480a0a876a0}{graph\_is\_labelled}}(\textcolor{keyword}{const}\ Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00066}00066\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_a804a20a46671b3b2206e046f7f6bb574}{graph\_add\_node}}(Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00076}00076\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_a9543feef236a6ff0d22a5321c1c651d6}{graph\_add\_edge}}(Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ label);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00084}\doxymbox{\hyperlink{graph_8h_a7bbba9f456900525b6ea34d99c36f5e0}{00084}}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_a9ce6b2ad9c5c392ee1f7b070994888bd}{graph\_contains\_node}}(\textcolor{keyword}{const}\ Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00093}\doxymbox{\hyperlink{graph_8h_a9df7bab7dcd52aac6ea10c9e9d88e274}{00093}}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_aacc48c6aeafcd2c7973aa2f12b34e551}{graph\_contains\_edge}}(\textcolor{keyword}{const}\ Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00101}\doxymbox{\hyperlink{graph_8h_afe396bebaac1cf13fd17b41b4793a1ae}{00101}}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_aba154e83b5bbc87190247fd4809179ce}{graph\_remove\_node}}(Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00110}\doxymbox{\hyperlink{graph_8h_aaa375f1e572f6b6ebd3761a70f35a00f}{00110}}\ \doxymbox{\hyperlink{graph_8h_a39db6982619d623273fad8a383489309}{Bool}}\ \doxymbox{\hyperlink{graph_8c_ab4a1ce54aa0e4fac0fc51d8fd29e32fa}{graph\_remove\_edge}}(Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00117}\doxymbox{\hyperlink{graph_8h_adcb38e3a44ea722dc302eeb1abd7f105}{00117}}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{graph_8c_a8bfbefa06b8628e94a55f5f3f8dc2e41}{graph\_num\_nodes}}(\textcolor{keyword}{const}\ Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00124}\doxymbox{\hyperlink{graph_8h_a69b44db28c04e12395fefa3d58278281}{00124}}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{graph_8c_a7c88d29fe7ae5991d4dcd8a75fbaedd1}{graph\_num\_edges}}(\textcolor{keyword}{const}\ Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00131}\doxymbox{\hyperlink{graph_8h_a4584a43a171cb67ab2c0b2d3dd338039}{00131}}\ \textcolor{keywordtype}{void}**\ \doxymbox{\hyperlink{graph_8c_acab5f88db61de8aa6b9c933a6f441534}{graph\_get\_nodes}}(\textcolor{keyword}{const}\ Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00138}\doxymbox{\hyperlink{graph_8h_a93c958bd73cdccadc269324fdd6b155b}{00138}}\ Edge**\ \doxymbox{\hyperlink{graph_8c_a8057d0f1c1a39d6e65febeb120ad53a0}{graph\_get\_edges}}(\textcolor{keyword}{const}\ Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00146}\doxymbox{\hyperlink{graph_8h_aeab15ea049b389929b1a5a4714b4fe76}{00146}}\ \textcolor{keywordtype}{void}**\ \doxymbox{\hyperlink{graph_8c_a659a2d632e551421d7add607f30cba31}{graph\_get\_neighbours}}(\textcolor{keyword}{const}\ Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00154}\doxymbox{\hyperlink{graph_8h_aea72dff139f3a9596021b6453f2bdb76}{00154}}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{graph_8c_a4ac5689d98e63a548b8b29162573e6ab}{graph\_num\_neighbours}}(\textcolor{keyword}{const}\ Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00163}\doxymbox{\hyperlink{graph_8h_a8a62d564c4707d279533a6f242b9bf48}{00163}}\ \textcolor{keywordtype}{void}*\ \doxymbox{\hyperlink{graph_8c_a61b75859f3d7a5091c1934db2d32a9b2}{graph\_get\_label}}(\textcolor{keyword}{const}\ Graph\ gr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ node2);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00169}\doxymbox{\hyperlink{graph_8h_a3070794fa9b8acbc60f7bc4e7e90e125}{00169}}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{graph_8c_a16bd4c9bff7ee047d3f07132711c99ee}{graph\_free}}(Graph\ gr);}
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{graph_8h_source_l00171}00171\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GRAPH\_H}}
 
 \end{DoxyCode}

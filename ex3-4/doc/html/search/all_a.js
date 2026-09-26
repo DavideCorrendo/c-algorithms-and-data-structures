@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['next_0',['next',['../structHashNode.html#a3213171b5cdc2bfab119ce74c9971e36',1,'HashNode']]],
-  ['nodes_1',['nodes',['../structgraph.html#a1777271f3807584ccd092d71a876f0bd',1,'graph']]]
+  ['size_0',['size',['../structHashTable.html#ad732056fce42df5162c810b4dd28fca1',1,'HashTable']]],
+  ['source_1',['source',['../structedge.html#ada87dc38a600171c6e2e0c865e3d082b',1,'edge']]]
 ];

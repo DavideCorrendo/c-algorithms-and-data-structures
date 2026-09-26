@@ -154,27 +154,6 @@ void swap(void **a, void **b) {
 }
 
 /**
- * @brief Three-way partition implementation
- * @details Partitions array into sections: <pivot, =pivot, >pivot
- */
-void threewaypartition(void **arr, int n, void *low, void *high, 
-                      int (*compar)(const void *, const void *), 
-                      int *start, int *end) {
-    *start = 0;
-    *end = n - 1;
-
-    for (int i = 0; i <= *end;) {
-        if (compar(arr[i], low) < 0) {
-            swap(&arr[i++], &arr[(*start)++]);
-        } else if (compar(arr[i], high) > 0) {
-            swap(&arr[i], &arr[(*end)--]);
-        } else {
-            i++;
-        }
-    }
-}
-
-/**
  * @brief Recursive quicksort implementation
  */
 void quick_sort_rec(void **arr, int left, int right, int (*compar)(const void *, const void *)) {
@@ -203,18 +182,13 @@ void quick_sort_rec(void **arr, int left, int right, int (*compar)(const void *,
 void quick_sort(void **base, size_t nitems, int (*compar)(const void *, const void *)) {
     clock_t from = clock();
 
-    int start, end;
-    int low = nitems;
-    int high = nitems - low;
-
-    threewaypartition(base, nitems, &low, &high, compar, &start, &end);
-    quick_sort_rec(base, 0, start - 1, compar);
-    quick_sort_rec(base, start, end, compar);
-    quick_sort_rec(base, end + 1, nitems - 1, compar);
+    if (nitems > 0) {
+        quick_sort_rec(base, 0, nitems - 1, compar);
+    }
 
     clock_t to = clock();
     double time_taken = (double)(to - from) / CLOCKS_PER_SEC;
-    printf("The time taken by sorting function function is: %f sec\n", time_taken);
+    printf("The time taken by quick_sort function is: %f sec\n", time_taken);
 }
 
 /**

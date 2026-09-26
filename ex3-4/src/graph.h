@@ -31,12 +31,7 @@ typedef struct edge {
  * @struct graph
  * @brief Structure representing the graph
  */
-typedef struct graph {
-    HashTable* nodes;      /**< Hash table storing nodes and their adjacency lists */
-    Bool is_directed;      /**< Flag indicating if the graph is directed */
-    Bool is_labelled;      /**< Flag indicating if the graph has edge labels */
-    int edge_count;        /**< Total number of edges in the graph */
-} Graph;
+typedef struct graph *Graph;
 
 /**
  * @brief Creates a new graph
@@ -46,21 +41,21 @@ typedef struct graph {
  * @param hash Function for hashing node values
  * @return Pointer to the created graph, NULL on failure
  */
-Graph* graph_create(Bool labelled, Bool directed, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*));
+Graph graph_create(Bool labelled, Bool directed, int (*compare)(const void*, const void*), unsigned long (*hash)(const void*));
 
 /**
  * @brief Checks if the graph is directed
  * @param gr The graph
  * @return true if directed, false otherwise
  */
-Bool graph_is_directed(const Graph* gr);
+Bool graph_is_directed(const Graph gr);
 
 /**
  * @brief Checks if the graph has edge labels
  * @param gr The graph
  * @return true if labelled, false otherwise
  */
-Bool graph_is_labelled(const Graph* gr);
+Bool graph_is_labelled(const Graph gr);
 
 /**
  * @brief Adds a node to the graph
@@ -68,7 +63,7 @@ Bool graph_is_labelled(const Graph* gr);
  * @param node The node to add
  * @return true if successful, false otherwise
  */
-Bool graph_add_node(Graph* gr, const void* node);
+Bool graph_add_node(Graph gr, const void* node);
 
 /**
  * @brief Adds an edge to the graph
@@ -78,7 +73,7 @@ Bool graph_add_node(Graph* gr, const void* node);
  * @param label Edge label (can be NULL for unlabelled graphs)
  * @return true if successful, false otherwise
  */
-Bool graph_add_edge(Graph* gr, const void* node1, const void* node2, const void* label);
+Bool graph_add_edge(Graph gr, const void* node1, const void* node2, const void* label);
 
 /**
  * @brief Checks if a node exists in the graph
@@ -86,7 +81,7 @@ Bool graph_add_edge(Graph* gr, const void* node1, const void* node2, const void*
  * @param node The node to check
  * @return true if node exists, false otherwise
  */
-Bool graph_contains_node(const Graph* gr, const void* node);
+Bool graph_contains_node(const Graph gr, const void* node);
 
 /**
  * @brief Checks if an edge exists in the graph
@@ -95,7 +90,7 @@ Bool graph_contains_node(const Graph* gr, const void* node);
  * @param node2 Destination node
  * @return true if edge exists, false otherwise
  */
-Bool graph_contains_edge(const Graph* gr, const void* node1, const void* node2);
+Bool graph_contains_edge(const Graph gr, const void* node1, const void* node2);
 
 /**
  * @brief Removes a node from the graph
@@ -103,7 +98,7 @@ Bool graph_contains_edge(const Graph* gr, const void* node1, const void* node2);
  * @param node The node to remove
  * @return true if successful, false otherwise
  */
-Bool graph_remove_node(Graph* gr, const void* node);
+Bool graph_remove_node(Graph gr, const void* node);
 
 /**
  * @brief Removes an edge from the graph
@@ -112,35 +107,35 @@ Bool graph_remove_node(Graph* gr, const void* node);
  * @param node2 Destination node
  * @return true if successful, false otherwise
  */
-Bool graph_remove_edge(Graph* gr, const void* node1, const void* node2);
+Bool graph_remove_edge(Graph gr, const void* node1, const void* node2);
 
 /**
  * @brief Gets the number of nodes in the graph
  * @param gr The graph
  * @return Number of nodes
  */
-int graph_num_nodes(const Graph* gr);
+int graph_num_nodes(const Graph gr);
 
 /**
  * @brief Gets the number of edges in the graph
  * @param gr The graph
  * @return Number of edges
  */
-int graph_num_edges(const Graph* gr);
+int graph_num_edges(const Graph gr);
 
 /**
  * @brief Gets an array of all nodes in the graph
  * @param gr The graph
  * @return NULL-terminated array of nodes
  */
-void** graph_get_nodes(const Graph* gr);
+void** graph_get_nodes(const Graph gr);
 
 /**
  * @brief Gets an array of all edges in the graph
  * @param gr The graph
  * @return NULL-terminated array of Edge pointers
  */
-Edge** graph_get_edges(const Graph* gr);
+Edge** graph_get_edges(const Graph gr);
 
 /**
  * @brief Gets an array of all neighboring nodes
@@ -148,7 +143,7 @@ Edge** graph_get_edges(const Graph* gr);
  * @param node The node whose neighbors to get
  * @return NULL-terminated array of neighboring nodes
  */
-void** graph_get_neighbours(const Graph* gr, const void* node);
+void** graph_get_neighbours(const Graph gr, const void* node);
 
 /**
  * @brief Gets the number of neighbors for a node
@@ -156,7 +151,7 @@ void** graph_get_neighbours(const Graph* gr, const void* node);
  * @param node The node to check
  * @return Number of neighboring nodes
  */
-int graph_num_neighbours(const Graph* gr, const void* node);
+int graph_num_neighbours(const Graph gr, const void* node);
 
 /**
  * @brief Gets the label of an edge
@@ -165,12 +160,12 @@ int graph_num_neighbours(const Graph* gr, const void* node);
  * @param node2 Destination node
  * @return Edge label, NULL if edge doesn't exist or graph is unlabelled
  */
-void* graph_get_label(const Graph* gr, const void* node1, const void* node2);
+void* graph_get_label(const Graph gr, const void* node1, const void* node2);
 
 /**
  * @brief Frees all memory associated with the graph
  * @param gr The graph to free
  */
-void graph_free(Graph* gr);
+void graph_free(Graph gr);
 
 #endif // GRAPH_H

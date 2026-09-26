@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['is_5fdirected_0',['is_directed',['../structgraph.html#a281098f7296782d1fde87ac063c4d855',1,'graph']]],
-  ['is_5flabelled_1',['is_labelled',['../structgraph.html#a4d11e6c85943080376d99ec93c665d12',1,'graph']]]
+  ['key_0',['key',['../structHashNode.html#a33fe9a4c955e0b679fcb639aafb84c36',1,'HashNode']]]
 ];

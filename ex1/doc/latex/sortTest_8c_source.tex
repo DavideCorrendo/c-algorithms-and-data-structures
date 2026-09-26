@@ -3,7 +3,7 @@
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}unity.h"{}}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sort_8h}{sort.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{sort_8h}{sort.h}}"{}}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <string.h>}}
@@ -14,13 +14,13 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00010}00010\ \textcolor{preprocessor}{\#define\ LARGE\_RECORD\_COUNT\ 10000}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00011}00011\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00012}00012\ \textcolor{comment}{//\ Forward\ declarations\ of\ helper\ functions}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00013}00013\ \mbox{\hyperlink{struct__Records}{Records}}**\ prepare\_test\_records(\textcolor{keywordtype}{int}\ count);}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00014}00014\ \textcolor{keywordtype}{void}\ cleanup\_test\_records(\mbox{\hyperlink{struct__Records}{Records}}**\ records,\ \textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00013}00013\ Records**\ prepare\_test\_records(\textcolor{keywordtype}{int}\ count);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00014}00014\ \textcolor{keywordtype}{void}\ cleanup\_test\_records(Records**\ records,\ \textcolor{keywordtype}{int}\ count);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00015}00015\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00016}00016\ \textcolor{comment}{//\ Helper\ function\ to\ prepare\ test\ records}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00017}00017\ \mbox{\hyperlink{struct__Records}{Records}}**\ prepare\_test\_records(\textcolor{keywordtype}{int}\ count)\ \{}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00017}00017\ Records**\ prepare\_test\_records(\textcolor{keywordtype}{int}\ count)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00018}00018\ \ \ \ \ \textcolor{comment}{//\ Dynamically\ allocate\ only\ the\ array\ of\ pointers}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ malloc(count\ *\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct__Records}{Records}}*));}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00019}00019\ \ \ \ \ Records**\ records\ =\ malloc(count\ *\ \textcolor{keyword}{sizeof}(Records*));}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (!records)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ puts(\textcolor{stringliteral}{"{}Memory\ allocation\ failed"{}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00022}00022\ \ \ \ \ \ \ \ \ exit(1);}
@@ -28,7 +28,7 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00024}00024\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//\ Allocate\ each\ record}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ count;\ i++)\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ records[i]\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct__Records}{Records}}));}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ records[i]\ =\ malloc(\textcolor{keyword}{sizeof}(Records));}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!records[i])\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Free\ previously\ allocated\ records\ if\ allocation\ fails}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ i;\ j++)\ \{}
@@ -40,17 +40,17 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ record\ to\ prevent\ potential\ garbage\ values}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00039}00039\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00039}00039\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00040}00040\ \ \ \ \ \ \ \ \ memset(records[i]-\/>field1,\ 0,\ \textcolor{keyword}{sizeof}(records[i]-\/>field1));}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00041}00041\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00041}00041\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 0.0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00043}00043\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00044}00044\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{return}\ records;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00046}00046\ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00047}00047\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00048}00048\ \textcolor{comment}{//\ Helper\ function\ to\ clean\ up\ test\ records}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00049}00049\ \textcolor{keywordtype}{void}\ cleanup\_test\_records(\mbox{\hyperlink{struct__Records}{Records}}**\ records,\ \textcolor{keywordtype}{int}\ count)\ \{}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00049}00049\ \textcolor{keywordtype}{void}\ cleanup\_test\_records(Records**\ records,\ \textcolor{keywordtype}{int}\ count)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (records)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ count;\ i++)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ free(records[i]);}
@@ -60,38 +60,38 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00056}00056\ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00057}00057\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00058}00058\ \textcolor{comment}{//\ Helper\ function\ to\ generate\ random\ test\ data}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00059}00059\ \textcolor{keywordtype}{void}\ generate\_random\_records(\mbox{\hyperlink{struct__Records}{Records}}**\ records,\ \textcolor{keywordtype}{int}\ count)\ \{}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00059}00059\ \textcolor{keywordtype}{void}\ generate\_random\_records(Records**\ records,\ \textcolor{keywordtype}{int}\ count)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ Seed\ random\ number\ generator}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00061}00061\ \ \ \ \ srand(time(NULL));}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00062}00062\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ count;\ i++)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ random\ ID}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ rand()\ \%\ 10000;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ rand()\ \%\ 10000;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00066}00066\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ random\ field1\ (string)}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ 14;\ j++)\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[j]\ =\ \textcolor{charliteral}{'A'}\ +\ (rand()\ \%\ 26);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[j]\ =\ \textcolor{charliteral}{'A'}\ +\ (rand()\ \%\ 26);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[14]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a2d622b7121eb9bccd07dd6f845c92be7}{field1}}[14]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00072}00072\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ random\ field2\ (integer)}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ rand()\ \%\ 1000;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ rand()\ \%\ 1000;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00075}00075\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ random\ field3\ (float)}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ records[i]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ (float)(rand()\ \%\ 10000)\ /\ 100.0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ records[i]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ (float)(rand()\ \%\ 10000)\ /\ 100.0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00078}00078\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00079}00079\ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00080}00080\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00081}00081\ \textcolor{comment}{//\ Test\ sorting\ with\ large\ number\ of\ records}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00082}00082\ \textcolor{keywordtype}{void}\ test\_merge\_sort\_large\_dataset(\textcolor{keywordtype}{void})\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ Allocate\ large\ test\ set}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00084}00084\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ prepare\_test\_records(LARGE\_RECORD\_COUNT);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00084}00084\ \ \ \ \ Records**\ records\ =\ prepare\_test\_records(LARGE\_RECORD\_COUNT);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00085}00085\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ Generate\ random\ data}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00087}00087\ \ \ \ \ generate\_random\_records(records,\ LARGE\_RECORD\_COUNT);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00088}00088\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ Perform\ merge\ sort}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00090}00090\ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ LARGE\_RECORD\_COUNT,\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00090}00090\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ LARGE\_RECORD\_COUNT,\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00091}00091\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ Verify\ sorting\ (check\ if\ sorted\ correctly)}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ LARGE\_RECORD\_COUNT;\ i++)\ \{}
@@ -104,7 +104,7 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00100}00100\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00101}00101\ \textcolor{comment}{//\ Test\ sorting\ with\ records\ containing\ duplicate\ values}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00102}00102\ \textcolor{keywordtype}{void}\ test\_quick\_sort\_duplicate\_values(\textcolor{keywordtype}{void})\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ prepare\_test\_records(5);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00103}00103\ \ \ \ \ Records**\ records\ =\ prepare\_test\_records(5);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00104}00104\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00105}00105\ \ \ \ \ \textcolor{comment}{//\ Create\ records\ with\ some\ duplicate\ field1\ values}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00106}00106\ \ \ \ \ strcpy(records[0]-\/>field1,\ \textcolor{stringliteral}{"{}AAA"{}});}
@@ -113,7 +113,7 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00109}00109\ \ \ \ \ strcpy(records[3]-\/>field1,\ \textcolor{stringliteral}{"{}CCC"{}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00110}00110\ \ \ \ \ strcpy(records[4]-\/>field1,\ \textcolor{stringliteral}{"{}BBB"{}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00111}00111\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00112}00112\ \ \ \ \ \mbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}**)records,\ 5,\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00112}00112\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}**)records,\ 5,\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00113}00113\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00114}00114\ \ \ \ \ \textcolor{comment}{//\ Verify\ correct\ sorting\ of\ duplicates}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00115}00115\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(\textcolor{stringliteral}{"{}AAA"{}},\ records[0]-\/>field1);}
@@ -129,16 +129,16 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00125}00125\ \textcolor{keywordtype}{void}\ test\_memory\_handling\_stress(\textcolor{keywordtype}{void})\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00126}00126\ \ \ \ \ \textcolor{comment}{//\ Test\ multiple\ allocations\ and\ deallocations}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ iterations\ =\ 0;\ iterations\ <\ 10;\ iterations++)\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ prepare\_test\_records(MAX\_TEST\_RECORDS);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ Records**\ records\ =\ prepare\_test\_records(MAX\_TEST\_RECORDS);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00129}00129\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generate\ random\ data}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00131}00131\ \ \ \ \ \ \ \ \ generate\_random\_records(records,\ MAX\_TEST\_RECORDS);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00132}00132\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Alternate\ between\ merge\ and\ quick\ sort}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iterations\ \%\ 2\ ==\ 0)\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ MAX\_TEST\_RECORDS,\ \mbox{\hyperlink{sort_8c_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ MAX\_TEST\_RECORDS,\ \doxymbox{\hyperlink{sort_8c_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00136}00136\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}**)records,\ MAX\_TEST\_RECORDS,\ \mbox{\hyperlink{sort_8c_a04608605cfc734f04f4719acff068fc5}{compare\_f3}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}**)records,\ MAX\_TEST\_RECORDS,\ \doxymbox{\hyperlink{sort_8c_a04608605cfc734f04f4719acff068fc5}{compare\_f3}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Verify\ no\ memory\ corruption\ occurred\ during\ sorting}}
@@ -151,37 +151,37 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00147}00147\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00148}00148\ \textcolor{comment}{//\ Test\ sorting\ with\ different\ field\ comparators}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00149}00149\ \textcolor{keywordtype}{void}\ test\_multiple\_field\_sorting(\textcolor{keywordtype}{void})\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00150}00150\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ prepare\_test\_records(4);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00150}00150\ \ \ \ \ Records**\ records\ =\ prepare\_test\_records(4);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00151}00151\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00152}00152\ \ \ \ \ \textcolor{comment}{//\ Prepare\ test\ data\ with\ varying\ field\ values}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00153}00153\ \ \ \ \ records[0]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00153}00153\ \ \ \ \ records[0]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00154}00154\ \ \ \ \ strcpy(records[0]-\/>field1,\ \textcolor{stringliteral}{"{}BBB"{}});}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00155}00155\ \ \ \ \ records[0]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 30;}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00156}00156\ \ \ \ \ records[0]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 3.0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00155}00155\ \ \ \ \ records[0]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 30;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00156}00156\ \ \ \ \ records[0]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 3.0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00157}00157\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00158}00158\ \ \ \ \ records[1]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00158}00158\ \ \ \ \ records[1]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 2;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00159}00159\ \ \ \ \ strcpy(records[1]-\/>field1,\ \textcolor{stringliteral}{"{}AAA"{}});}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00160}00160\ \ \ \ \ records[1]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 20;}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00161}00161\ \ \ \ \ records[1]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 2.0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00160}00160\ \ \ \ \ records[1]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 20;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00161}00161\ \ \ \ \ records[1]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 2.0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00162}00162\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00163}00163\ \ \ \ \ records[2]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00163}00163\ \ \ \ \ records[2]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 3;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00164}00164\ \ \ \ \ strcpy(records[2]-\/>field1,\ \textcolor{stringliteral}{"{}CCC"{}});}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00165}00165\ \ \ \ \ records[2]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 10;}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00166}00166\ \ \ \ \ records[2]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00165}00165\ \ \ \ \ records[2]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 10;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00166}00166\ \ \ \ \ records[2]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 1.0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00167}00167\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00168}00168\ \ \ \ \ records[3]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 4;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00168}00168\ \ \ \ \ records[3]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 4;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00169}00169\ \ \ \ \ strcpy(records[3]-\/>field1,\ \textcolor{stringliteral}{"{}AAA"{}});}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00170}00170\ \ \ \ \ records[3]-\/>\mbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 40;}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00171}00171\ \ \ \ \ records[3]-\/>\mbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 4.0;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00170}00170\ \ \ \ \ records[3]-\/>\doxymbox{\hyperlink{struct__Records_a00502008b6007fb140993a58702119dc}{field2}}\ =\ 40;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00171}00171\ \ \ \ \ records[3]-\/>\doxymbox{\hyperlink{struct__Records_a7b2c9843166c1a7e1dad6a3b3d2b4fda}{field3}}\ =\ 4.0;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00172}00172\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00173}00173\ \ \ \ \ \textcolor{comment}{//\ Test\ sorting\ by\ different\ fields}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00174}00174\ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 4,\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00174}00174\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 4,\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00175}00175\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(\textcolor{stringliteral}{"{}AAA"{}},\ records[0]-\/>field1);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00176}00176\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00177}00177\ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 4,\ \mbox{\hyperlink{sort_8c_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00177}00177\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 4,\ \doxymbox{\hyperlink{sort_8c_a3ec095b53162c0b67582330fb5fea2aa}{compare\_f2}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00178}00178\ \ \ \ \ TEST\_ASSERT\_EQUAL\_INT(10,\ records[0]-\/>field2);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00179}00179\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00180}00180\ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 4,\ \mbox{\hyperlink{sort_8c_a04608605cfc734f04f4719acff068fc5}{compare\_f3}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00180}00180\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 4,\ \doxymbox{\hyperlink{sort_8c_a04608605cfc734f04f4719acff068fc5}{compare\_f3}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00181}00181\ \ \ \ \ TEST\_ASSERT\_EQUAL\_FLOAT(1.0,\ records[0]-\/>field3);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00182}00182\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00183}00183\ \ \ \ \ cleanup\_test\_records(records,\ 4);}
@@ -191,22 +191,22 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00187}00187\ \textcolor{keywordtype}{void}\ test\_minimal\_array\_sorting(\textcolor{keywordtype}{void})\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00188}00188\ \ \ \ \ \textcolor{comment}{//\ Test\ arrays\ of\ length\ 0,\ 1,\ and\ 2}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00189}00189\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ size\ =\ 0;\ size\ <=\ 2;\ size++)\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00190}00190\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ prepare\_test\_records(size\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00190}00190\ \ \ \ \ \ \ \ \ Records**\ records\ =\ prepare\_test\_records(size\ +\ 1);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00191}00191\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (size\ >\ 0)\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ some\ predefined\ data}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ records[0]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ records[0]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(records[0]-\/>field1,\ \textcolor{stringliteral}{"{}BBB"{}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (size\ >\ 1)\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ records[1]-\/>\mbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 2;}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ records[1]-\/>\doxymbox{\hyperlink{struct__Records_a422a28016d73a0939d1e4a4fa46bb686}{id}}\ =\ 2;}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(records[1]-\/>field1,\ \textcolor{stringliteral}{"{}AAA"{}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Try\ both\ sorting\ algorithms}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ size,\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}**)records,\ size,\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ size,\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{sort_8c_afd0315445eb73304a4b6cb2718dc520f}{quick\_sort}}((\textcolor{keywordtype}{void}**)records,\ size,\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00206}00206\ \ \ \ \ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ size\ >\ 1,\ verify\ sorting}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (size\ >\ 1)\ \{}
@@ -219,7 +219,7 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00215}00215\ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00216}00216\ \textcolor{comment}{//\ Performance\ and\ error\ handling\ test}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00217}00217\ \textcolor{keywordtype}{void}\ test\_sorting\_with\_large\_strings(\textcolor{keywordtype}{void})\ \{}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00218}00218\ \ \ \ \ \mbox{\hyperlink{struct__Records}{Records}}**\ records\ =\ prepare\_test\_records(5);}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00218}00218\ \ \ \ \ Records**\ records\ =\ prepare\_test\_records(5);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00219}00219\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00220}00220\ \ \ \ \ \textcolor{comment}{//\ Create\ records\ with\ longer\ field1\ values}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00221}00221\ \ \ \ \ strcpy(records[0]-\/>field1,\ \textcolor{stringliteral}{"{}Very\ Long\ String\ Test\ 1"{}});}
@@ -229,7 +229,7 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00225}00225\ \ \ \ \ strcpy(records[4]-\/>field1,\ \textcolor{stringliteral}{"{}Aardvark\ Test"{}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00226}00226\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00227}00227\ \ \ \ \ \textcolor{comment}{//\ Ensure\ sorting\ works\ with\ longer\ strings}}
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00228}00228\ \ \ \ \ \mbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 5,\ \mbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00228}00228\ \ \ \ \ \doxymbox{\hyperlink{sort_8c_a8ee57ded9b73a556f6c5bf10c221e0a2}{merge\_sort}}((\textcolor{keywordtype}{void}**)records,\ 5,\ \doxymbox{\hyperlink{sort_8c_a9c381db2e8691840bd4179a7ff3dc753}{compare\_f1}});}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00229}00229\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00230}00230\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(\textcolor{stringliteral}{"{}Aardvark\ Test"{}},\ records[0]-\/>field1);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00231}00231\ \ \ \ \ TEST\_ASSERT\_EQUAL\_STRING(\textcolor{stringliteral}{"{}Another\ Long\ String\ Test\ 2"{}},\ records[1]-\/>field1);}
@@ -240,7 +240,7 @@
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00236}00236\ \ \ \ \ cleanup\_test\_records(records,\ 5);}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00237}00237\ \}}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00238}00238\ }
-\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00239}00239\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00239}00239\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}}(\textcolor{keywordtype}{void})\ \{}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00240}00240\ \ \ \ \ UNITY\_BEGIN();}
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00241}00241\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{sortTest_8c_source_l00242}00242\ \ \ \ \ \textcolor{comment}{//\ Run\ additional\ test\ cases}}

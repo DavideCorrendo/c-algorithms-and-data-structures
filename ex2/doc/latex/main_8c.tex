@@ -1,17 +1,23 @@
-\doxysection{src/main.c File Reference}
+\doxysection{src/\+main.c File Reference}
 \hypertarget{main_8c}{}\label{main_8c}\index{src/main.c@{src/main.c}}
 
 
 Main program for word correction using edit distance.  
 
 
-{\ttfamily \#include "{}distance.\+h"{}}\newline
-Include dependency graph for main.\+c\+:
-% FIG 0
+{\ttfamily \+\#include "{}distance.\+h"{}}\newline
+Include dependency graph for main.\+c:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
+int \doxymbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\+[$\,$]\+)
 \begin{DoxyCompactList}\small\item\em Main function that implements the word correction program. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -20,16 +26,18 @@ Main program for word correction using edit distance.
 
 Reads words from a dictionary file and suggests corrections for words in an input file based on edit distance calculations 
 
-Definition in file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+Definition in file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
 
 
 
+\label{main_8c_doc-func-members}
+\Hypertarget{main_8c_doc-func-members}
 \doxysubsection{Function Documentation}
-\Hypertarget{main_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{main_8c_a0ddf1224851353fc92bfbff6f499fa97} 
-\index{main.c@{main.c}!main@{main}}
+\Hypertarget{main_8c_a0ddf1224851353fc92bfbff6f499fa97}\index{main.c@{main.c}!main@{main}}
 \index{main@{main}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{main()}{main()}}
-{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{main_8c_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\+[$\,$]}\end{DoxyParamCaption})}
 
 
 
@@ -47,7 +55,7 @@ Main function that implements the word correction program.
 \end{DoxyReturn}
 
 
-Definition at line \mbox{\hyperlink{main_8c_source_l00016}{16}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00016}{16}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
 
 
 \begin{DoxyCode}{0}
@@ -116,54 +124,37 @@ Definition at line \mbox{\hyperlink{main_8c_source_l00016}{16}} of file \mbox{\h
 \DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (len\ >\ max\_word\_len)\ max\_word\_len\ =\ len;}
 \DoxyCodeLine{00079\ \ \ \ \ \}}
 \DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ Initialize\ memoization\ matrix}}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{int}\ **memo\ =\ \mbox{\hyperlink{distance_8c_a248b96ee59cc18b8a662707d19a64b74}{initialize\_memo}}(max\_word\_len\ +\ 1,\ max\_word\_len\ +\ 1);}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (!memo)\ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ dict\_size;\ i++)\ \{}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ free(dictionary[i]);}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ free(dictionary);}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00089\ \ \ \ \ \}}
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Open\ and\ process\ correctme\ file}}
-\DoxyCodeLine{00092\ \ \ \ \ FILE\ *correctme\_fp\ =\ fopen(correctme\_file,\ \textcolor{stringliteral}{"{}r"{}});}
-\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (!correctme\_fp)\ \{}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Error\ opening\ correctme\ file"{}});}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{distance_8c_a82c6f74dd09e412629f96cb1f0a8efdc}{free\_memo}}(memo,\ max\_word\_len\ +\ 1);}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ dict\_size;\ i++)\ \{}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ free(dictionary[i]);}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ free(dictionary);}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ \ \ \ \ FILE\ *correctme\_fp\ =\ fopen(correctme\_file,\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{if}\ (!correctme\_fp)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ perror(\textcolor{stringliteral}{"{}Error\ opening\ correctme\ file"{}});}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ dict\_size;\ i++)\ free(dictionary[i]);}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ free(dictionary);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Process\ words\ and\ find\ corrections}}
+\DoxyCodeLine{00090\ \ \ \ \ clock\_t\ start\ =\ clock();}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{while}\ (fscanf(correctme\_fp,\ \textcolor{stringliteral}{"{}\%1023s"{}},\ buffer)\ ==\ 1)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ find\_closest\_words((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ **)dictionary,\ dict\_size,\ buffer);}
+\DoxyCodeLine{00093\ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ clock\_t\ end\ =\ clock();}
+\DoxyCodeLine{00095\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Total\ processing\ time:\ \%.2f\ seconds\(\backslash\)n"{}},\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{double})(end\ -\/\ start)\ /\ CLOCKS\_PER\_SEC);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Cleanup}}
+\DoxyCodeLine{00099\ \ \ \ \ fclose(correctme\_fp);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ dict\_size;\ i++)\ free(dictionary[i]);}
+\DoxyCodeLine{00101\ \ \ \ \ free(dictionary);}
 \DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Process\ words\ and\ find\ corrections}}
-\DoxyCodeLine{00104\ \ \ \ \ clock\_t\ start\ =\ clock();}
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{while}\ (fscanf(correctme\_fp,\ \textcolor{stringliteral}{"{}\%1023s"{}},\ buffer)\ ==\ 1)\ \{}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ find\_closest\_words((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ **)dictionary,\ dict\_size,\ buffer,\ memo);}
-\DoxyCodeLine{00107\ \ \ \ \ \}}
-\DoxyCodeLine{00108\ \ \ \ \ clock\_t\ end\ =\ clock();}
-\DoxyCodeLine{00109\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Total\ processing\ time:\ \%.2f\ seconds\(\backslash\)n"{}},\ }
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{double})(end\ -\/\ start)\ /\ CLOCKS\_PER\_SEC);}
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Cleanup}}
-\DoxyCodeLine{00113\ \ \ \ \ fclose(correctme\_fp);}
-\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{distance_8c_a82c6f74dd09e412629f96cb1f0a8efdc}{free\_memo}}(memo,\ max\_word\_len\ +\ 1);}
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ dict\_size;\ i++)\ \{}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ free(dictionary[i]);}
-\DoxyCodeLine{00117\ \ \ \ \ \}}
-\DoxyCodeLine{00118\ \ \ \ \ free(dictionary);}
-\DoxyCodeLine{00119\ }
-\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00121\ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00104\ \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{distance_8c_source_l00045}{free\+\_\+memo()}}, \mbox{\hyperlink{distance_8c_source_l00016}{initialize\+\_\+memo()}}, and \mbox{\hyperlink{main_8c_source_l00016}{main()}}.
+References \doxymbox{\hyperlink{main_8c_source_l00016}{main()}}.
 
 
 
-Referenced by \mbox{\hyperlink{main_8c_source_l00016}{main()}}.
+Referenced by \doxymbox{\hyperlink{main_8c_source_l00016}{main()}}.
 
